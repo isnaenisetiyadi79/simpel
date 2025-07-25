@@ -1,7 +1,13 @@
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
-
 @source '../views';
+/* Preline UI */
+@source "./node_modules/preline/dist/*.js";
+/* @import "./node_modules/preline/variants.css"; */
+@import 'preline/variants.css';
+
+@plugin "@tailwindcss/forms";
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
