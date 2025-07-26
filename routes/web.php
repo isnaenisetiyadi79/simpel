@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -10,6 +11,9 @@ use Livewire\Volt\Volt;
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login.auth');
+
+
+Route::get('/dashbard',[DashboardController::class, 'index'])->name('dashboard');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
