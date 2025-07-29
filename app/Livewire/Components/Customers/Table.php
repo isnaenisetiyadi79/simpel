@@ -26,6 +26,10 @@ class Table extends Component
         session()->flash('success', $message);
     }
 
+    public function edit($id) {
+        $this->dispatch('edit-modal', $id);
+    }
+    
     public function getItems()
     {
         return Customer::where('name', 'like', '%' . $this->search . '%')

@@ -9,7 +9,7 @@
                     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                         {{-- <h3 class="text-lg font-semibold">{{ $update_data ? 'Edit' : 'Tambah' }} Service
                             {{ $update_data ? $name : 'Baru' }}</h3> --}}
-                        <h3 class="text-lg font-semibold">Tambah Customer Baru</h3>
+                        <h3 class="text-lg font-semibold">{{ $update_data ? 'Edit' : 'Tambah' }} Customer {{ $update_data ? $name : 'Baru' }}</h3>
                         <button type="button"
                             class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
                             wire:click="closeModal">
@@ -111,7 +111,7 @@
                         </button>
                         <button type="submit" wire:loading.attr="disabled"
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                            {{-- {{ $update_data ? 'Update' : 'Simpan' }} --}} Simpan
+                            {{ $update_data ? 'Update' : 'Simpan' }} 
                             <div wire:loading
                                 class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full dark:text-white"
                                 role="status" aria-label="loading">

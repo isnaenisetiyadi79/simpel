@@ -167,10 +167,10 @@
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-1.5">
-                                            <a class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
-                                                href="#">
+                                            <button type="button" class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
+                                                wire:click="edit({{ $item->id }})">
                                                 Edit
-                                            </a>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

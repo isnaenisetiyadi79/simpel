@@ -17,6 +17,9 @@ class Modalform extends Component
     public $phone_number;
     public $address;
 
+    public $id;
+    public $update_data = false;
+
     #[On('open-modal')]
     public function openModal()
     {
@@ -30,28 +33,61 @@ class Modalform extends Component
     public function closeModal()
     {
         $this->modalFormData = false;
+        // if ($this->update_data) {
+        //     $this->update_data = false;
+        // }
+        $this->reset();
     }
 
-    public function save() 
+    #[On('edit-modal')]
+    public function editModal($id)
+    {
+        $this->modalFormData = true;
+        $this->id = $id;
+        $this->update_data = true;
+
+        $customer = Customer::find($id);
+        $this->name = $customer->name;
+        $this->email = $customer->email;
+        $this->phone_number = $customer->phone_number;
+        $this->address = $customer->address;
+    }
+
+    public function save()
     {
 
-         $this->validate([
+        $this->validate([
             'name' => 'required',
             'email' => 'required|email:rfc,dns',
             'phone_number' => 'required|numeric',
             'address' => 'required|string'
         ]);
-        
-        $customer = Customer::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone_number' => $this->phone_number,
-            'address' => $this->address
-        ]);
+
+        if ($this->update_data) {
+            $customer = Customer::find($this->id);
+            $customer->update([
+                'name' => $this->name,
+                'email' => $this->email,
+                'phone_number' => $this->phone_number,
+                'address' => $this->address
+            ]);
+            $this->dispatch('success', message: "Customer updated successfully");
+            $this->reset();
+        } else {
+
+            $customer = Customer::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'phone_number' => $this->phone_number,
+                'address' => $this->address
+            ]);
+            $this->dispatch('success', message: "Customer created successfully");
+            $this->reset();
+        }
+
 
         $this->closeModal();
         // session()->flash('succcess', 'Customer created succesfully');
-        $this->dispatch('success', message: "Customer created successfully");
-        
+
     }
 }
