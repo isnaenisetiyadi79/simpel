@@ -33,9 +33,6 @@ class Modalform extends Component
     public function closeModal()
     {
         $this->modalFormData = false;
-        // if ($this->update_data) {
-        //     $this->update_data = false;
-        // }
         $this->reset();
     }
 
