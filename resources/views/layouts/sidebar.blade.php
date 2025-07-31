@@ -39,7 +39,7 @@
             <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
                 <ul class="flex flex-col space-y-1">
                     <li>
-                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('dashboard') ?  'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('dashboard') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('dashboard') }}">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -244,7 +244,7 @@
 
                     <li class="hs-accordion {{ Route::is('master.*') ? 'active' : '' }}" id="projects-accordion">
                         <button type="button"
-                            class="hs-accordion-toggle w-full text-start flex {{ Route::is('master.*') ?  'bg-gray-100' : '' }} items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                            class="hs-accordion-toggle w-full text-start flex {{ Route::is('master.*') ? 'bg-gray-100' : '' }} items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                             aria-expanded="true" aria-controls="projects-accordion-child">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -270,17 +270,17 @@
                         </button>
 
                         <div id="projects-accordion-child"
-                            class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 {{ Route::is('master.*') ?  'block' : 'hidden'}}"
+                            class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 {{ Route::is('master.*') ? 'block' : 'hidden' }}"
                             role="region" aria-labelledby="projects-accordion">
                             <ul class="ps-8 pt-1 space-y-1">
                                 <li>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.customer') ?  'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.customer') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                                         href="{{ route('master.customer') }}">
                                         Customers
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.service') ?  'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.service') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                                         href="{{ route('master.service') }}">
                                         Service
                                     </a>
@@ -289,7 +289,16 @@
                             </ul>
                         </div>
                     </li>
-
+                    <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('order') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
+                            href="{{ route('order') }}">
+                            <svg class="shrink-0 size-4"  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18t1.463-3.537T18 13t3.538 1.463T23 18t-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v6.675q-.475-.225-.975-.375T19 11.075V5H5v14.05h6.075q.125.775.388 1.475t.687 1.325L12 22l-1.5-1.5L9 22l-1.5-1.5L6 22l-1.5-1.5zm3-5h5.075q.075-.525.225-1.025t.375-.975H6zm0-4h7.1q.95-.925 2.213-1.463T18 11H6zm-1 6.05V5z" />
+                            </svg>
+                            Transaction
+                        </a>
+                    </li>
                     {{-- <li><a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                             href="#">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"

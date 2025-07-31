@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -15,7 +16,7 @@ use Livewire\Volt\Volt;
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login.auth');
 
-Route::get('/dashbard',[DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
 // Route Customer
 Route::get('/master/customer',[CustomerController::class, 'index'])->name('master.customer');
@@ -24,6 +25,8 @@ Route::post('/master/customer/store',[CustomerController::class, 'store'])->name
 // Route Service
 Route::get('/master/service',[ServiceController::class, 'index'])->name('master.service');
 
+// Route Transaction
+Route::get('/transaction',[OrderController::class, 'index'])->name('order');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
