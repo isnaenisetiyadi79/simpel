@@ -35,6 +35,11 @@ class Table extends Component
         ]);
     }
 
+    public function changeStatus($id)
+    {
+
+        $this->dispatch('open-modal-change', $id);
+    }
     public function getItems()
     {
         return Order::whereRelation('customer','name', 'ilike', '%' . $this->search . '%')

@@ -33,6 +33,7 @@ class Modalform extends Component
     #[On('open-modal')]
     public function openModal()
     {
+        dd('sampai sini');
         $this->modalFormData = true;
     }
 
