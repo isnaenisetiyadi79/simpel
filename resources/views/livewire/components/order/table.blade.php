@@ -203,9 +203,10 @@
                                                     </span>
                                                 </div>
                                             @elseif($item->status == 'pending')
+
                                                 <div>
-                                                    <span
-                                                        class="py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-100 text-orange-800 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                    <button type="button" wire:click="changeStatus({{ $item->id }})"
+                                                        class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-100 hover:bg-gray-200 text-orange-800 hover:text-orange-500 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
                                                         <svg class="shrink-0 size-3"
                                                             xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
@@ -218,12 +219,12 @@
                                                             <path d="M12 17h.01"></path>
                                                         </svg>
                                                         Pending
-                                                    </span>
+                                                    </button>
                                                 </div>
                                             @elseif ($item->status == 'process')
                                                 <div>
-                                                    <span
-                                                        class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full dark:bg-yellow-500/10 dark:text-blue-500">
+                                                    <button type="button" wire:click="changeStatus({{ $item->id }})"
+                                                        class="cursor-pointer py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-blue-100 hover:bg-blue-200 text-blue-800 hover:text-blue-500 rounded-full dark:bg-yellow-500/10 dark:text-blue-500">
                                                         <svg class="shrink-0 size-3"
                                                             xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
@@ -247,12 +248,12 @@
                                                                 y2="4.93"></line>
                                                         </svg>
                                                         Proses
-                                                    </span>
+                                                    </button>
                                                 </div>
                                             @else
                                                 <div>
-                                                    <span
-                                                        class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                    <button type="button" wire:click="changeStatus({{ $item->id }})"
+                                                        class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 hover:text-teal-500 rounded-full dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500">
                                                         <svg class="shrink-0 size-3"
                                                             xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
@@ -264,7 +265,7 @@
                                                             <path d="m9 12 2 2 4-4"></path>
                                                         </svg>
                                                         Selesai
-                                                    </span>
+                                                    </button>
                                                 </div>
                                             @endif
                                         </div>
@@ -284,8 +285,7 @@
                                             <div class="hs-tooltip inline-block">
                                                 <button type="button"
                                                     class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-sky-400 text-white shadow-2xs hover:bg-sky-500 focus:outline-hidden focus:bg-sky-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                                    wire:click="edit({{ $item->id }})"
-                                                    >
+                                                    wire:click="edit({{ $item->id }})" {{ $item->status == 'completed' ? 'disabled' : '' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                         height="20" viewBox="0 0 24 24">
                                                         <g class="edit-outline">
@@ -306,8 +306,9 @@
                                                 </button>
                                             </div>
                                             <div class="hs-tooltip inline-block">
-                                                <button type="button" class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-orange-400 text-white shadow-2xs hover:bg-orange-500 focus:outline-hidden focus:bg-orange-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                                    wire:click="changeStatus({{ $item->id }})"  >
+                                                <button type="button"
+                                                    class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-orange-400 text-white shadow-2xs hover:bg-orange-500 focus:outline-hidden focus:bg-orange-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                                    wire:click="changeStatus({{ $item->id }})" {{ $item->status == 'completed' ? 'disabled' : '' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                         height="20" viewBox="0 0 20 20">
                                                         <path fill="currentColor"

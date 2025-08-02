@@ -87,19 +87,19 @@
                                 <label for="input-label-with-helper-total"
                                     class="block text-sm font-medium mb-2 dark:text-white">Metode Pembayaran</label>
                                 <div class="grid sm:grid-cols-2 gap-2">
-                                    <label for="hs-radio-in-form" wire:model.change="cash"
-                                        class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                    <label for="hs-radio-in-form"
+                                        class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 cursor-pointer">
                                         <input type="radio" name="hs-radio-in-form"
                                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                            id="hs-radio-in-form" checked>
+                                            id="hs-radio-in-form" wire:model.change="payment_method" value="cash">
                                         <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Cash</span>
                                     </label>
 
                                     <label for="hs-radio-checked-in-form"
-                                        class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                                        <input type="radio" name="hs-radio-in-form" wire:model.change="qris"
+                                        class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 cursor-pointer">
+                                        <input type="radio" name="hs-radio-in-form"
                                             class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                            id="hs-radio-checked-in-form">
+                                            id="hs-radio-checked-in-form" wire:model.change="payment_method" value="qris">
                                         <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">QRIS</span>
                                     </label>
                                 </div>
@@ -123,11 +123,11 @@
                             <div class="w-full mt-4">
                                 <label for="input-label-with-helper-phone"
                                     class="block text-sm font-medium mb-2 dark:text-white">Pembayaran</label>
-                                <input type="number" wire:model='"amount' name="pembayaran"
+                                <input type="number" wire:model.live.debounce.500ms="amount" name="amount"
                                     id="input-label-with-helper-phone"
-                                    class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                    placeholder="1" aria-describedby="hs-input-helper-text" required>
-                                @error('pembayaran')
+                                    class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 {{ $payment_method == 'qris' ? 'read-only:bg-gray-200 read-only:cursor-not-allowed' : ''}}"
+                                    placeholder="1" aria-describedby="hs-input-helper-text" required {{ $payment_method == 'qris' ? 'readonly' : '' }}>
+                                @error('amount')
                                     <span class="text-red-600 text-xs">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -136,7 +136,7 @@
                             <div class="w-full mt-4">
                                 <label for="input-label-with-helper-total"
                                     class="block text-sm font-medium mb-2 dark:text-white">Kembalian</label>
-                                <input type="text" wire:model="spending" name="spending"
+                                <input type="text" wire:model.live.debounce.500ms="spending" name="spending"
                                     id="input-label-with-helper-total"
                                     class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 read-only:bg-gray-200 read-only:cursor-not-allowed"
                                     placeholder="0" aria-describedby="hs-input-helper-text" readonly>
