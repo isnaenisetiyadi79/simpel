@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -27,6 +28,11 @@ Route::get('/master/service',[ServiceController::class, 'index'])->name('master.
 
 // Route Transaction
 Route::get('/transaction',[OrderController::class, 'index'])->name('order');
+Route::get('/transaction/print/{id}',[OrderController::class, 'print'])->name('order.print');
+
+// Route User
+Route::get('/user',[UserController::class, 'index'])->name('user');
+
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

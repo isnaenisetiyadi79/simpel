@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Transaction')
+@section('title', 'User Management')
 
 
 @section('content')
@@ -10,8 +10,8 @@
 
 
 
-            @livewire('components.order.widget');
-            @livewire('components.order.table');
+            {{-- @livewire('components.order.widget'); --}}
+            @livewire('components.user.table');
         </div>
     </div>
     <!-- End Content -->

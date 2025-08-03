@@ -42,9 +42,14 @@ class Table extends Component
     }
     public function getItems()
     {
-        return Order::whereRelation('customer','name', 'ilike', '%' . $this->search . '%')
+        return Order::whereRelation('customer', 'name', 'ilike', '%' . $this->search . '%')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+    }
+
+    public function print($id)
+    {
+        $this->redirectRoute('order.print', $id);
     }
 
     public function render()

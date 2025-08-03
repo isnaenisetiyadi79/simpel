@@ -14,4 +14,8 @@ class Order extends Model
     public function detail() {
         return $this->hasOne(OrderDetail::class);
     }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }
