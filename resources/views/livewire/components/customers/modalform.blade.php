@@ -111,7 +111,7 @@
                         </button>
                         <button type="submit" wire:loading.attr="disabled"
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                            {{ $update_data ? 'Update' : 'Simpan' }} 
+                            {{ $update_data ? 'Update' : 'Simpan' }}
                             <div wire:loading
                                 class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full dark:text-white"
                                 role="status" aria-label="loading">

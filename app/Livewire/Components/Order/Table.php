@@ -13,7 +13,7 @@ class Table extends Component
     use WithPagination, WithoutUrlPagination;
 
     public $search;
-    public function openModal()
+    function openModal()
     {
         $this->dispatch('open-modal');
     }

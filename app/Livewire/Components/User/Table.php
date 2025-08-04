@@ -13,9 +13,9 @@ class Table extends Component
 
     use WithPagination, WithoutUrlPagination;
 
-    public $search;
+    protected $search;
 
-      public function openModal()
+    public function openModal()
     {
         $this->dispatch('open-modal');
     }
@@ -25,6 +25,20 @@ class Table extends Component
     {
         $this->resetPage();
         session()->flash('success', $message);
+    }
+
+    public function edit($id)
+    {
+        $this->dispatch('edit-modal', $id);
+        $user = User::find($id);
+        $this->dispatch('user');
+    }
+
+    public function changeStatus($id)
+    {
+        // dd($id);
+        $this->dispatch('open-modal-change', $id);
+
     }
     public function getItems()
     {

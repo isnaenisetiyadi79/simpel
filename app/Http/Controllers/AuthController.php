@@ -27,8 +27,8 @@ class AuthController extends Controller
             return back()->withErrors([
                 'email' => 'Email not found'
             ]);
-        } 
-        
+        }
+
         if(!Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
@@ -38,8 +38,8 @@ class AuthController extends Controller
             ]);
         }
 
-        
+
         return redirect()->route('dashboard');
-        
+
     }
 }

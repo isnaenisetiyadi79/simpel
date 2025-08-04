@@ -21,7 +21,7 @@ class CustomerController extends Controller
             'phone_number' => 'required|numeric',
             'address' => 'required|string'
         ]);
-        
+
         $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,

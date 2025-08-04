@@ -7,6 +7,7 @@
         </div>
     @endif
     {{-- End Alert --}}
+
     <!-- Card -->
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
@@ -29,7 +30,7 @@
                             <div class="inline-flex gap-x-2">
 
 
-                                <button type="button" wire:click="openModal"
+                                <button type="button" wire:click="openModal" wire:loading.attr="disabled"
                                     class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -53,9 +54,9 @@
                                 placeholder="Search for items">
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                 <svg class="size-4 text-gray-400 dark:text-neutral-500"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <path d="m21 21-4.3-4.3"></path>
                                 </svg>
@@ -152,14 +153,13 @@
                                     </td> --}}
                                     <td class="h-px w-72 whitespace-nowrap">
                                         @if ($item->status)
-
                                             <div>
                                                 <span
                                                     class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
                                                     <svg class="shrink-0 size-3" xmlns="http://www.w3.org/2000/svg"
-                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
+                                                        width="24" height="24" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
                                                         <path
                                                             d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z">
                                                         </path>
@@ -171,15 +171,15 @@
                                         @else
                                             <div>
                                                 <button type="button" wire:click="changeStatus({{ $item->id }})"
-                                                    class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 hover:text-teal-500 rounded-full dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500">
-                                                    <svg class="shrink-0 size-3" xmlns="http://www.w3.org/2000/svg"
-                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <path
-                                                            d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z">
-                                                        </path>
-                                                        <path d="m9 12 2 2 4-4"></path>
+                                                    class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-red-100 text-red-800 rounded-full dark:bg-red-500/10 dark:text-red-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12"
+                                                        height="12" viewBox="0 0 24 24">
+                                                        <g fill="currentColor">
+                                                            <path
+                                                                d="M12 14a1 1 0 0 1-1-1v-3a1 1 0 1 1 2 0v3a1 1 0 0 1-1 1m-1.5 2.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0" />
+                                                            <path
+                                                                d="M10.23 3.216c.75-1.425 2.79-1.425 3.54 0l8.343 15.852C22.814 20.4 21.85 22 20.343 22H3.657c-1.505 0-2.47-1.6-1.77-2.931zM20.344 20L12 4.147L3.656 20z" />
+                                                        </g>
                                                     </svg>
                                                     Inactive
                                                 </button>
@@ -289,5 +289,6 @@
     </div>
     <!-- End Card -->
     {{-- Nothing in the world is as soft and yielding as water. --}}
-    @livewire('components.order.modalform');
+    @livewire('components.user.modalform');
+    @livewire('components.user.modalchange');
 </div>

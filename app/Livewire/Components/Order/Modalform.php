@@ -15,14 +15,14 @@ class Modalform extends Component
 {
 
     public $modalFormData = false;
+    public $id;
+    public $update_data = false;
 
     public $name;
     public $email;
     public $phone_number;
     public $address;
 
-    public $id;
-    public $update_data = false;
 
     public $customer;
     public $service;
