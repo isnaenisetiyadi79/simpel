@@ -15,6 +15,7 @@ class DashboardController extends Controller
         // get data order last 7 days
         $orders = Order::whereDate('created_at', '>=', now()->subDays(10))->get();
 
+        // dd($orders);
         // get list date lat 7 days
         $today = now();
         $dates = collect();

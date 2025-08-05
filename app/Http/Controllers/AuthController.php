@@ -29,10 +29,10 @@ class AuthController extends Controller
             ]);
         }
 
-        if(!Auth::attempt([
+        if (!Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
-        ])){
+        ])) {
             return back()->withErrors([
                 'password' => 'Incorrect password'
             ]);
@@ -40,6 +40,10 @@ class AuthController extends Controller
 
 
         return redirect()->route('dashboard');
-
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login.auth')->with('success', 'Logout succesfully');
     }
 }

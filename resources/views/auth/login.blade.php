@@ -27,7 +27,7 @@
             </div>
 
             <div class="mt-5">
-                <button type="button"
+                {{-- <button type="button"
                     class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                     <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
                         <path
@@ -48,8 +48,14 @@
 
                 <div
                     class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
-                    Or</div>
+                    Or</div> --}}
 
+                @if (session('success'))
+                    <div class="mt-2 mb-5 bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500"
+                        role="alert" tabindex="-1" aria-labelledby="hs-soft-color-success-label">
+                        <span id="hs-soft-color-success-label" class="font-bold">Success</span> {{ session('success') }}
+                    </div>
+                @endif
                 <!-- Form -->
                 <form action="{{ route('login.auth') }}" method="POST">
                     @csrf
