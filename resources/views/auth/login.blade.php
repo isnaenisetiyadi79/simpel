@@ -56,7 +56,14 @@
                         <span id="hs-soft-color-success-label" class="font-bold">Success</span> {{ session('success') }}
                     </div>
                 @endif
+                @if (session('error'))
+                    <div class="mt-2 mb-5 bg-rose-100 border border-rose-200 text-sm text-rose-800 rounded-lg p-4 dark:bg-rose-800/10 dark:border-rose-900 dark:text-rose-500"
+                        role="alert" tabindex="-1" aria-labelledby="hs-soft-color-success-label">
+                        <span id="hs-soft-color-success-label" class="font-bold">Error</span> {{ session('error') }}
+                    </div>
+                @endif
                 <!-- Form -->
+
                 <form action="{{ route('login.auth') }}" method="POST">
                     @csrf
                     <div class="grid gap-y-4">

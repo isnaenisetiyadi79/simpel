@@ -14,27 +14,39 @@ use Livewire\Volt\Volt;
 //     return view('auth.login');
 // })->name('home');
 
-Route::get('/', [AuthController::class, 'login'])->name('login');
+Route::get('/', [AuthController::class, 'login'])->name('beranda');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login.auth');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout.auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['authenticate'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
-// Route Customer
-Route::get('/master/customer', [CustomerController::class, 'index'])->name('master.customer');
-Route::post('/master/customer/store', [CustomerController::class, 'store'])->name('master.customer.store');
+    // Route Master
+    Route::prefix('master')->group(function () {
 
-// Route Service
-Route::get('/master/service', [ServiceController::class, 'index'])->name('master.service');
+        // Route Master Customer
+        Route::prefix('customer')->group(function () {
+            Route::get('/', [CustomerController::class, 'index'])->name('master.customer');
+            Route::post('/store', [CustomerController::class, 'store'])->name('master.customer.store');
+        });
 
-// Route Transaction
-Route::get('/transaction', [OrderController::class, 'index'])->name('order');
-Route::get('/transaction/print/{id}', [OrderController::class, 'print'])->name('order.print');
+        // Route Master Service
+        Route::get('/service', [ServiceController::class, 'index'])->name('master.service');
+    });
 
-// Route User
-Route::get('/user', [UserController::class, 'index'])->name('user');
+    // Route Transaction
+    Route::get('/transaction', [OrderController::class, 'index'])->name('order');
+    Route::get('/transaction/print/{id}', [OrderController::class, 'print'])->name('order.print');
+
+    // Route User
+    Route::get('/user', [UserController::class, 'index'])->name('user');
+
+    // Route Logout
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout.auth');
+});
+
+
+
 
 
 // Route::view('dashboard', 'dashboard')
