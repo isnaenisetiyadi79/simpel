@@ -16,7 +16,7 @@ Project ini dirancang agar dapat dengan mudah dikembangkan untuk kebutuhan berba
 
 ## ⚙️ Teknologi Utama
 
-- **Laravel 10** – Framework PHP modern
+- **Laravel 12** – Framework PHP modern
 - **Livewire** – Interaktivitas tanpa JavaScript berlebih
 - **Tailwind CSS** – UI responsif dan bersih
 - **PostgreSQL / MySQL** – Opsi database fleksibel
