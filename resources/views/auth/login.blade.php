@@ -17,13 +17,13 @@
         <div class="p-4 sm:p-7">
             <div class="text-center">
                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1>
-                <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">
+                {{-- <p class="mt-2 text-sm text-gray-600 dark:text-neutral-400">
                     Don't have an account yet?
                     <a class="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
                         href="../examples/html/signup.html">
                         Sign up here
                     </a>
-                </p>
+                </p> --}}
             </div>
 
             <div class="mt-5">
@@ -137,7 +137,7 @@
                         <!-- End Form Group -->
 
                         <!-- Checkbox -->
-                        <div class="flex items-center">
+                        {{-- <div class="flex items-center">
                             <div class="flex">
                                 <input id="remember-me" name="remember-me" type="checkbox"
                                     class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
@@ -145,11 +145,11 @@
                             <div class="ms-3">
                                 <label for="remember-me" class="text-sm dark:text-white">Remember me</label>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- End Checkbox -->
 
                         <button type="submit"
-                            class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign
+                            class="w-full mt-2 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Sign
                             in</button>
                     </div>
                 </form>

@@ -37,7 +37,7 @@
                             </p>
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <span
                                 class="py-[5px] px-1.5 inline-flex items-center gap-x-1 text-xs font-medium rounded-md bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500">
                                 <svg class="inline-block size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -48,7 +48,7 @@
                                 </svg>
                                 2%
                             </span>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- End Header -->
 
