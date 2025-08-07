@@ -1,40 +1,77 @@
-# laravel_laundry
-Belajar dari udemy, Laravel Livewire Studi Kasus: Laundry
+# Simpel – Sistem Informasi Manajemen Pelayanan
 
-**Tentang Software**
-Ini adalah murni belajar dari Udemy. Bisa digunakan untuk layanan sederhana, seperti laundry. Bisa juga untuk layanan jasa lainnya, seperti service handphone, komputer dan elektronik lainnya, bengkel motor, dan lain-lain.
+🔧 Pengembangan lanjutan dari project [Laravel Laundry](https://github.com/isnaenisetiyadi79/laravel_laundry)  
+Dirancang untuk menjadi sistem manajemen layanan jasa yang lebih umum dan fleksibel  
+Menggunakan Laravel + Livewire + PostgreSQL/MySQL
 
-**_Petunjuk instalasi_**
-Clone repository ini atau download zip.
+---
 
-'git clone https://github.com/isnaenisetiyadi79/laravel_laundry'
+## 🧩 Tentang Proyek Ini
 
-## Install composer
-'composer install'
+**Simpel** (Sistem Informasi Manajemen Pelayanan) adalah sistem informasi berbasis web untuk berbagai jenis **usaha layanan jasa**, tidak terbatas hanya pada laundry. Proyek ini dikembangkan dengan arsitektur modern menggunakan Laravel dan Livewire, serta dukungan basis data PostgreSQL atau MySQL.
 
-## Edit koneksi database .env
-Terlebih dahulu, buat database dan usernya, berikan grant sesuai kebutuhan,
-Disarankan menggunakan PostgreSQL meskipun MySQL juga bisa(pada MySQL belum diuji).
+Project ini dirancang agar dapat dengan mudah dikembangkan untuk kebutuhan berbagai jenis layanan: laundry, salon, bengkel, servis elektronik, dan lainnya.
 
-'cp .env.example .env'
-'nano .env'
+---
 
-edit koneksi database:
-'DB_CONNECTION=pgsql'
-'DB_HOST=127.0.0.1'
-'DB_PORT=5432'
-'DB_DATABASE=[nama database]'
-'DB_USERNAME=[nama user]'
-'DB_PASSWORD=[password]'
+## ⚙️ Teknologi Utama
 
-## Install Composer
-'composer install'
-_Tunggu sampai proses instalasi selesai, ini membutuhkan waktu beberapa menit._
+- **Laravel 10** – Framework PHP modern
+- **Livewire** – Interaktivitas tanpa JavaScript berlebih
+- **Tailwind CSS** – UI responsif dan bersih
+- **PostgreSQL / MySQL** – Opsi database fleksibel
 
+---
 
-## Key Generate
-'php artisan key:generate'
+## ✅ Fitur Yang Sudah Ada
 
-# Migrasi Dababase
-'php artisan migrate'
-'php artisan db:seed'
+- 👤 **Manajemen User**
+  - Pendaftaran dan login
+  - Belum ada level akses (akan dikembangkan)
+  
+- 👥 **Manajemen Customer**
+  - Tambah/edit/hapus pelanggan
+  - Riwayat order
+  
+- 🛠️ **Manajemen Jenis Layanan**
+  - Konfigurasi layanan (misal: setrika, servis AC, potong rambut, dll.)
+  
+- 📦 **Manajemen Order**
+  - Input order pelanggan
+  - Hubungan antara customer dan jenis layanan
+
+---
+
+## 🧭 Fitur Yang Akan Dikembangkan
+
+- 🔐 **Role & Level Akses**
+  - Admin, kasir, operator, dll.
+  
+- 🧾 **Detail Order Lebih Dari Satu**
+  - Satu order bisa memiliki banyak layanan dalam satu transaksi
+  
+- 💼 **Penggajian**
+  - Berdasarkan job description per layanan
+  - Perhitungan upah otomatis
+  
+- 📥 **Pengambilan Barang/Jasa Berdasarkan Detail Order**
+  - Tracking order yang sudah selesai dan siap diambil
+  
+- 💸 **Pembayaran**
+  - Mendukung transaksi **cash** dan **hutang**
+  - Riwayat pembayaran hutang pelanggan
+
+---
+
+## 📦 Instalasi
+
+```bash
+git clone https://github.com/isnaenisetiyadi79/simpel.git
+cd simpel
+cp .env.example .env
+composer install
+php artisan key:generate
+
+# Setup database dan sesuaikan konfigurasi .env
+php artisan migrate --seed
+php artisan serve
