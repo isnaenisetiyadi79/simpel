@@ -54,9 +54,9 @@
                                 placeholder="Search for items">
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                 <svg class="size-4 text-gray-400 dark:text-neutral-500"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <path d="m21 21-4.3-4.3"></path>
                                 </svg>
@@ -102,6 +102,14 @@
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
                                             Status
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Level Akses
                                         </span>
                                     </div>
                                 </th>
@@ -157,9 +165,9 @@
                                                 <span
                                                     class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
                                                     <svg class="shrink-0 size-3" xmlns="http://www.w3.org/2000/svg"
-                                                        width="24" height="24" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round">
                                                         <path
                                                             d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z">
                                                         </path>
@@ -187,7 +195,13 @@
                                         @endif
                                     </td>
 
+ <td class="h-px w-72 whitespace-nowrap">
+                                        <div class="px-6 py-3">
 
+                                            <span
+                                                class="block text-sm text-gray-500 dark:text-neutral-500">{{ $item->roles->first()->name }}</span>
+                                        </div>
+                                    </td>
 
                                     <td class="size-px whitespace-nowrap">
                                         <div class="flex gap-2">
@@ -235,6 +249,7 @@
 
                                         </div>
                                     </td>
+
                                 </tr>
                             @endforeach
 

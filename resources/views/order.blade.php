@@ -10,8 +10,8 @@
 
 
 
-            @livewire('components.order.widget');
-            @livewire('components.order.table');
+            @livewire('components.order.widget')
+            @livewire('components.order.table')
         </div>
     </div>
     <!-- End Content -->

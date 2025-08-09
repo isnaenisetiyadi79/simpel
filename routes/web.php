@@ -39,10 +39,13 @@ Route::middleware(['authenticate'])->group(function () {
     Route::get('/transaction/print/{id}', [OrderController::class, 'print'])->name('order.print');
 
     // Route User
-    Route::get('/user', [UserController::class, 'index'])->name('user');
 
     // Route Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.auth');
+});
+Route::middleware(['authenticate','role:admin'])->group(function() {
+
+    Route::get('/user', [UserController::class, 'index'])->name('user');
 });
 
 

@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
@@ -28,6 +28,12 @@ class AuthController extends Controller
                 'email' => 'Email not found'
             ]);
         }
+
+         if (!$user->status) { // jika kolom status bernilai false/0
+        return back()->withErrors([
+            'email' => 'Akun Anda tidak aktif. Silakan hubungi admin.'
+        ]);
+    }
 
         if (!Auth::attempt([
             'email' => $request->email,

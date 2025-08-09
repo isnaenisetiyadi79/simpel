@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\User;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -17,6 +18,7 @@ class Modalform extends Component
     public $name;
     public $email;
     public $password;
+    public $role;
     #[On('open-modal')]
     public function openModal()
     {
@@ -34,6 +36,7 @@ class Modalform extends Component
         $user = User::find($id);
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->role = $user->roles->pluck('id')->toArray();
     }
 
     public function closeModal()
@@ -42,7 +45,10 @@ class Modalform extends Component
         $this->reset();
     }
 
-
+    public function getRoles()
+    {
+        return Role::all();
+    }
     public function save()
     {
         $this->validate([
@@ -59,6 +65,7 @@ class Modalform extends Component
             }
 
             $user->save();
+            $user->roles()->sync($this->role);
             $this->reset();
             $this->dispatch('success', 'User updated successfully');
         } else {
@@ -72,6 +79,7 @@ class Modalform extends Component
                 'email' => $this->email,
                 'password' => Hash::make($this->password)
             ]);
+            $user->roles()->sync($this->role);
             $this->reset();
             $this->dispatch('success', 'User created successfully');
         }
@@ -81,6 +89,8 @@ class Modalform extends Component
     }
     public function render()
     {
-        return view('livewire.components.user.modalform');
+        return view('livewire.components.user.modalform', [
+            'roles' => $this->getRoles(),
+        ]);
     }
 }

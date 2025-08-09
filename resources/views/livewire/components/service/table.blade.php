@@ -212,5 +212,5 @@
     </div>
     <!-- End Card -->
     {{-- Nothing in the world is as soft and yielding as water. --}}
-    @livewire('components.service.modalform');
+    @livewire('components.service.modalform')
 </div>

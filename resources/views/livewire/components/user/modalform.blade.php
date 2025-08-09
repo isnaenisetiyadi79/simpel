@@ -100,7 +100,8 @@
                         <div class="w-full mt-4">
                             <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
                             <div class="relative">
-                                <input type="password" wire:model="password" id="password" name="password" value="{{ old('password') }}"
+                                <input type="password" wire:model="password" id="password" name="password"
+                                    value="{{ old('password') }}"
                                     class="py-2.5 sm:py-3 px-4 pe-11 block w-full border-gray-200 rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 @error('password') border-red-500 @enderror""
                                     {{ $update_data ? '' : 'required' }} placeholder="xxxxxxxxx">
 
@@ -137,7 +138,19 @@
                         @enderror
                         {{-- END: Komponen Input Password --}}
 
+                        <div class="w-full">
+                            <label for="input-label-with-helper-text"
+                                class="block text-sm font-medium mb-2 dark:text-white">Customer</label>
+                            <select wire:model="role"
+                                class="py-3 mb-2 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                <option selected="">Pilih Customer...</option>
+                                @foreach ($roles as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->name }}</option>
+                                @endforeach
 
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Footer -->

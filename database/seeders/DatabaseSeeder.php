@@ -1,8 +1,9 @@
 <?php
 
 namespace Database\Seeders;
-
 use App\Models\User;
+use App\Models\Role;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -16,10 +17,38 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'isnaeni',
-            'email' => 'isnaenisetiyadi@gmail.com',
-            'password' => Hash::make('password')
+        // User::factory()->create([
+
+        // ]);
+        $admin = User::create([
+            'name' => 'Simpel',
+            'email' => 'simpel@gmail.com',
+            'password' => Hash::make('simpel'),
         ]);
+
+        $operator = User::create([
+            'name' => 'Operator User',
+            'email' => 'operator@yahoo.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $siswa = User::create([
+            'name' => 'Siswa User',
+            'email' => 'siswa@google.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $this->call([
+            RoleSeeder::class
+        ]);
+        $admin->roles()->attach(Role::where('slug', 'admin')->first());
+        $operator->roles()->attach(Role::where('slug', 'operator')->first());
+        $siswa->roles()->attach(Role::where('slug', 'kasir')->first());
+
+        // Role::factory()->create([
+        //     ['name' => 'Administrator', 'slug' => 'admin'],
+        //     ['name' => 'Operator', 'slug' => 'operator'],
+        //     ['name' => 'Siswa', 'slug' => 'siswa'],
+        // ]);
     }
 }
