@@ -2,7 +2,8 @@
 
 namespace App\Livewire\Components\Order;
 
-use App\Models\Order;
+use App\Models\OrderDetail;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
@@ -13,10 +14,15 @@ class Table extends Component
     use WithPagination, WithoutUrlPagination;
 
     public $search;
+    public $dateFrom = null;
+    public $dateTo = null;
+    // protected $listeners = ['orderCreated' => '$refresh'];
+
     function openModal()
     {
         $this->dispatch('open-modal');
     }
+
 
     #[On('success')]
     public function messageSuccess($message)
@@ -25,15 +31,15 @@ class Table extends Component
         session()->flash('success', $message);
     }
 
-    public function edit($id)
-    {
-        $this->dispatch('edit-modal', $id);
-        $order = Order::find($id);
-        $this->dispatch('value', [
-            'customer' => $order->customer_id,
-            'service' => $order->detail->service_id,
-        ]);
-    }
+    // public function edit($id)
+    // {
+    //     $this->dispatch('edit-modal', $id);
+    //     $order = Order::find($id);
+    //     $this->dispatch('value', [
+    //         'customer' => $order->customer_id,
+    //         'service' => $order->detail->service_id,
+    //     ]);
+    // }
 
     public function changeStatus($id)
     {
@@ -42,18 +48,34 @@ class Table extends Component
     }
     public function getItems()
     {
-        return Order::whereRelation('customer', 'name', 'ilike', '%' . $this->search . '%')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+       $query = OrderDetail::with(['order.customer', 'service'])
+            ->when($this->search, function ($q) {
+                $q->where(function ($sub) {
+                    $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
+                        ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%");
+                });
+            })
+            ->when($this->dateFrom, fn($q) =>
+                $q->whereDate('created_at', '>=', Carbon::parse($this->dateFrom))
+            )
+            ->when($this->dateTo, fn($q) =>
+                $q->whereDate('created_at', '<=', Carbon::parse($this->dateTo))
+            )
+            ->latest();
+
+        // return view('livewire.components.order.table', [
+        //     'details' => $query->paginate(10)
+        // ]);
+        return $query->paginate(10);
     }
 
-    public function print($id)
-    {
-        $this->redirectRoute('order.print', $id);
-    }
+    // public function print($id)
+    // {
+    //     $this->redirectRoute('order.print', $id);
+    // }
 
     public function render()
     {
-        return view('livewire.components.order.table', ['orders' => $this->getItems()]);
+        return view('livewire.components.order.table', ['details' => $this->getItems()]);
     }
 }

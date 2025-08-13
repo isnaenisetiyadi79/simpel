@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->enum('status', ['pending', 'process', 'done', 'completed'])->default('pending');
-            $table->float('total_amount');
+            $table->enum('payment_status', ['unpaid','paid','partially_paid'])->default('unpaid');
+            $table->decimal('total_amount',14,2)->default(0);
+            $table->date('order_date');
+            $table->text('note')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });

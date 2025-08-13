@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->float('price');
+            $table->boolean('is_package')
+            ->default(false)
+            ->comment('Centang jika layanan paket, tidak pakai dimensi panjang x lebar');
+            $table->string('unit', 50)
+            ->nullable()
+            ->comment('Satuan layanan, contoh: pcs, meter, cm, pack, kg');
             $table->timestamps();
         });
     }

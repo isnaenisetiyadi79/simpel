@@ -9,7 +9,8 @@
                     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                         {{-- <h3 class="text-lg font-semibold">{{ $update_data ? 'Edit' : 'Tambah' }} Service
                             {{ $update_data ? $name : 'Baru' }}</h3> --}}
-                        <h3 class="text-lg font-semibold">{{ $update_data ? 'Edit' : 'Tambah' }} Service {{ $update_data ? $name : 'Baru' }}</h3>
+                        <h3 class="text-lg font-semibold">{{ $update_data ? 'Edit' : 'Tambah' }} Service
+                            {{ $update_data ? $name : 'Baru' }}</h3>
                         <button type="button"
                             class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
                             wire:click="closeModal">
@@ -79,7 +80,30 @@
                             @enderror
 
                         </div>
+                        <div class="w-full mt-4">
+                            <label for="input-label-with-helper-unit"
+                                class="block text-sm font-medium mb-2 dark:text-white">Unit</label>
+                            <input type="text" wire:model="unit" name="unit" id="input-label-with-helper-unit"
+                                class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                placeholder="Meter, Kg, Box" aria-describedby="hs-input-helper-text" required>
+                            @error('unit')
+                                <span class="text-red-600 text-xs">{{ $message }}</span>
+                            @enderror
 
+                        </div>
+                        <div class="w-full mt-4">
+                            <div class="flex">
+                                <input type="checkbox"
+                                    class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                    wire:model="is_package">
+                                <label for="hs-checked-checkbox"
+                                    class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Centang bila tidak menggunakan ukuran/dimensi (panjangxlebar)</label>
+                            </div>
+                            @error('unit')
+                                <span class="text-red-600 text-xs">{{ $message }}</span>
+                            @enderror
+
+                        </div>
                         <div class="w-full mt-4">
                             <label for="textarea-label"
                                 class="block text-sm font-medium mb-2 dark:text-white">Deskripsi</label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Pail\ValueObjects\Origin\Console;
@@ -13,7 +14,7 @@ class DashboardController extends Controller
     public function index()
     {
         // get data order last 7 days
-        $orders = Order::whereDate('created_at', '>=', now()->subDays(10))->get();
+        $orderdetails = OrderDetail::whereDate('created_at', '>=', now()->subDays(10))->get();
 
         // dd($orders);
         // get list date lat 7 days
@@ -31,11 +32,11 @@ class DashboardController extends Controller
         // dd($categories);
         $sales = [];
         foreach ($dates as $date) {
-            $sales[] = Order::whereDate('created_at', $date)
-            ->where('status', 'completed')
-            ->sum('total_amount');
+            $sales[] = OrderDetail::whereDate('created_at', $date)
+            ->where('pickup_status', 'completed')
+            ->sum('subtotal');
         }
         // dd($sales);
-        return view('dashboard', compact('orders', 'categories', 'sales'));
+        return view('dashboard', compact('orderdetails', 'categories', 'sales'));
     }
 }

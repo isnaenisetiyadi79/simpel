@@ -47,7 +47,8 @@
                     <div class="py-3 px-4">
                         <div class="relative max-w-xs">
                             <label for="hs-table-search" class="sr-only">Search</label>
-                            <input type="text" name="hs-table-search" wire:model.live.debounce.250ms="search" id="hs-table-search"
+                            <input type="text" name="hs-table-search" wire:model.live.debounce.250ms="search"
+                                id="hs-table-search"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                 placeholder="Search for items">
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
@@ -61,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                     <!-- End Search Item -->
+                    <!-- End Search Item -->
                     <!-- Table -->
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                         <thead class="bg-gray-50 dark:bg-neutral-800">
@@ -104,6 +105,22 @@
                                         </span>
                                     </div>
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Jenis
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Unit
+                                        </span>
+                                    </div>
+                                </th>
 
 
                                 <th scope="col" class="px-6 py-3 text-end"></th>
@@ -141,8 +158,8 @@
                                     <td class="h-px w-72 whitespace-nowrap">
                                         <div class="px-6 py-3">
 
-                                            <span
-                                                class="block text-sm text-gray-500 dark:text-neutral-500">Rp {{number_format($item->price, 0, ',','.')}}</span>
+                                            <span class="block text-sm text-gray-500 dark:text-neutral-500">Rp
+                                                {{ number_format($item->price, 0, ',', '.') }}</span>
                                         </div>
                                     </td>
 
@@ -152,10 +169,39 @@
                                                 class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->description }}</span>
                                         </div>
                                     </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            @if ($item->is_package)
+                                                <div>
+                                                    <span
+                                                        class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="m221.76 69.66l-88-48.18a12 12 0 0 0-11.52 0l-88 48.18A12 12 0 0 0 28 80.18v95.64a12 12 0 0 0 6.24 10.52l88 48.18a11.95 11.95 0 0 0 11.52 0l88-48.18a12 12 0 0 0 6.24-10.52V80.18a12 12 0 0 0-6.24-10.52M126.08 28.5a3.94 3.94 0 0 1 3.84 0L216.67 76L178.5 96.89a4 4 0 0 0-.58-.4l-88-48.18Zm1.92 96L39.33 76l42.23-23.13l88.67 48.54Zm-89.92 54.8a4 4 0 0 1-2.08-3.5V83.29l88 48.16v94.91Zm179.84 0l-85.92 47v-94.85l40-21.89V152a4 4 0 0 0 8 0v-46.82l40-21.89v92.53a4 4 0 0 1-2.08 3.5Z"/></svg>
+                                                        Paket
+                                                    </span>
+                                                </div>
+                                            @else
+                                                <div>
+                                                        <button type="button"
+                                                            wire:click="changeStatus({{ $item->id }})"
+                                                            class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-100 hover:bg-gray-200 text-orange-800 hover:text-orange-500 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 23.3 25.7"><path fill="currentColor" d="M0 17.5v8.2h23.3v-8.2zm22.3 7.2H1v-6.2h1V20h1v-1.6h1v3.1h1v-3.1h1.5V20h1v-1.6h1.2v3.1h1v-3.1h1.4V20h1v-1.6h1.4v3.1h1v-3.1h1.2V20h1v-1.6h1.5v3.1h1v-3.1h1.1V20h1v-1.6h1zm-3-22.1H13V0h-2.7v2.6H4L1.4 15.9H22zm-8-1.6h.7v1.6h-.7zM4.8 3.6h13.7l2.2 11.3H2.6z"/><path fill="currentColor" d="M11 6.9h-1L8.6 8.6c-.2.1-.3.3-.5.5V4.7h-.8v7h.9V9.9l.4-.5l1.7 2.3h1.1L9.2 8.9zm4.2.7c-.2-.4-.7-.8-1.5-.8c-1.1 0-2.2.9-2.2 2.5c0 1.3.9 2.3 2 2.3c.7 0 1.3-.4 1.5-.8v.5c0 1.2-.7 1.7-1.5 1.7c-.6 0-1.1-.2-1.4-.4l-.1.8c.4.3 1 .4 1.6.4s1.3-.1 1.7-.6c.5-.4.7-1.1.7-2.2V6.9h-.8zm-.1 2c0 .1 0 .3-.1.5c-.2.6-.7.9-1.2.9c-.9 0-1.4-.8-1.4-1.7c0-1.1.6-1.8 1.4-1.8c.6 0 1.1.4 1.2.9v1.2z"/></svg>
+                                                            Dimensi
+                                                        </button>
+                                                    </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span
+                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->unit }}</span>
+                                        </div>
+                                    </td>
 
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-1.5">
-                                            <button type="button" class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
+                                            <button type="button"
+                                                class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
                                                 wire:click="edit({{ $item->id }})">
                                                 Edit
                                             </button>
@@ -176,15 +222,17 @@
                         class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
                         <div>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                <span class="font-semibold text-gray-800 dark:text-neutral-200">{{ $services->total() }}</span>
+                                <span
+                                    class="font-semibold text-gray-800 dark:text-neutral-200">{{ $services->total() }}</span>
                                 results
                             </p>
                         </div>
 
                         <div>
                             <div class="inline-flex gap-x-2">
-                                <button type="button" {{ $services->onFirstPage() ? 'disabled' : ''}}
-                                    class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" wire:click="previousPage" wire:loading.attr="disabled" rel="prev">
+                                <button type="button" {{ $services->onFirstPage() ? 'disabled' : '' }}
+                                    class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                    wire:click="previousPage" wire:loading.attr="disabled" rel="prev">
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -193,8 +241,9 @@
                                     Prev
                                 </button>
 
-                                <button type="button" {{ $services->onLastPage() ? 'disabled' : ''}}
-                                    class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" wire:click="nextPage" wire:loading.attr="disabled" rel="next">
+                                <button type="button" {{ $services->onLastPage() ? 'disabled' : '' }}
+                                    class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                    wire:click="nextPage" wire:loading.attr="disabled" rel="next">
                                     Next
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"

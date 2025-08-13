@@ -1,7 +1,7 @@
 <div>
     <div wire:show="modalFormData" x-cloak>
         <!-- Modal background -->
-        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-[80]">
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <!-- Modal container -->
             <div class="bg-white rounded-lg shadow-lg max-w-xl w-full">
                 <form wire:submit="save">

@@ -16,6 +16,8 @@ class Modalform extends Component
     public $price;
     public $name;
     public $description;
+    public $is_package;
+    public $unit;
     #[On('open-modal')]
     public function openModal()
     {
@@ -38,6 +40,8 @@ class Modalform extends Component
         $this->name = $service->name;
         $this->price = $service->price;
         $this->description = $service->description;
+        $this->unit = $service->unit;
+        $this->is_package = $service->is_package;
     }
 
     public function save()
@@ -47,6 +51,7 @@ class Modalform extends Component
             'name' => 'required',
             'price' => 'required|numeric',
             'description' => 'required',
+            'unit' => 'required',
         ]);
 
         if ($this->update_data) {
@@ -55,6 +60,8 @@ class Modalform extends Component
                 'name' => $this->name,
                 'price' => $this->price,
                 'description' => $this->description,
+                'unit' => $this->unit,
+                'is_package' => $this->is_package ?? false,
             ]);
             $this->dispatch('success', 'Service updated successfully');
             $this->reset();
@@ -63,6 +70,8 @@ class Modalform extends Component
                 'name' => $this->name,
                 'price' => $this->price,
                 'description' => $this->description,
+                'unit' => $this->unit,
+                'is_package' => $this->is_package ?? false,
             ]);
             $this->dispatch('success', 'Service created successfully');
             $this->reset();
