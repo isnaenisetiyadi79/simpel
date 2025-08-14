@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
@@ -35,6 +36,7 @@ Route::middleware(['authenticate'])->group(function () {
         // Route Master Service
         Route::get('/service', [ServiceController::class, 'index'])->name('master.service');
         Route::get('/work', [WorkController::class, 'index'])->name('master.work');
+        Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
     });
 
     // Route Transaction

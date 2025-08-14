@@ -45,6 +45,8 @@ class DatabaseSeeder extends Seeder
             ServicesTableSeeder::class,
             OrdersTableSeeder::class,
             OrderDetailsTableSeeder::class,
+            WorksTableSeeder::class,
+            EmployeesTableSeeder::class,
         ]);
         $admin->roles()->attach(Role::where('slug', 'admin')->first());
         $operator->roles()->attach(Role::where('slug', 'operator')->first());
