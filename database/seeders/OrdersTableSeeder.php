@@ -17,11 +17,13 @@ class OrdersTableSeeder extends Seeder
     {
          $faker = Faker::create();
         $customerIds = DB::table('customers')->pluck('id')->toArray();
+        $userIds = DB::table('users')->pluck('id')->toArray();
 
         foreach (range(1, 20) as $i) {
             DB::table('orders')->insert([
                 'customer_id' => $faker->randomElement($customerIds),
-                'payment_status' => $faker->randomElement(['unpaid', 'paid', 'partially_paid']),
+                'user_id' => $faker->randomElement($userIds),
+                'payment_status' => $faker->randomElement(['unpaid', 'paid', 'partially']),
                 'total_amount' => $faker->randomFloat(2, 100000, 2000000),
                 'order_date' => $faker->dateTimeBetween('-1 years', 'now')->format('Y-m-d'),
                 'note' => $faker->sentence,

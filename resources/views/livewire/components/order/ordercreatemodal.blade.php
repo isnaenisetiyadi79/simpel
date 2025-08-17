@@ -4,7 +4,7 @@
             <div class="bg-gray-100 rounded shadow-lg  md:w-3/4 lg:w-2/3 p-4 w-full">
 
                 {{-- HEADER --}}
-                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-400">
+                <div class="flex items-center justify-between px-6 pb-2 border-b border-gray-400">
                     {{-- <h3 class="text-lg font-semibold">{{ $update_data ? 'Edit' : 'Tambah' }} Service
                             {{ $update_data ? $name : 'Baru' }}</h3> --}}
                     <h3 class="text-lg font-semibold">Orderan Baru</h3>
@@ -161,7 +161,7 @@
                                         <div class="flex items-center gap-x-2">
                                             <span
                                                 class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
-                                                Bul.
+                                                Bulat?
                                             </span>
                                         </div>
                                     </th>
@@ -220,15 +220,13 @@
                                             <input type="number" step="0.01"
                                                 wire:model.live.debounce.300ms="details.{{ $i }}.length"
                                                 class="text-end block w-full rounded-md border-gray-300 shadow-sm
-           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm {{ ($details[$i]['is_package'] ?? false) ? 'hidden' : '' }}"
-                                              />
+           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm {{ $details[$i]['is_package'] ?? false ? 'hidden' : '' }}" />
                                         </td>
                                         <td class="p-1 border border-t-gray-400">
                                             <input type="number" step="0.01"
                                                 wire:model.live.debounce.300ms="details.{{ $i }}.width"
                                                 class="text-end block w-full rounded-md border-gray-300 shadow-sm
-           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm {{ ($details[$i]['is_package'] ?? false) ? 'hidden' : '' }}"
-                                               />
+           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm {{ $details[$i]['is_package'] ?? false ? 'hidden' : '' }}" />
                                         </td>
                                         <td class="p-1 border border-t-gray-400">
                                             <input type="number" step="0.01"
@@ -240,7 +238,8 @@
                                             <input type="number" step="0.01"
                                                 wire:model.live.debounce.300ms="details.{{ $i }}.qty_asli"
                                                 class="text-end block w-full rounded-md border-gray-300 shadow-sm
-           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-100" readonly />
+           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-100"
+                                                readonly />
                                         </td>
                                         <td class="p-1 border text-center">
                                             <input type="checkbox"
@@ -306,9 +305,7 @@
                         </table>
                     </div>
                     {{-- END : TABEL ORDER --}}
-                    <div class="flex justify-between items-center mt-4">
-                        {{-- <button wire:click="addRow" class="bg-green-500 text-white px-3 py-2 rounded">+ Tambah
-                            Baris</button> --}}
+                    <div class="flex items-center">
                         <button type="button" wire:click="addRow"
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-teal-500 text-white hover:bg-teal-400 focus:outline-hidden focus:bg-teal-300 disabled:opacity-50 disabled:pointer-events-none">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -319,15 +316,39 @@
                             </svg>
                             Tambah Baris
                         </button>
+                    </div>
+                    <div class="items-en">
+                        {{-- <button wire:click="addRow" class="bg-green-500 text-white px-3 py-2 rounded">+ Tambah
+                            Baris</button> --}}
                         <div class="text-right">
-                            <div class="font-bold">Total: Rp
+                            {{-- <div class="font-bold text-2xl">Total: Rp
                                 <span>{{ number_format(array_sum(array_column($details, 'subtotal')), 0, ',', '.') }}</span>
+                            </div> --}}
+                            <div class="mt-2 flex flex-col items-end">
+                                <div class="flex items-center">
+                                    <label for="catatan-label"
+                                        class="w-60 font-bold uppercase text-lg text-gray-600 dark:text-neutral-100 mr-5">Total Rp.</label>
+                                    <input type="text" id="catatan-label" wire:model="total_amount"
+                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                        placeholder="0" readonly>
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="catatan-label"
+                                        class="w-60 font-bold text-lg uppercase text-gray-600 dark:text-neutral-100 mr-5">Bayar Rp.</label>
+                                    <input type="number" id="catatan-label" wire:model.live.debounce.300ms = "pay"
+                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        placeholder="0">
+                                </div>
+                                <div class="flex items-center">
+                                     <label for="catatan-label"
+                                        class="w-60 font-bold text-lg uppercase text-gray-600 dark:text-neutral-100 mr-5">Kembalian Rp.</label>
+                                    <input type="number" id="catatan-label" wire:model.live.debounce.300ms = "change" readonly
+                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        placeholder="0">
+                                </div>
                             </div>
                             <div class="mt-2 space-x-2">
-                                {{-- <button wire:click="closeModal"
-                                    class="bg-gray-300 px-3 py-1 rounded">Batal</button>
-                                <button wire:click="save" class="bg-blue-600 text-white px-3 py-1 rounded">Simpan
-                                    Order</button> --}}
+
                                 <button type="button" wire:click="closeModal"
                                     class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-400 text-white hover:bg-orange-500 focus:outline-hidden focus:bg-orange-500 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

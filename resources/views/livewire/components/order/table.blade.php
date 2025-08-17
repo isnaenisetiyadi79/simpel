@@ -233,9 +233,6 @@
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">
                                             <div class="px-6 py-3">
-
-
-
                                                 @if ($item->process_status == 'pending')
                                                     <div>
                                                         <button type="button"
@@ -308,8 +305,6 @@
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">
                                             <div class="px-6 py-3">
-
-
                                                 @if ($item->pickup_status == 'completed')
                                                     <div>
                                                         <span
@@ -354,7 +349,7 @@
 
                                                 <span
                                                     class="block text-sm text-gray-500 dark:text-neutral-500 capitalize">
-                                                    diambil dari pengambilan
+                                                    {{ $item->order->payment_status }}
                                                 </span>
                                             </div>
                                         </td>

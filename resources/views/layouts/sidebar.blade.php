@@ -19,9 +19,12 @@
                 <div class="flex items-center">
 
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="#06ac75" d="M11 7.75a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0v-7.5a.75.75 0 0 0-1.5 0v10.574c0 .79.163 1.57.478 2.295l1.36 3.127a3.75 3.75 0 0 0 3.44 2.254h3.04c1.427 0 2.803-.858 3.73-2.214c2.668-3.904 6.158-6.306 7.852-7.323c-.274-.451-.64-.841-1.092-.996c-.461-.157-1.46-.211-3.271 1.255A1.25 1.25 0 0 1 19 17.25v-9.5a.75.75 0 0 0-1.5 0v7.5a1.25 1.25 0 1 1-2.5 0v-9a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0zm10.5 7.21c1.33-.63 2.538-.727 3.617-.358c1.512.517 2.328 1.816 2.702 2.581c.567 1.16-.076 2.306-.912 2.793c-1.424.83-4.785 3.049-7.296 6.72C18.349 28.547 16.276 30 13.82 30h-3.042a6.25 6.25 0 0 1-5.73-3.756l-1.362-3.128A8.25 8.25 0 0 1 3 19.824V9.25a3.25 3.25 0 0 1 4.39-3.045a3.25 3.25 0 0 1 4-1.5a3.25 3.25 0 0 1 5.72 0A3.25 3.25 0 0 1 21.5 7.75zm-6.38 16.937C16.051 39.286 22.358 45 30 45c8.285 0 15-6.716 15-15s-6.715-15-15-15q-.578 0-1.145.043c.355.482.601.935.761 1.262c.198.404.321.805.382 1.195H30c6.904 0 12.5 5.596 12.5 12.5S36.904 42.5 30 42.5c-6.529 0-11.889-5.006-12.451-11.389a8.4 8.4 0 0 1-2.43.786m7.698 1.305a1.25 1.25 0 0 1 1.73.366A6.47 6.47 0 0 0 30 36.5a6.47 6.47 0 0 0 5.452-2.932a1.25 1.25 0 1 1 2.096 1.364A8.97 8.97 0 0 1 30 39a8.97 8.97 0 0 1-7.548-4.068a1.25 1.25 0 0 1 .366-1.73M34 29a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-6-2a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/></svg>
-                <span class="font-extrabold text-green-600 pt-3 pl-3 italic text-2xl tracking-widest">Sim</span>
-                <span class="font-extrabold text-orange-400 pt-3 pr-3 italic text-2xl tracking-widest">Pel</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                        <path fill="#06ac75"
+                            d="M11 7.75a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0v-7.5a.75.75 0 0 0-1.5 0v10.574c0 .79.163 1.57.478 2.295l1.36 3.127a3.75 3.75 0 0 0 3.44 2.254h3.04c1.427 0 2.803-.858 3.73-2.214c2.668-3.904 6.158-6.306 7.852-7.323c-.274-.451-.64-.841-1.092-.996c-.461-.157-1.46-.211-3.271 1.255A1.25 1.25 0 0 1 19 17.25v-9.5a.75.75 0 0 0-1.5 0v7.5a1.25 1.25 0 1 1-2.5 0v-9a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0zm10.5 7.21c1.33-.63 2.538-.727 3.617-.358c1.512.517 2.328 1.816 2.702 2.581c.567 1.16-.076 2.306-.912 2.793c-1.424.83-4.785 3.049-7.296 6.72C18.349 28.547 16.276 30 13.82 30h-3.042a6.25 6.25 0 0 1-5.73-3.756l-1.362-3.128A8.25 8.25 0 0 1 3 19.824V9.25a3.25 3.25 0 0 1 4.39-3.045a3.25 3.25 0 0 1 4-1.5a3.25 3.25 0 0 1 5.72 0A3.25 3.25 0 0 1 21.5 7.75zm-6.38 16.937C16.051 39.286 22.358 45 30 45c8.285 0 15-6.716 15-15s-6.715-15-15-15q-.578 0-1.145.043c.355.482.601.935.761 1.262c.198.404.321.805.382 1.195H30c6.904 0 12.5 5.596 12.5 12.5S36.904 42.5 30 42.5c-6.529 0-11.889-5.006-12.451-11.389a8.4 8.4 0 0 1-2.43.786m7.698 1.305a1.25 1.25 0 0 1 1.73.366A6.47 6.47 0 0 0 30 36.5a6.47 6.47 0 0 0 5.452-2.932a1.25 1.25 0 1 1 2.096 1.364A8.97 8.97 0 0 1 30 39a8.97 8.97 0 0 1-7.548-4.068a1.25 1.25 0 0 1 .366-1.73M34 29a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-6-2a2 2 0 1 1-4 0a2 2 0 0 1 4 0" />
+                    </svg>
+                    <span class="font-extrabold text-green-600 pt-3 pl-3 italic text-2xl tracking-widest">Sim</span>
+                    <span class="font-extrabold text-orange-400 pt-3 pr-3 italic text-2xl tracking-widest">Pel</span>
                 </div>
             </a>
             <!-- End Logo -->
@@ -91,15 +94,18 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.service') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
-                                        href="{{ route('master.service') }}">
-                                        Service
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.work') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                        href="{{ route('master.work') }}">
+                                        Payrate
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.work') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
-                                        href="{{ route('master.work') }}">
-                                        Work/ Job type
+                                    <hr class=" border-gray-300 dark:border-neutral-700">
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.service') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                        href="{{ route('master.service') }}">
+                                        Service
                                     </a>
                                 </li>
 
@@ -109,7 +115,8 @@
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('order') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('order') }}">
-                            <svg class="shrink-0 size-4"  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18t1.463-3.537T18 13t3.538 1.463T23 18t-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v6.675q-.475-.225-.975-.375T19 11.075V5H5v14.05h6.075q.125.775.388 1.475t.687 1.325L12 22l-1.5-1.5L9 22l-1.5-1.5L6 22l-1.5-1.5zm3-5h5.075q.075-.525.225-1.025t.375-.975H6zm0-4h7.1q.95-.925 2.213-1.463T18 11H6zm-1 6.05V5z" />
                             </svg>
@@ -119,7 +126,15 @@
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('user') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('user') }}">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 15H6a4 4 0 0 0-4 4v2m12.305-4.47l.923-.382m0-2.296l-.923-.383m2.547-1.241l-.383-.923m.383 6.467l-.383.924m2.679-6.468l.383-.923m-.001 7.391l-.382-.924m1.624-3.92l.924-.383m-.924 2.679l.924.383"/><circle cx="18" cy="15" r="3"/><circle cx="9" cy="7" r="4"/></g></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="2">
+                                    <path
+                                        d="M10 15H6a4 4 0 0 0-4 4v2m12.305-4.47l.923-.382m0-2.296l-.923-.383m2.547-1.241l-.383-.923m.383 6.467l-.383.924m2.679-6.468l.383-.923m-.001 7.391l-.382-.924m1.624-3.92l.924-.383m-.924 2.679l.924.383" />
+                                    <circle cx="18" cy="15" r="3" />
+                                    <circle cx="9" cy="7" r="4" />
+                                </g>
+                            </svg>
                             User Management
                         </a>
                     </li>

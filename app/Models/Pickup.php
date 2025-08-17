@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Order extends Model
+class Pickup extends Model
 {
     protected $guarded = [];
 
@@ -12,15 +13,7 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo(User::class);
-    }
-    public function detail() {
-        return $this->hasOne(OrderDetail::class);
-    }
-    public function payment()
-    {
-        return $this->hasOne(Payment::class);
     }
 }

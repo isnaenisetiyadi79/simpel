@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('pickups', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('payment_status', ['unpaid','paid','partially'])->default('unpaid');
-            $table->decimal('total_amount',14,2)->default(0);
-            $table->date('order_date');
+            $table->date('pickup_date');
             $table->text('note')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('pickups');
     }
 };

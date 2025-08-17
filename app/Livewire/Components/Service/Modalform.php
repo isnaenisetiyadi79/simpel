@@ -216,6 +216,7 @@ class Modalform extends Component
         }
     }
 
+
     public function render()
     {
         return view('livewire.components.service.modalform');

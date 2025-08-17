@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('price',12,2)->default(0);
             $table->decimal('subtotal', 14,2)->default(0);
             $table->enum('process_status', ['pending','process','done'])->default('pending');
-            $table->enum('pickup_status',['pending','completed'])->default('pending');
+            $table->enum('pickup_status',['pending','partially','completed'])->default('pending');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();

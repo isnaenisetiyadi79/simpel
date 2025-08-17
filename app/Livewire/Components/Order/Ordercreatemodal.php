@@ -7,9 +7,10 @@ use App\Models\Customer;
 use App\Models\Service;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Auth;
 
 class Ordercreatemodal extends Component
 {
@@ -24,6 +25,11 @@ class Ordercreatemodal extends Component
 
     public $customers;
     public $services;
+
+    // untuk pembayaran dan pengembalian
+    public $total_amount;
+    public $pay;  //pembayaran
+    public $change; //kembalian
 
     // protected $listeners = ['openOrderModal' => 'openModal'];
 
@@ -92,12 +98,22 @@ class Ordercreatemodal extends Component
         ];
     }
 
+
     public function removeRow($index)
     {
         unset($this->details[$index]);
         $this->details = array_values($this->details);
     }
 
+    public function updatedPay()
+    {
+        $this->validate([
+            'total_amount' => 'required|numeric',
+            'pay' => 'required|numeric',
+        ]);
+
+        $this->change = $this->pay - $this->total_amount ;
+    }
 
 
     public function updated($name, $value)
@@ -154,7 +170,19 @@ class Ordercreatemodal extends Component
                 $qtyFinal = (float) ($this->details[$index]['qty_final'] ?? 0);
                 $this->details[$index]['subtotal'] = round($price * $qtyFinal, 2);
             }
+            $this->total_amount = (float)array_sum(array_column($this->details, 'subtotal'));
         }
+
+        // if ($name == 'pay') {
+
+        //     $this->validate([
+        //         'total_amount' => 'required|numeric',
+        //         'pay' => 'required|numeric',
+        //     ]);
+
+        //     dd($this->total_amount);
+        //     $this->change = (float) $this->pay - (float) $this->total_amount;
+        // }
     }
     public function save()
     {
@@ -169,9 +197,14 @@ class Ordercreatemodal extends Component
 
         DB::beginTransaction();
         try {
+            $user = Auth::user();
+            if (!$user) {
+                abort(403, 'Unauthorized');
+            }
 
             $order = Order::create([
                 'customer_id' => $this->customer_id,
+                'user_id' => $user->id,
                 'order_date' => $this->order_date,
                 'total_amount' => array_sum(array_column($this->details, 'subtotal')),
                 'note' => $this->order_note,
@@ -190,6 +223,23 @@ class Ordercreatemodal extends Component
                     'description' => $d['description'],
                 ]);
             }
+
+            // Langkah pembayaran
+            if ($this->pay != 0) {
+
+                $payment_status = $this->change >= 0 ? 'paid' : 'partially';
+                Payment::create([
+                    'order_id' => $order->id,
+                    'amount' => $this->pay,
+                ]);
+
+                $order->update([
+                    'payment_status' => $payment_status
+                ]);
+
+
+            }
+
             DB::commit();
             $this->dispatch('success', message: 'Orders added succesfully');
             $this->closeModal();
