@@ -8,4 +8,23 @@ class Service extends Model
 {
     //
     protected $guarded = [];
+
+    public function serviceEmployeeWork()
+    {
+        return $this->hasMany(ServiceEmployeeWork::class);
+    }
+
+    public function work()
+    {
+        return $this->belongsToMany(Work::class, 'service_employee_work')
+            ->withPivot('employee_id')
+            ->withTimestamps();
+    }
+
+    public function employee()
+    {
+        return $this->belongsToMany(Employee::class, 'service_employee_work')
+            ->withPivot('work_id')
+            ->withTimestamps();
+    }
 }

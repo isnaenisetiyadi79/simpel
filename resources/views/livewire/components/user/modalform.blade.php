@@ -86,17 +86,6 @@
                         </div>
                         {{-- END: Komponen Input Email --}}
                         {{-- Komponen Input Password --}}
-                        {{-- <div class="w-full mt-4">
-                            <label for="input-label-with-helper-total"
-                                class="block text-sm font-medium mb-2 dark:text-white">Email</label>
-                            <input type="text" wire:model="email"
-                            name="email" id="input-label-with-helper-total"
-                                class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 "
-                                placeholder="johndoe@gmail.com" aria-describedby="hs-input-helper-text">
-                            @error('email')
-                                <span class="text-red-600 text-xs">{{ $message }}</span>
-                            @enderror
-                        </div> --}}
                         <div class="w-full mt-4">
                             <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
                             <div class="relative">

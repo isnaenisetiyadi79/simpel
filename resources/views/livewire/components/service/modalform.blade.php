@@ -97,7 +97,8 @@
                                     class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                                     wire:model="is_package">
                                 <label for="hs-checked-checkbox"
-                                    class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Centang bila tidak menggunakan ukuran/dimensi (panjangxlebar)</label>
+                                    class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Centang bila tidak
+                                    menggunakan ukuran/dimensi (panjangxlebar)</label>
                             </div>
                             @error('unit')
                                 <span class="text-red-600 text-xs">{{ $message }}</span>
@@ -114,6 +115,116 @@
                                 <span class="text-red-600 text-xs">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        {{-- Komponen Works Employees --}}
+                        <div class="overflow-x-auto mt-4">
+                             <label for="work-table"
+                                class="block text-sm font-medium mb-2 dark:text-white">Daftar Upah Karyawan</label>
+                            <table class="w-full table-auto" id="work-table">
+                                <thead class="bg-gray-100 border">
+                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                Job
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                Karyawan
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                Upah
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                        {{-- <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                Upah
+                                            </span>
+                                        </div> --}}
+                                    </th>
+                                </thead>
+                                <tbody class="border">
+                                    @foreach ($workemployees as $i => $row)
+                                        <tr wire:key="row-{{ $i }}" class="mb-2 border">
+                                            <td class="p-q border">
+                                                <select
+                                                    wire:model.live.debounce.300ms="workemployees.{{ $i }}.work_id"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm
+           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                                    <option value="">Pilih ...</option>
+                                                    @foreach ($works as $s)
+                                                        <option value="{{ $s->id }}">{{ $s->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td class="p-q border">
+                                                <select
+                                                    wire:model.live.debounce.300ms="workemployees.{{ $i }}.employee_id"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm
+           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                                    <option value="">Pilih ...</option>
+                                                    @foreach ($employees as $s)
+                                                        <option value="{{ $s->id }}">{{ $s->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td class="p-1 border border-t-gray-400">
+                                                <input type="number" step="0.01"
+                                                    wire:model.live.debounce.300ms="workemployees.{{ $i }}.default_pay"
+                                                    class="text-end block w-full rounded-md border-gray-300 shadow-sm
+           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm read-only:bg-gray-100" readonly />
+                                            </td>
+                                             <td class="p-1 border border-t-gray-400 text-center">
+                                            {{-- <button wire:click="removeRow({{ $i }})"
+                                                class="text-red-500">✕</button> --}}
+                                            <button type="button"
+                                                class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-red-400 text-white shadow-2xs hover:bg-red-500 focus:outline-hidden focus:bg-red-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                                wire:click="removeRow({{ $i }})">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24">
+                                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="1.5"
+                                                        d="m14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21q.512.078 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48 48 0 0 0-3.478-.397m-12 .562q.51-.088 1.022-.165m0 0a48 48 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a52 52 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a49 49 0 0 0-7.5 0" />
+                                                </svg>
+                                                <span
+                                                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                                                    role="tooltip">
+                                                    Hapus
+                                                </span>
+                                            </button>
+                                        </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex justify-between items-center mt-4">
+                            <button type="button" wire:click="addRow"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-teal-500 text-white hover:bg-teal-400 focus:outline-hidden focus:bg-teal-300 disabled:opacity-50 disabled:pointer-events-none">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14" />
+                                <path d="M12 5v14" />
+                            </svg>
+                            Tambah Baris
+                        </button>
+                        </div>
+                        {{-- END: Komponen Works Employees --}}
                     </div>
 
                     <!-- Footer -->

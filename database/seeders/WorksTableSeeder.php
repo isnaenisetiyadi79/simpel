@@ -15,15 +15,15 @@ class WorksTableSeeder extends Seeder
         DB::table('works')->insert([
             [
                 'name' => 'Desain',
-                'description' => 'Desain Baliho kemudian cetak',
-                'default_pay' => 45000,
+                'description' => 'Upah tukang desain',
+                'default_pay' => 5000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Cetak',
-                'description' => 'Cetak Saja',
-                'default_pay' => 40000,
+                'description' => 'Upah tukang cetak',
+                'default_pay' => 2000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
