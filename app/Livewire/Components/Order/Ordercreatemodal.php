@@ -30,6 +30,7 @@ class Ordercreatemodal extends Component
     public $total_amount;
     public $pay;  //pembayaran
     public $change; //kembalian
+    public $payment_method = 'cash';
 
     // protected $listeners = ['openOrderModal' => 'openModal'];
 
@@ -65,6 +66,9 @@ class Ordercreatemodal extends Component
         $this->customer_id = null;
         $this->order_date = now()->toDateString();
         $this->order_note = '';
+        $this->total_amount = 0;
+        $this->pay = 0;
+        $this->change =0;
         $this->details = [
             // default one empty row
             [
@@ -113,6 +117,8 @@ class Ordercreatemodal extends Component
         ]);
 
         $this->change = $this->pay - $this->total_amount ;
+
+
     }
 
 
@@ -231,6 +237,7 @@ class Ordercreatemodal extends Component
                 Payment::create([
                     'order_id' => $order->id,
                     'amount' => $this->pay,
+                    'payment_method' => $this->payment_method == 'transfer' ? 'transfer' : 'cash',
                 ]);
 
                 $order->update([
@@ -257,6 +264,9 @@ class Ordercreatemodal extends Component
     }
     public function render()
     {
+          if ($this->payment_method == 'transfer') {
+            $this->pay = $this->total_amount;
+        }
         return view('livewire.components.order.ordercreatemodal');
     }
 }

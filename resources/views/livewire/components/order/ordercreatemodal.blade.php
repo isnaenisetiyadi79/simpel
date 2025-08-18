@@ -324,26 +324,56 @@
                             {{-- <div class="font-bold text-2xl">Total: Rp
                                 <span>{{ number_format(array_sum(array_column($details, 'subtotal')), 0, ',', '.') }}</span>
                             </div> --}}
-                            <div class="mt-2 flex flex-col items-end">
-                                <div class="flex items-center">
+                            <div class="mt-2 flex flex-col items-end space-y-2 w-full">
+                                <div class="grid grid-cols-2 gap-2 w-full">
                                     <label for="catatan-label"
-                                        class="w-60 font-bold uppercase text-lg text-gray-600 dark:text-neutral-100 mr-5">Total Rp.</label>
+                                        class="w-60 font-bold uppercase text-lg text-gray-600 dark:text-neutral-100 mr-5">Total
+                                        Rp.</label>
                                     <input type="text" id="catatan-label" wire:model="total_amount"
-                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 read-only:cursor-not-allowed"
                                         placeholder="0" readonly>
                                 </div>
-                                <div class="flex items-center">
+                                <div class="grid grid-cols-2 gap-2 w-full">
+
                                     <label for="catatan-label"
-                                        class="w-60 font-bold text-lg uppercase text-gray-600 dark:text-neutral-100 mr-5">Bayar Rp.</label>
-                                    <input type="number" id="catatan-label" wire:model.live.debounce.300ms = "pay"
-                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                        placeholder="0">
+                                        class="w-60 font-bold text-lg uppercase text-gray-600 dark:text-neutral-100 mr-5">Bayar
+                                        Rp.</label>
+
+                                    <div class="flex items-center gap-2 w-full">
+                                        <label for="hs-radio-in-form"
+                                            class="flex p-3 gap-2 bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 cursor-pointer">
+                                            <input type="radio" name="hs-radio-in-form"
+                                                class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                id="hs-radio-in-form" wire:model.change="payment_method"
+                                                value="cash">
+                                            <span
+                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400 uppercase">Cash</span>
+                                        </label>
+
+                                        <label for="hs-radio-checked-in-form"
+                                            class="flex p-3 bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 cursor-pointer">
+                                            <input type="radio" name="hs-radio-in-form"
+                                                class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 "
+                                                id="hs-radio-checked-in-form" wire:model.change="payment_method"
+                                                value="transfer">
+                                            <span
+                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400 uppercase">Transfer</span>
+                                        </label>
+
+                                        <input type="number" id="catatan-label"
+                                            wire:model.live.debounce.300ms = "pay"
+                                            class=" text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none read-only:cursor-not-allowed"
+                                            placeholder="0" {{ $payment_method == 'transfer' ? 'readonly' : '' }}>
+
+                                    </div>
                                 </div>
-                                <div class="flex items-center">
-                                     <label for="catatan-label"
-                                        class="w-60 font-bold text-lg uppercase text-gray-600 dark:text-neutral-100 mr-5">Kembalian Rp.</label>
-                                    <input type="number" id="catatan-label" wire:model.live.debounce.300ms = "change" readonly
-                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                <div class="grid grid-cols-2 gap-2 w-full">
+                                    <label for="catatan-label"
+                                        class="w-60 font-bold text-lg uppercase text-gray-600 dark:text-neutral-100 mr-5">Kembalian
+                                        Rp.</label>
+                                    <input type="number" id="catatan-label"
+                                        wire:model.live.debounce.300ms = "change" readonly
+                                        class="text-end py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none read-only:cursor-not-allowed"
                                         placeholder="0">
                                 </div>
                             </div>
