@@ -191,8 +191,15 @@ class PickupWizardModal extends Component
         if ($this->pay_now < 0) {
             $this->pay_now = 0;
         }
-            $this->change = (float) $this->pay_now - $this->outstanding;
+        $this->change = (float) $this->pay_now - $this->outstanding;
     }
+
+    // public function updatedPayMethd()
+    // {
+    //     if ($this->payment_method == 'transfer') {
+    //         $this->pay_now = $this->outstanding;
+    //     }
+    // }
 
     // public function updated()
     // {
@@ -205,9 +212,9 @@ class PickupWizardModal extends Component
     // }
     public function render()
     {
-        if ($this->payment_method == 'transfer') {
-            $this->pay_now = $this->outstanding;
-        }
+        // if ($this->payment_method == 'transfer') {
+        //     $this->pay_now = $this->outstanding;
+        // }
 
         return view('livewire.components.pickup.pickup-wizard-modal');
     }

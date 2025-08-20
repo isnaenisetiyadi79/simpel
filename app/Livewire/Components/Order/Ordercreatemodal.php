@@ -68,7 +68,7 @@ class Ordercreatemodal extends Component
         $this->order_note = '';
         $this->total_amount = 0;
         $this->pay = 0;
-        $this->change =0;
+        $this->change = 0;
         $this->details = [
             // default one empty row
             [
@@ -116,9 +116,7 @@ class Ordercreatemodal extends Component
             'pay' => 'required|numeric',
         ]);
 
-        $this->change = $this->pay - $this->total_amount ;
-
-
+        $this->change = $this->pay - $this->total_amount;
     }
 
 
@@ -243,8 +241,6 @@ class Ordercreatemodal extends Component
                 $order->update([
                     'payment_status' => $payment_status
                 ]);
-
-
             }
 
             DB::commit();
@@ -264,9 +260,9 @@ class Ordercreatemodal extends Component
     }
     public function render()
     {
-          if ($this->payment_method == 'transfer') {
-            $this->pay = $this->total_amount;
-        }
+        // if ($this->payment_method == 'transfer') {
+        //     $this->pay = $this->total_amount;
+        // }
         return view('livewire.components.order.ordercreatemodal');
     }
 }

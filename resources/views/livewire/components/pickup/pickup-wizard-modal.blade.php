@@ -404,19 +404,19 @@
                                         <div class="col-span-2 flex items-center gap-2 w-full">
                                             <label
                                                 class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
-                                                <input type="radio" wire:model="payment_method" value="cash">
+                                                <input type="radio" wire:model.live.debounce.50ms="payment_method" value="cash">
                                                 <span class="uppercase text-sm">Cash</span>
                                             </label>
 
                                             <label
                                                 class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
-                                                <input type="radio" wire:model="payment_method" value="transfer">
+                                                <input type="radio" wire:model.live.debounce.50ms="payment_method" value="transfer">
                                                 <span class="uppercase text-sm">Transfer</span>
                                             </label>
 
                                             <input type="number" wire:model.live.debounce.300ms="pay_now"
                                                 class="text-end py-2.5 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500"
-                                                placeholder="0" {{ $payment_method == 'transfer' ? 'readonly' : '' }}>
+                                                placeholder="0">
                                         </div>
                                     </div>
 
