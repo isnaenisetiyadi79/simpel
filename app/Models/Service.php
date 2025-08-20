@@ -21,7 +21,7 @@ class Service extends Model
             ->withTimestamps();
     }
 
-    public function employee()
+    public function employees()
     {
         return $this->belongsToMany(Employee::class, 'service_employee_work')
             ->withPivot('work_id')

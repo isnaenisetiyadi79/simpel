@@ -46,9 +46,8 @@
                     <!-- Search Item -->
                     <div class="flex flex-wrap gap-3 py-3 px-4 ">
                         <div class="relative w-full lg:w-1/4">
-                            <label  class="sr-only">Search</label>
-                            <input type="text"  wire:model.live.debounce.250ms="search"
-
+                            <label class="sr-only">Search</label>
+                            <input type="text" wire:model.live.debounce.100ms="search"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                 placeholder="Cari customer atau pesanan">
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
@@ -62,8 +61,9 @@
                             </div>
                         </div>
                         <div class="flex ml-4 items-center gap-2 max-w-xs">
-                            <label for="hs-date-from" class="text-sm text-gray-800 dark:text-neutral-200">Tanggal</label>
-                            <input type="date" wire:model.live.debounce.250ms="dateFrom" id="hs-date-from"
+                            <label for="hs-date-from"
+                                class="text-sm text-gray-800 dark:text-neutral-200">Tanggal</label>
+                            <input type="date" wire:model.live.debounce.100ms="dateFrom" id="hs-date-from"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -78,8 +78,7 @@
                         </div>
                         <div class="flex ml-4 items-center gap-2 max-w-xl">
                             <label class="text-sm text-gray-800 dark:text-neutral-200">Sampai</label>
-                            <input type="date" name="date-to" wire:model.live.debounce.250ms="dateTo"
-
+                            <input type="date" name="date-to" wire:model.live.debounce.100ms="dateTo"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -212,9 +211,14 @@
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">
                                             <div class="px-6 py-3">
-
-                                                <span class="block text-sm text-gray-500 dark:text-neutral-500"
-                                                    title="{{ $item->description }}">{{ $item->service->name }}</span>
+                                                <ul>
+                                                    <li class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                        {{ $item->service->name }}
+                                                    </li>
+                                                    <li class="block text-xs text-gray-500 dark:text-neutral-500">
+                                                        {{ $item->description }}
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">

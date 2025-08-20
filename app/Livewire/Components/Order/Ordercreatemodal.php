@@ -236,7 +236,7 @@ class Ordercreatemodal extends Component
                 $payment_status = $this->change >= 0 ? 'paid' : 'partially';
                 Payment::create([
                     'order_id' => $order->id,
-                    'amount' => $this->pay,
+                    'amount' => $this->pay > $this->total_amount ? $this->total_amount : $this->pay,
                     'payment_method' => $this->payment_method == 'transfer' ? 'transfer' : 'cash',
                 ]);
 

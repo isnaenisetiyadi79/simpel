@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
@@ -42,6 +43,9 @@ Route::middleware(['authenticate'])->group(function () {
     // Route Transaction
     Route::get('/transaction', [OrderController::class, 'index'])->name('order');
     Route::get('/transaction/print/{id}', [OrderController::class, 'print'])->name('order.print');
+
+    // Route Pickup
+    Route::get('pickup', [PickupController::class, 'index'])->name('pickup');
 
     // Route User
 

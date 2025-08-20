@@ -124,9 +124,25 @@
                         </a>
                     </li>
                     <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('pickup') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
+                            href="{{ route('pickup') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1">
+                                    <path
+                                        d="m21.5 22.25l-2 1.25l-2-1.25v-2l2-1.25l2 1.25zm-15 0l-2 1.25l-2-1.25v-2l2-1.25l2 1.25z" />
+                                    <path d="M2.5 21.5h-2v-5l3-2h20v7h-2m-15 0h11m-17-4h2" />
+                                    <path d="M14.5 21.5v-11H8l-1.5 4v2l2.778 5m3.222-7v-4m-1 6h1m2 0h9" />
+                                </g>
+                            </svg>
+                            Pickup
+                        </a>
+                    </li>
+                    <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('user') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('user') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24">
                                 <g fill="none" stroke="currentColor" stroke-linecap="round"
                                     stroke-linejoin="round" stroke-width="2">
                                     <path

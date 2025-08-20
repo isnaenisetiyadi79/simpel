@@ -9,11 +9,18 @@ class Pickup extends Model
 {
     protected $guarded = [];
 
-    public function customer() {
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 
-    public function user() {
+
+    public function pickupdetail()
+    {
+        return $this->hasMany(PickupDetail::class);
+    }
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
