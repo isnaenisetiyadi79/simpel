@@ -339,11 +339,14 @@
                                                                     <select
                                                                         wire:model="selectedRows.{{ $i }}.works.{{ $j }}.employee_id"
                                                                         class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                                                                        <option value="">Pilih Karyawan —
+                                                                        {{-- <option value="">Pilih Karyawan — --}}
                                                                         </option>
                                                                         @foreach ($row['employees'] as $emp)
                                                                             <option value="{{ $emp['id'] }}">
-                                                                                {{ $emp['name'] }}</option>
+                                                                                <span class="text-sm">
+                                                                                    {{ $emp['name'] }}
+                                                                            </option>
+                                                                            </span>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -404,13 +407,15 @@
                                         <div class="col-span-2 flex items-center gap-2 w-full">
                                             <label
                                                 class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
-                                                <input type="radio" wire:model.live.debounce.50ms="payment_method" value="cash">
+                                                <input type="radio" wire:model.live.debounce.50ms="payment_method"
+                                                    value="cash">
                                                 <span class="uppercase text-sm">Cash</span>
                                             </label>
 
                                             <label
                                                 class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
-                                                <input type="radio" wire:model.live.debounce.50ms="payment_method" value="transfer">
+                                                <input type="radio" wire:model.live.debounce.50ms="payment_method"
+                                                    value="transfer">
                                                 <span class="uppercase text-sm">Transfer</span>
                                             </label>
 
@@ -459,12 +464,31 @@
                             {{-- Tombol --}}
                             <div class="flex justify-end gap-2">
                                 <button type="button" wire:click="closeWizard"
-                                     class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-600 text-white hover:bg-orange-700 focus:outline-hidden focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-600 text-white hover:bg-orange-700 focus:outline-hidden focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 48 48">
+                                        <g fill="none" stroke="#FFF" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="4">
+                                            <path d="M12.9998 8L6 14L12.9998 21" />
+                                            <path
+                                                d="M6 14H28.9938C35.8768 14 41.7221 19.6204 41.9904 26.5C42.2739 33.7696 36.2671 40 28.9938 40H11.9984" />
+                                        </g>
+                                    </svg>
                                     Batal
                                 </button>
                                 <button type="button" wire:click="save"
                                     {{ !empty($selectedDetailIds) && count($selectedDetailIds) > 0 ? '' : 'disabled' }}
-                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">>
+                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none" stroke="currentColor" stroke-width="1">
+                                            <path
+                                                d="M16 21v-2c0-1.886 0-2.828-.586-3.414S13.886 15 12 15h-1c-1.886 0-2.828 0-3.414.586S7 17.114 7 19v2" />
+                                            <path stroke-linecap="round" d="M7 8h5" />
+                                            <path
+                                                d="M3 9c0-2.828 0-4.243.879-5.121C4.757 3 6.172 3 9 3h7.172c.408 0 .613 0 .796.076s.329.22.618.51l2.828 2.828c.29.29.434.434.51.618c.076.183.076.388.076.796V15c0 2.828 0 4.243-.879 5.121C19.243 21 17.828 21 15 21H9c-2.828 0-4.243 0-5.121-.879C3 19.243 3 17.828 3 15z" />
+                                        </g>
+                                    </svg>
                                     Simpan
                                 </button>
                             </div>
