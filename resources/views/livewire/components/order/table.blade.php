@@ -328,9 +328,8 @@
                                                     </div>
                                                 @else
                                                     <div>
-                                                        <button type="button"
-                                                            wire:click="changeStatus({{ $item->id }})"
-                                                            class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-100 hover:bg-gray-200 text-orange-800 hover:text-orange-500 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                        <span
+                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-200  text-orange-800 rounded-sm dark:bg-neutral-500/20 dark:text-neutral-400">
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -343,7 +342,7 @@
                                                                 <path d="M12 17h.01"></path>
                                                             </svg>
                                                             Belum
-                                                        </button>
+                                                        </span>
                                                     </div>
                                                 @endif
                                             </div>
@@ -497,5 +496,6 @@
     <!-- End Card -->
 
     @livewire('components.order.ordercreatemodal')
+    @livewire('components.orderdetail.changeprocess')
 
 </div>

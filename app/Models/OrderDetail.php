@@ -15,4 +15,9 @@ class OrderDetail extends Model
     public function order() {
         return $this->belongsTo(Order::class);
     }
+
+    public function pickupdetail()
+    {
+        return $this->hasOne(PickupDetail::class, 'order_detail_id');
+    }
 }

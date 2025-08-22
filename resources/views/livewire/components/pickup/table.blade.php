@@ -118,7 +118,7 @@
                                     <div class="flex items-center gap-x-2">
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                            Item
+                                            Jenis
                                         </span>
                                     </div>
                                 </th>
@@ -152,7 +152,7 @@
                                                 <div class="grow">
 
                                                     <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">{{ \Carbon\Carbon::parse($item->pickup_date)->format('d/m/Y H:i') }}</span>
+                                                        class="block text-sm text-gray-500 dark:text-neutral-500">{{ \Carbon\Carbon::parse($item->pickup->pickup_date)->format('d/m/Y H:i') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,32 +160,32 @@
                                     <td class="h-px w-72 whitespace-nowrap">
                                         <div class="px-6 py-3">
 
-                                            <span class="block text-sm text-gray-500 dark:text-neutral-500">Rp
-                                                Order # {{ $item->pickupdetail->orderdetail->order->id }}</span>
+                                            <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                # {{ $item->orderdetail->order->id }}
+                                                {{ $item->orderdetail->description }}
+                                            </span>
+
                                         </div>
                                     </td>
 
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
                                             <span
-                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->customer->name }}</span>
+                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->pickup->customer->name }}</span>
                                         </div>
                                     </td>
+                                    {{-- {{ dd($item) }} --}}
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
                                             <ul class="list-disc list-inside text-sm text-gray-700">
-                                                @foreach ($item->pickupdetail as $pd)
-                                                    <li>
-                                                        {{ optional($pd->orderdetail->service)->name }} Qty:
-                                                        {{ $pd->qty }}
-                                                    </li>
-                                                @endforeach
+                                                 <span
+                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->orderdetail->service->name }}</span>
+
                                             </ul>
                                         </div>
                                     </td>
 
-
-                                    <td class="size-px whitespace-nowrap">
+                                    {{-- <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-1.5">
                                             <button type="button"
                                                 class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
@@ -193,11 +193,12 @@
                                                 Edit
                                             </button>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-sm px-4 py-6 text-center text-gray-500">Belum ada pickup (pengambilan barang)
+                                    <td colspan="5" class="text-sm px-4 py-6 text-center text-gray-500">Belum ada
+                                        pickup (pengambilan barang)
                                     </td>
                                 </tr>
                             @endforelse

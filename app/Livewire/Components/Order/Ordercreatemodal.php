@@ -220,6 +220,7 @@ class Ordercreatemodal extends Component
                     'service_id' => $d['service_id'],
                     'length' => $d['length'],
                     'width' => $d['width'],
+                    'qty' => $d['qty'],
                     'qty_asli' => $d['qty_asli'],
                     'qty_final' => $d['qty_final'],
                     'price' => $d['price'],

@@ -27,4 +27,7 @@ class Service extends Model
             ->withPivot('work_id')
             ->withTimestamps();
     }
+    public function orderdetail() {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

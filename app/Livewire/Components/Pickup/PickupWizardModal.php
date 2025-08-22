@@ -14,6 +14,8 @@ use App\Models\PickupDetail;
 use App\Models\Service;
 use App\Models\Employee;
 use App\Models\Work;
+use Auth;
+use Carbon\Carbon;
 
 class PickupWizardModal extends Component
 {
@@ -29,6 +31,7 @@ class PickupWizardModal extends Component
     public $availableOrderDetails = [];
     public $selectedDetailIds = [];
     public $selectAll = false;
+    public $pickupQty = [];
 
     // Step 2 filters(final)
     public $selectedRows = [];
@@ -125,10 +128,12 @@ class PickupWizardModal extends Component
             ->get();
 
         $this->availableOrderDetails = $ods->map(function ($od) {
+            $picked = $od->pickupdetail()->sum('qty');
             return [
                 'id' => $od->id,
                 'service_name' => optional($od->service)->name,
-                'qty' => (float)$od->qty_final,
+                'qty' => (float)$od->qty,
+                'qty_remaining' => max(0, (float)$od->qty - $picked),
                 'price' => (float)$od->price,
                 'subtotal' => (float)$od->subtotal,
                 'description' => $od->description,
@@ -194,22 +199,94 @@ class PickupWizardModal extends Component
         $this->change = (float) $this->pay_now - $this->outstanding;
     }
 
-    // public function updatedPayMethd()
-    // {
-    //     if ($this->payment_method == 'transfer') {
-    //         $this->pay_now = $this->outstanding;
-    //     }
-    // }
+    public function save()
+    {
+        // $this->validate([
+        //     'order_id' => 'required|exists:orders,id',
+        //     'pickup_date' => 'required|date',
+        //     'selectedRows' => 'required|array|min:1',
+        //     'selectedRows.*.order_detail_id' => 'required|exists:order_details,id',
+        //     'selectedRows.*.works' => 'array',
+        //     'selectedRows.*.works.*.work_id' => 'required|exists:works,id',
+        //     'selectedRows.*.works.*.employee_id' => 'nullable|exists:employees,id',
+        //     'selectedRows.*.works.*.fee' => 'nullable|numeric|min:0',
+        //     'pay_now' => 'nullable|numeric|min:0',
+        // ]);
 
-    // public function updated()
-    // {
-    //     // dd('disini');
-    //     $this->validate([
-    //         'outstanding' => 'required|numeric',
-    //         'pay_now' => 'required|numeric',
-    //     ]);
-    //     $this->change = (float) $this->outstanding - $this->pay_now;
-    // }
+        DB::beginTransaction();
+
+        try {
+            $pickup = Pickup::create([
+                'customer_id' => $this->customer_id,
+                'user_id' => Auth::user()->id,
+                'pickup_date' => Carbon::parse($this->pickup_date)->format('Y-m-d H:i:s'),
+                'note' => $this->note,
+            ]);
+
+            foreach ($this->selectedRows as $row) {
+                $od = OrderDetail::find($row['order_detail']['id']);
+
+                $pd = PickupDetail::create([
+                    'pickup_id' => $pickup->id,
+                    'order_detail_id' => $od->id,
+                    'qty' => $od->qty_final, // jika nanti mau partial, ganti sesuai input
+                ]);
+
+                // Simpan pivot pekerjaan per baris
+                if (!empty($row['works'])) {
+                    $pivotRows = [];
+                    foreach ($row['works'] as $w) {
+                        $pivotRows[] = [
+                            'pickup_detail_id' => $pd->id,
+                            'work_id' => $w['work']['id'],
+                            'employee_id' => $w['employee_id'] ?? null,
+                            'pay_default' => (float)($w['fee'] ?? 0),
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+                    if (!empty($pivotRows)) {
+                        DB::table('pickup_detail_employee_works')->insert($pivotRows);
+                    }
+                }
+
+                // 3) Update status order_detail → completed
+                $od->update([
+                    'pickup_status' => 'completed',
+                ]);
+
+                // 4) Pembayaran (kalau ada)
+                $payAmount = (float)($this->pay_now ?? 0);
+                if ($payAmount > 0) {
+                    $pickup->payments()->create([
+                        'order_id'       => $this->order_id, // tetap kaitkan ke order
+                        'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
+                        'amount'         => $payAmount,
+                        'payment_method' => $this->payment_method,
+                    ]);
+                }
+
+                // 5) Update status order (unpaid/partially_paid/paid)
+                $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
+                $paid    = (float)($order->paid_sum ?? 0);
+                $total   = (float)($order->total_amount ?? 0);
+                $status  = match (true) {
+                    $paid <= 0        => 'unpaid',
+                    $paid < $total    => 'partially_paid',
+                    default           => 'paid',
+                };
+
+                $order->update(['payment_status' => $status]);
+            }
+            DB::commit();
+            $this->dispatch('success', message: 'Pickup added succesfully');
+            $this->closeWizard();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            session()->flash('error', $th->getMessage());
+        }
+    }
+
     public function render()
     {
         // if ($this->payment_method == 'transfer') {
