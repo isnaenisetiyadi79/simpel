@@ -74,4 +74,3 @@ php artisan key:generate
 
 # Setup database dan sesuaikan konfigurasi .env
 php artisan migrate --seed
-php artisan serve
