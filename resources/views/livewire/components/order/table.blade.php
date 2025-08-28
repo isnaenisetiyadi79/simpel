@@ -290,7 +290,9 @@
                                                     <div>
                                                         <button type="button"
                                                             wire:click="changeStatus({{ $item->id }})"
-                                                            class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 hover:text-teal-500 rounded-full dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500">
+                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 hover:text-teal-500 rounded-full dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500 disabled:hover:bg-sky-100 disabled:hover:text-teal-800 enabled:cursor-pointer"
+                                                            {{ $item->pickup_status != 'pending' ? 'disabled': '' }}
+                                                            >
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"

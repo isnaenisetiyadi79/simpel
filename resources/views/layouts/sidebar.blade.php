@@ -139,6 +139,13 @@
                         </a>
                     </li>
                     <li>
+                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('receivable') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
+                            href="{{ route('receivable') }}">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M14 2.222q-.97-.198-2-.2c-5.523 0-10 4.472-10 9.989S6.477 22 12 22s10-4.472 10-9.989q-.002-1.027-.2-1.998"/><path d="M12 9.014c-1.105 0-2 .671-2 1.499c0 .827.895 1.498 2 1.498s2 .67 2 1.498s-.895 1.499-2 1.499m0-5.994c.87 0 1.612.417 1.886 1m-1.886-1v-.999m0 6.993c-.87 0-1.612-.417-1.886-1m1.886 1v.999"/><path stroke-linejoin="round" d="M21.995 2L17.82 6.174m-.824-3.653l.118 3.088c0 .728.435 1.182 1.228 1.239l3.124.147"/></g></svg>
+                            Receivable
+                        </a>
+                    </li>
+                    <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('user') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('user') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

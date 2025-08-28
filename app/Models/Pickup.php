@@ -24,8 +24,10 @@ class Pickup extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function payments() {
-        return $this->belongsTo(Payment::class);
+    public function payment() {
+        return $this->hasMany(Payment::class);
     }
+
+
 
 }

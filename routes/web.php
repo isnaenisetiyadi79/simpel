@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PickupController;
+use App\Http\Controllers\ReceivableController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
@@ -46,6 +47,9 @@ Route::middleware(['authenticate'])->group(function () {
 
     // Route Pickup
     Route::get('pickup', [PickupController::class, 'index'])->name('pickup');
+
+    // Route Receivable
+    Route::get('receivable', [ReceivableController::class, 'index'])->name('receivable');
 
     // Route User
 

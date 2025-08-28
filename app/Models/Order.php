@@ -17,10 +17,14 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
     public function detail() {
-        return $this->hasOne(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class);
+        // return $this->hasOne(OrderDetail::class);
     }
     public function payment()
     {
-        return $this->hasOne(Payment::class);
+        // return $this->hasOne(Payment::class);
+        return $this->hasMany(Payment::class);
+        // return $this->belongsTo(Payment::class);
     }
+
 }

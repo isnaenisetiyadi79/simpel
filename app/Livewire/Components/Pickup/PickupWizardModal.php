@@ -43,7 +43,7 @@ class PickupWizardModal extends Component
 
     // Payment section (Step 2)
     public $order_total = 0;
-    public $paid_total = 0; // total payments recorded (order-level)
+    public $paid_total = 0; // total payment recorded (order-level)
     public $outstanding = 0; //order_total - paid_total
     public $pay_now = 0;
     public $change = 0;
@@ -258,7 +258,7 @@ class PickupWizardModal extends Component
                 // 4) Pembayaran (kalau ada)
                 $payAmount = (float)($this->pay_now ?? 0);
                 if ($payAmount > 0) {
-                    $pickup->payments()->create([
+                    $pickup->payment()->create([
                         'order_id'       => $this->order_id, // tetap kaitkan ke order
                         'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
                         'amount'         => $payAmount,
@@ -272,7 +272,7 @@ class PickupWizardModal extends Component
                 $total   = (float)($order->total_amount ?? 0);
                 $status  = match (true) {
                     $paid <= 0        => 'unpaid',
-                    $paid < $total    => 'partially_paid',
+                    $paid < $total    => 'partially',
                     default           => 'paid',
                 };
 
