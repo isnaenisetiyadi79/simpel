@@ -81,7 +81,7 @@ class Table extends Component
     public function getPickupQuery()
     {
         return Pickup::query()
-            ->with(['pickupdetail', 'pickupdetail.orderdetail.order', 'payment', 'customer'])
+            ->with(['pickupdetail', 'pickupdetail.orderdetail','pickupdetail.orderdetail.order', 'payment', 'customer'])
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
                     $sub->whereHas(
@@ -115,7 +115,7 @@ class Table extends Component
             // filter payment_status ≠ paid
             ->whereHas('pickupdetail.orderdetail.order', fn($q) => $q->where('payment_status', '!=', 'paid'))
             // filter pickup_status ≠ paid
-            ->whereHas('pickupdetail.orderdetail', fn($q) => $q->where('pickup_status', '!=', 'completed'))
+            ->whereHas('pickupdetail.orderdetail', fn($q) => $q->where('pickup_status', '=', 'completed'))
             ->latest();
     }
 

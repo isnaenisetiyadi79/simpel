@@ -36,9 +36,12 @@ Route::middleware(['authenticate'])->group(function () {
         });
 
         // Route Master Service
-        Route::get('/service', [ServiceController::class, 'index'])->name('master.service');
-        Route::get('/work', [WorkController::class, 'index'])->name('master.work');
-        Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
+        Route::middleware('role:owner,admin')->group(function() {
+
+            Route::get('/service', [ServiceController::class, 'index'])->name('master.service');
+            Route::get('/work', [WorkController::class, 'index'])->name('master.work');
+            Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
+        });
     });
 
     // Route Transaction

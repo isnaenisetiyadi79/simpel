@@ -158,8 +158,8 @@
                                             <div class="flex items-center gap-x-3">
                                                 <div class="grow">
                                                     <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                        {{ $item->id }}
-                                                   {{ $item->pickupdetail->first()->orderdetail->order->id }}
+                                                        {{-- {{ $item->id }} --}}
+                                                   {{-- {{ $item->pickupdetail->first()->orderdetail->order->id }} --}}
                                                    {{ \Carbon\Carbon::parse($item->pickupdetail->first()->orderdetail->order->order_date)->format('d/m/Y') }}
                                                     </span>
                                                 </div>
@@ -213,15 +213,23 @@
                                         <div class="px-6 py-3">
                                             <ul class="list-disc list-inside text-sm text-gray-700">
                                                 <ul>
-                                                    {{-- @forelse ($item->detail as $dtl)
+                                                    @forelse ($item->pickupdetail as $pdtl)
+                                                        @foreach ($pdtl as $odtl)
+
                                                         <li class="text-sm text-gray-500 dark:text-gray-500">
-                                                            {{ $loop->iteration }}. {{ $dtl->description }} - Qty:
-                                                            {{ $dtl->qty }} {{ $dtl->service->unit }}
-                                                            {{ $dtl->pickupdetail }}
+                                                            {{ $loop->iteration }}.{{ $odtl }}
+                                                             {{-- {{ $odtl->description }} - Qty:
+                                                            {{ $odtl->qty }} {{ $dtl->service->unit }}
+                                                            {{ $odtl->pickupdetail }} --}}
                                                         </li>
+                                                        @endforeach
                                                     @empty
-                                                    @endforelse --}}
+
+                                                    <span
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">Tidak ada pesanan</span>
+                                                    @endforelse
                                                 </ul>
+
                                                 {{-- <span
                                                 class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->description }} Qty: {{ $dtl->qty }} {{ $dtl->service->unit }}</span> --}}
 

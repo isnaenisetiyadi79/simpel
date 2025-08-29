@@ -38,6 +38,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'siswa@google.com',
             'password' => Hash::make('password'),
         ]);
+        $owner = User::create([
+            'name' => 'Owner User',
+            'email' => 'owner@google.com',
+            'password' => Hash::make('password'),
+        ]);
 
         $this->call([
             RoleSeeder::class,
@@ -51,6 +56,7 @@ class DatabaseSeeder extends Seeder
         $admin->roles()->attach(Role::where('slug', 'admin')->first());
         $operator->roles()->attach(Role::where('slug', 'operator')->first());
         $siswa->roles()->attach(Role::where('slug', 'kasir')->first());
+        $owner->roles()->attach(Role::where('slug', 'owner')->first());
 
         // Role::factory()->create([
         //     ['name' => 'Administrator', 'slug' => 'admin'],
