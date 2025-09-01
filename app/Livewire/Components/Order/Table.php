@@ -31,6 +31,10 @@ class Table extends Component
         session()->flash('success', $message);
     }
 
+    public function openModalBayarDepe($id)
+    {
+        $this->dispatch('open-modal-bayar-depe', $id);
+    }
     // public function edit($id)
     // {
     //     $this->dispatch('edit-modal', $id);
@@ -48,17 +52,21 @@ class Table extends Component
     }
     public function getItems()
     {
-       $query = OrderDetail::with(['order.customer', 'service'])
+        $query = OrderDetail::with(['order.customer', 'service'])
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
                     $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
                         ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%");
                 });
             })
-            ->when($this->dateFrom, fn($q) =>
+            ->when(
+                $this->dateFrom,
+                fn($q) =>
                 $q->whereDate('created_at', '>=', Carbon::parse($this->dateFrom))
             )
-            ->when($this->dateTo, fn($q) =>
+            ->when(
+                $this->dateTo,
+                fn($q) =>
                 $q->whereDate('created_at', '<=', Carbon::parse($this->dateTo))
             )
             ->latest();
@@ -69,10 +77,10 @@ class Table extends Component
         return $query->paginate(10);
     }
 
-    // public function print($id)
-    // {
-    //     $this->redirectRoute('order.print', $id);
-    // }
+    public function print($id)
+    {
+        $this->redirectRoute('order.print', $id);
+    }
 
     public function render()
     {

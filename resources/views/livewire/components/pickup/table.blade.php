@@ -122,6 +122,30 @@
                                         </span>
                                     </div>
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Subtotal
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Bayar DP
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Bayar Pengambilan
+                                        </span>
+                                    </div>
+                                </th>
 
 
 
@@ -178,22 +202,71 @@
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
                                             <ul class="list-disc list-inside text-sm text-gray-700">
-                                                 <span
-                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->orderdetail->service->name }}</span>
+                                                <span
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->orderdetail->service->name }}</span>
 
                                             </ul>
                                         </div>
                                     </td>
-
-                                    {{-- <td class="size-px whitespace-nowrap">
-                                        <div class="px-6 py-1.5">
-                                            <button type="button"
-                                                class="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
-                                                wire:click="edit({{ $item->id }})">
-                                                Edit
-                                            </button>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                                <span
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->orderdetail->subtotal, 0, ',', '.') }}</span>
+                                            </ul>
                                         </div>
-                                    </td> --}}
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                                <span
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->dp, 0, ',', '.') }}</span>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                                <span
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->bayarpickup, 0, ',', '.') }}</span>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td
+                                        class="size-px
+                                                whitespace-nowrap">
+                                        <div class="flex gap-2">
+
+
+
+                                            <div class="hs-tooltip inline-block">
+                                                <button type="button"
+                                                    class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-gray-400 text-white shadow-2xs hover:bg-gray-500 focus:outline-hidden focus:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                                    wire:click="print({{ $item->pickup->id }})"
+                                                    >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                        height="20" viewBox="0 0 24 24">
+                                                        <g fill="none" stroke="currentColor" stroke-width="1">
+                                                            <path
+                                                                d="M18 13.5h.5c.943 0 1.414 0 1.707-.293s.293-.764.293-1.707v-1c0-1.886 0-2.828-.586-3.414S18.386 6.5 16.5 6.5h-9c-1.886 0-2.828 0-3.414.586S3.5 8.614 3.5 10.5v2c0 .471 0 .707.146.854c.147.146.383.146.854.146H6" />
+                                                            <path
+                                                                d="M6.5 19.806V11.5c0-.943 0-1.414.293-1.707S7.557 9.5 8.5 9.5h7c.943 0 1.414 0 1.707.293s.293.764.293 1.707v8.306c0 .317 0 .475-.104.55s-.254.025-.554-.075l-2.168-.723a.5.5 0 0 0-.173-.042a.5.5 0 0 0-.171.052l-2.144.858a.5.5 0 0 1-.186.055a.5.5 0 0 1-.186-.055l-2.144-.858c-.084-.034-.126-.05-.17-.052s-.088.013-.174.042l-2.168.723c-.3.1-.45.15-.554.075s-.104-.233-.104-.55Z" />
+                                                            <path stroke-linecap="round" d="M9.5 13.5h4m-4 3h5" />
+                                                            <path
+                                                                d="M17.5 6.5v-.4c0-1.697 0-2.546-.527-3.073S15.597 2.5 13.9 2.5h-3.8c-1.697 0-2.546 0-3.073.527S6.5 4.403 6.5 6.1v.4" />
+                                                        </g>
+                                                    </svg>
+                                                    <span
+                                                        class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                                                        role="tooltip">
+                                                        Print Struck
+                                                    </span>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
                                 </tr>
                             @empty
                                 <tr>

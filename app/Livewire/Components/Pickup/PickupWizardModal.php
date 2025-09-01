@@ -35,6 +35,7 @@ class PickupWizardModal extends Component
 
     // Step 2 filters(final)
     public $selectedRows = [];
+    public $pickup_id;
     public $pickup_date;
     public $note;
 
@@ -259,7 +260,7 @@ class PickupWizardModal extends Component
                 $payAmount = (float)($this->pay_now ?? 0);
                 if ($payAmount > 0) {
                     $pickup->payment()->create([
-                        'order_id'       => $this->order_id, // tetap kaitkan ke order
+                        // 'order_id'       => $this->order_id, // tetap kaitkan ke order
                         'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
                         'amount'         => $payAmount,
                         'payment_method' => $this->payment_method,
@@ -268,7 +269,10 @@ class PickupWizardModal extends Component
 
                 // 5) Update status order (unpaid/partially_paid/paid)
                 $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
-                $paid    = (float)($order->paid_sum ?? 0);
+                $pickups = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
+                $paid    = (float)($order->paid_sum ?? 0) + (float)($pickups->paid_sum ?? 0 + $payAmount);
+                // dd($pickups->paid_sum);
+                // dd($paid);
                 $total   = (float)($order->total_amount ?? 0);
                 $status  = match (true) {
                     $paid <= 0        => 'unpaid',
@@ -280,6 +284,7 @@ class PickupWizardModal extends Component
             }
             DB::commit();
             $this->dispatch('success', message: 'Pickup added succesfully');
+            $this->redirectRoute('pickup.print', $pickup->id);
             $this->closeWizard();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -289,10 +294,6 @@ class PickupWizardModal extends Component
 
     public function render()
     {
-        // if ($this->payment_method == 'transfer') {
-        //     $this->pay_now = $this->outstanding;
-        // }
-
         return view('livewire.components.pickup.pickup-wizard-modal');
     }
 }

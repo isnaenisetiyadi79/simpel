@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ReceivableController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,7 @@ Route::middleware(['authenticate'])->group(function () {
 
     // Route Pickup
     Route::get('pickup', [PickupController::class, 'index'])->name('pickup');
+    Route::get('/pickup/print/{id}', [PickupController::class, 'print'])->name('pickup.print');
 
     // Route Receivable
     Route::get('receivable', [ReceivableController::class, 'index'])->name('receivable');
@@ -58,10 +60,12 @@ Route::middleware(['authenticate'])->group(function () {
 
     // Route Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.auth');
+
 });
 Route::middleware(['authenticate','role:admin'])->group(function() {
 
     Route::get('/user', [UserController::class, 'index'])->name('user');
+    Route::get('/toko', [TokoController::class, 'index'])->name('toko');
 });
 
 

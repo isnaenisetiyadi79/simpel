@@ -246,6 +246,7 @@ class Ordercreatemodal extends Component
 
             DB::commit();
             $this->dispatch('success', message: 'Orders added succesfully');
+            $this->redirectRoute('order.print', $order->id);
             $this->closeModal();
         } catch (\Throwable $th) {
             DB::rollBack();

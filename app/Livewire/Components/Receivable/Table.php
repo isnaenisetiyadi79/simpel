@@ -4,6 +4,7 @@ namespace App\Livewire\Components\Receivable;
 
 use App\Models\Order;
 use App\Models\Pickup;
+use App\Models\PickupDetail;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
@@ -24,7 +25,10 @@ class Table extends Component
         $this->resetPage();
         session()->flash('success', $message);
     }
-
+    public function openModalBayarDepe($id)
+    {
+        $this->dispatch('open-modal-bayar-depe', $id);
+    }
     // return PickupDetail::query()
     //     ->with(['pickup.customer', 'orderdetail.service'])
     //     ->when($this->search, function ($q) {
@@ -81,7 +85,7 @@ class Table extends Component
     public function getPickupQuery()
     {
         return Pickup::query()
-            ->with(['pickupdetail', 'pickupdetail.orderdetail','pickupdetail.orderdetail.order', 'payment', 'customer'])
+            ->with(['pickupdetail', 'pickupdetail.orderdetail', 'pickupdetail.orderdetail.order', 'payment', 'customer'])
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
                     $sub->whereHas(
@@ -112,6 +116,12 @@ class Table extends Component
                 $q->where('pickup_date', '<=', $this->dateTo)
 
             )
+            // subtotal pakai subquery
+            ->addSelect([
+                'subtotal' => PickupDetail::selectRaw('SUM(pickup_details.qty * order_details.price)')
+                    ->join('order_details', 'order_details.id', '=', 'pickup_details.order_detail_id')
+                    ->whereColumn('pickup_details.pickup_id', 'pickups.id')
+            ])
             // filter payment_status ≠ paid
             ->whereHas('pickupdetail.orderdetail.order', fn($q) => $q->where('payment_status', '!=', 'paid'))
             // filter pickup_status ≠ paid
@@ -120,8 +130,16 @@ class Table extends Component
     }
 
 
+    public function print($id)
+    {
+        $this->redirectRoute('pickup.print', $id);
+        // $this->redirectRoute('cetakstruk', $id);
+    }
+
     public function render()
     {
+        $pickups = [];
+
         return view('livewire.components.receivable.table', [
             // 'orders' => $this->getOrderQuery()->paginate(10),
             'pickups' => $this->getPickupQuery()->paginate(10)

@@ -291,8 +291,7 @@
                                                         <button type="button"
                                                             wire:click="changeStatus({{ $item->id }})"
                                                             class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 hover:text-teal-500 rounded-full dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500 disabled:hover:bg-sky-100 disabled:hover:text-teal-800 enabled:cursor-pointer"
-                                                            {{ $item->pickup_status != 'pending' ? 'disabled': '' }}
-                                                            >
+                                                            {{ $item->pickup_status != 'pending' ? 'disabled' : '' }}>
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -354,7 +353,14 @@
 
                                                 <span
                                                     class="block text-sm text-gray-500 dark:text-neutral-500 capitalize">
-                                                    {{ $item->order->payment_status }}
+                                                    @if ($item->order->payment_status === 'unpaid')
+                                                    Belum Dibayar
+                                                    @elseif ($item->order->payment_status === 'partially')
+                                                    Dibayar sebagian
+                                                    @elseif ($item->order->payment_status === 'paid')
+                                                    Lunas
+                                                    @endif
+                                                    {{-- {{ $item->order->payment_status }} --}}
                                                 </span>
                                             </div>
                                         </td>
@@ -374,7 +380,7 @@
                                                 whitespace-nowrap">
                                             <div class="flex gap-2">
 
-                                                <div class="hs-tooltip inline-block">
+                                                {{-- <div class="hs-tooltip inline-block">
                                                     <button type="button"
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-sky-400 text-white shadow-2xs hover:bg-sky-500 focus:outline-hidden focus:bg-sky-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                         wire:click="edit({{ $item->id }})"
@@ -397,31 +403,27 @@
                                                             Update
                                                         </span>
                                                     </button>
-                                                </div>
+                                                </div> --}}
                                                 <div class="hs-tooltip inline-block">
                                                     <button type="button"
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-orange-400 text-white shadow-2xs hover:bg-orange-500 focus:outline-hidden focus:bg-orange-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                                        wire:click="changeStatus({{ $item->id }})"
-                                                        {{ $item->status == 'completed' ? 'disabled' : '' }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                            height="20" viewBox="0 0 20 20">
-                                                            <path fill="currentColor"
-                                                                d="M18 5.75a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h14.5a.75.75 0 0 0 .75-.75m0 3a.75.75 0 0 0-.75-.75H2.75a.75.75 0 0 0 0 1.5h9.456A5.5 5.5 0 0 1 14.5 9a5.5 5.5 0 0 1 2.294.5h.456a.75.75 0 0 0 .75-.75M9.022 14a5.6 5.6 0 0 0 .069 1.5H2.75a.75.75 0 0 1 0-1.5zm1.235-3a5.5 5.5 0 0 0-.882 1.5H2.75a.75.75 0 0 1 0-1.5zM19 14.5a4.5 4.5 0 1 0-9 0a4.5 4.5 0 0 0 9 0m-2.5-2a.5.5 0 0 1 .749.657l-.06.068l-3.512 3.64a.5.5 0 0 1-.666.021l-.067-.067l-1.34-1.645a.5.5 0 0 1 .713-.696l.063.064l.999 1.227z" />
-                                                        </svg>
+                                                        wire:click="openModalBayarDepe({{ $item->order_id }})"
+                                                        {{ $item->pickup_status == 'completed' ? 'disabled' : '' }}>
+                                                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M8.276 3.979a1 1 0 0 0-.943-.667H6.56a.893.893 0 0 0-.19 1.765l1.178.257a1 1 0 0 1-.214 1.978h-.666a1 1 0 0 1-.943-.667M7 3.312v-1m0 6v-1"/><path d="M11.5 5.031a4.5 4.5 0 1 0-6.5 4v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1.5a4.48 4.48 0 0 0 2.5-4M5 13.5h4"/></g></svg>
                                                         <span
                                                             class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
                                                             role="tooltip">
-                                                            Change Status
+                                                            Bayar Depe
                                                         </span>
                                                     </button>
                                                 </div>
                                                 <div class="hs-tooltip inline-block">
                                                     <button type="button"
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-gray-400 text-white shadow-2xs hover:bg-gray-500 focus:outline-hidden focus:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                                        wire:click="print({{ $item->id }})"
-                                                        {{ $item->status != 'completed' ? 'disabled' : '' }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24">
+                                                        wire:click="print({{ $item->order->id }})"
+                                                        {{ $item->pickup_status === 'completed' ? 'disabled' : '' }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                            height="20" viewBox="0 0 24 24">
                                                             <g fill="none" stroke="currentColor" stroke-width="1">
                                                                 <path
                                                                     d="M18 13.5h.5c.943 0 1.414 0 1.707-.293s.293-.764.293-1.707v-1c0-1.886 0-2.828-.586-3.414S18.386 6.5 16.5 6.5h-9c-1.886 0-2.828 0-3.414.586S3.5 8.614 3.5 10.5v2c0 .471 0 .707.146.854c.147.146.383.146.854.146H6" />
@@ -444,10 +446,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
-
-
-
                             </tbody>
                         </table>
                     </div>
@@ -499,5 +497,6 @@
 
     @livewire('components.order.ordercreatemodal')
     @livewire('components.orderdetail.changeprocess')
+    @livewire('components.order.modalbayardepe')
 
 </div>

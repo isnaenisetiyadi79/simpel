@@ -7,7 +7,7 @@
     <title>Putra Makarti</title>
     <style>
         @page {
-            size: {{ $toko->printer_width }}mm auto;
+            size: {{ $toko->printer_width }}80mm auto;
             margin: 0;
             padding: 0;
         }
@@ -48,7 +48,7 @@
 
         .info-row {
             display: flex;
-            font-size: 11px;
+            font-size: 12px;
             justify-content: space-between;
             margin-bottom: 1mm;
         }
@@ -139,19 +139,19 @@
         <div class="info-row">
             <span>Tanggal:</span>
             {{-- <span>{{ date('d-F-Y H:i', strtotime($order->created_at)) }}</span> --}}
-            <span>{{ \Illuminate\Support\Carbon::parse($order->order_date)->locale('id')->translatedFormat('d F Y') }}</span>
+            <span>{{ \Illuminate\Support\Carbon::parse($pickup->created_at)->locale('id')->translatedFormat('d F Y H:i') }}</span>
         </div>
         <div class="info-row">
             <span>Pelanggan:</span>
-            <span>{{ $order->customer->name }}</span>
+            <span>{{ $pickup->customer->name }}</span>
         </div>
         <div class="info-row">
             <span>No. HP:</span>
-            <span>{{ $order->customer->phone_number }}</span>
+            <span>{{ $pickup->customer->phone_number }}</span>
         </div>
         <div class="info-row">
-            <span>Order No: # {{ $order->id }}</span>
-            <span>{{ $order->note }}</span>
+            <span>Pickup No: # {{ $pickup->id }}</span>
+            <span>{{ $pickup->note }}</span>
         </div>
     </div>
 
@@ -166,23 +166,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($order->orderdetail as $pd)
+            @foreach ($pickup->pickupdetail as $pd)
                 <tr>
                     <td>
-                        {{ $pd->description }} <br>
-                        qty: {{ number_format($pd->qty, 0, ',', '.') }}
-                        {{-- @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width) --}}
-                        @if ($pd->length != 0 && $pd->width != 0)
-                            > ({{ number_format($pd->length, 0, ',', '.') }} x
-                            {{ number_format($pd->width, 0, ',', '.') }})
+                        {{ $pd->orderdetail->description }} <br>
+                        qty: {{ number_format($pd->orderdetail->qty, 0, ',', '.') }}
+                        @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width)
+                            @if ($pd->orderdetail->length != 0 && $pd->orderdetail->width != 0)
+                                > ({{ number_format($pd->orderdetail->length, 0, ',', '.') }} x
+                                {{ number_format($pd->orderdetail->width, 0, ',', '.') }})
+                            @endif
                         @endif
-                        {{-- @endif --}}
 
                     </td>
-                    <td class="align-right">{{ number_format($pd->qty_final, 0, ',', '.') }}
-                        {{ $pd->service->unit }}</td>
-                    <td class="align-right">{{ number_format($pd->price, 0, ',', '.') }}</td>
-                    <td class="align-right">{{ number_format($pd->subtotal, 0, ',', '.') }}</td>
+                    <td class="align-right">{{ number_format($pd->orderdetail->qty_final, 0, ',', '.') }}
+                        {{ $pd->orderdetail->service->unit }}</td>
+                    <td class="align-right">{{ number_format($pd->orderdetail->price, 0, ',', '.') }}</td>
+                    <td class="align-right">{{ number_format($pd->orderdetail->subtotal, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -195,7 +195,7 @@
         </div>
         <div class="total-row">
             <span>Pembayaran:</span>
-            <span>{{ number_format($order->paid_sum, 0, ',', '.') }}</span>
+            <span>{{ number_format($paid_sum, 0, ',', '.') }}</span>
         </div>
         @if ($kembali > 0)
             <div class="total-row">
