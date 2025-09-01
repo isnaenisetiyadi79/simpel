@@ -50,7 +50,7 @@
               <div class="mt-1 flex items-center gap-x-2">
                   <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
                      {{-- Rp. {{ number_format($total, 0, ',', '.') }} --}}
-                     Rp. {{ number_format($pickupdetail->first()->orderdetail->sum('subtotal'), 0, ',', '.') }}
+                     Rp. {{ number_format(optional(optional($pickupdetail->first())->orderdetail)->sum('subtotal'), 0, ',', '.') }}
                   </h3>
               </div>
           </div>

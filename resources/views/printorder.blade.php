@@ -139,7 +139,7 @@
         <div class="info-row">
             <span>Tanggal:</span>
             {{-- <span>{{ date('d-F-Y H:i', strtotime($order->created_at)) }}</span> --}}
-            <span>{{ \Illuminate\Support\Carbon::parse($order->order_date)->locale('id')->translatedFormat('d F Y') }}</span>
+            <span>{{ \Illuminate\Support\Carbon::parse($order->order_date)->locale('id')->translatedFormat('d F Y H:i') }}</span>
         </div>
         <div class="info-row">
             <span>Pelanggan:</span>

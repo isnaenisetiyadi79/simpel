@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
@@ -64,7 +65,7 @@ class Ordercreatemodal extends Component
     public function resetForm()
     {
         $this->customer_id = null;
-        $this->order_date = now()->toDateString();
+        $this->order_date = now()->format('Y-m-d\TH:i');
         $this->order_note = '';
         $this->total_amount = 0;
         $this->pay = 0;
@@ -209,7 +210,7 @@ class Ordercreatemodal extends Component
             $order = Order::create([
                 'customer_id' => $this->customer_id,
                 'user_id' => $user->id,
-                'order_date' => $this->order_date,
+                'order_date' => Carbon::parse($this->order_date)->format('Y-m-d H:i:s'),
                 'total_amount' => array_sum(array_column($this->details, 'subtotal')),
                 'note' => $this->order_note,
             ]);
