@@ -22,7 +22,6 @@
             @livewire('components.orderdetail.widget')
             <div class="grid gap-4 sm:gap-6">
 
-
                 <!-- Card -->
                 <div
                     class="p-4 md:p-5 min-h-102.5 flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">

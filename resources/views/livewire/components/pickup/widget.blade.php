@@ -6,7 +6,7 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                      Total Pesanan Masuk
+                      Total Pesanan Diambil
                   </p>
                   <div class="hs-tooltip">
                       <div class="hs-tooltip-toggle">
@@ -29,7 +29,7 @@
 
               <div class="mt-1 flex items-center gap-x-2">
                   <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                      {{ $orderdetail->count() }}
+                      {{ $pickupdetail->count() }}
                   </h3>
 
               </div>
@@ -43,13 +43,14 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                      Belum dikerjakan
+                      Nilai Transaksi
                   </p>
               </div>
 
               <div class="mt-1 flex items-center gap-x-2">
                   <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                      {{ $orderdetail->where('process_status', 'pending')->count() }}
+                     {{-- Rp. {{ number_format($total, 0, ',', '.') }} --}}
+                     Rp. {{ number_format($pickupdetail->first()->orderdetail->sum('subtotal'), 0, ',', '.') }}
                   </h3>
               </div>
           </div>
@@ -62,13 +63,13 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                      DiProses
+                      Total Pembayaran
                   </p>
               </div>
 
               <div class="mt-1 flex items-center gap-x-2">
                   <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                      {{ $orderdetail->where('process_status', 'process')->count() }}
+                      {{ number_format($total_payment, 0, ',', '.') }}
                   </h3>
 
               </div>
@@ -77,7 +78,7 @@
       <!-- End Card -->
 
       <!-- Card -->
-      <div
+      {{-- <div
           class="flex flex-col bg-white border-l-2 border-green-500 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
@@ -92,10 +93,10 @@
                   </h3>
               </div>
           </div>
-      </div>
+      </div> --}}
       <!-- End Card -->
       <!-- Card -->
-      <div
+      {{-- <div
           class="flex flex-col bg-white border-l-2 border-green-700 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
@@ -110,7 +111,7 @@
                   </h3>
               </div>
           </div>
-      </div>
+      </div> --}}
       <!-- End Card -->
   </div>
   <!-- End Grid -->

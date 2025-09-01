@@ -10,7 +10,7 @@
 
 
 
-            @livewire('components.order.widget')
+            @livewire('components.pickup.widget')
             @livewire('components.pickup.table')
         </div>
     </div>
