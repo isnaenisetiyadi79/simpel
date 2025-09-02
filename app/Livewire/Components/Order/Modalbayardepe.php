@@ -108,16 +108,23 @@ class Modalbayardepe extends Component
 
             // 4) Pembayaran (kalau ada)
             $payAmount = (float)($this->pay_now ?? 0);
+            // 5) Cek pembayaran dulu, untuk melihat lebih apa tidak
+            $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
+            $paid    = (float)($order->paid_sum ?? 0) + $payAmount;
+            // dd($pickups->paid_sum);
+            // dd($paid);
+            $total   = (float)($order->total_amount ?? 0);
             if ($payAmount > 0) {
                 $this->order->payment()->create([
                     'order_id'       => $this->order_id, // tetap kaitkan ke order
                     // 'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
-                    'amount'         => $payAmount,
+                    'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
+                    'paid_amount'   => $payAmount,
                     'payment_method' => $this->payment_method,
                 ]);
             }
 
-            // 5) Update status order (unpaid/partially_paid/paid)
+            // 6) Update status order (unpaid/partially_paid/paid)
             $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
             $paid    = (float)($order->paid_sum ?? 0) + $payAmount;
             // dd($pickups->paid_sum);

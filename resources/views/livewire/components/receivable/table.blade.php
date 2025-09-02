@@ -120,7 +120,23 @@
                                     <div class="flex justify-end gap-x-2">
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                            Harga
+                                            Sub Total
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <div class="flex justify-end gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Bayar
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <div class="flex justify-end gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                           Hutang
                                         </span>
                                     </div>
                                 </th>
@@ -211,6 +227,26 @@
                                                 <span class="text-sm text-gray-500 dark:text-neutral-500">
                                                     {{-- {{ $item->pickupdetail->first()->orderdetail->subtotal }} --}}
                                                     {{ number_format($item->subtotal, 0, ',', '.') }}
+                                                </span>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                                <span class="text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{-- {{ $item->pickupdetail->first()->orderdetail->subtotal }} --}}
+                                                    {{ number_format($item->payment->sum('amount') + $item->pickupdetail->first()->orderdetail->order->payment->sum('amount'), 0, ',', '.') }}
+                                                </span>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                                <span class="text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{-- {{ $item->pickupdetail->first()->orderdetail->subtotal }} --}}
+                                                    {{ number_format($item->subtotal - ($item->payment->sum('amount') + $item->pickupdetail->first()->orderdetail->order->payment->sum('amount')), 0, ',', '.') }}
                                                 </span>
                                             </ul>
                                         </div>

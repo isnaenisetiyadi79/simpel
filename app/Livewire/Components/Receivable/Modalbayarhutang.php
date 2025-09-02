@@ -58,38 +58,46 @@ class Modalbayarhutang extends Component
     {
         $max = max(0, $this->outstanding);
         // if ($this->pay_now > $max) {
-            //     $this->pay_now = $max;
-            // }
-            if ($this->pay_now < 0) {
-                $this->pay_now = 0;
-            }
-            $this->change = (float) $this->pay_now - $this->outstanding;
+        //     $this->pay_now = $max;
+        // }
+        if ($this->pay_now < 0) {
+            $this->pay_now = 0;
         }
-        public function save()
-        {
-            $this->validate([
-                'order_id' => 'required|exists:orders,id',
-                'pay_now' => 'nullable|numeric|min:1',
-            ]);
+        $this->change = (float) $this->pay_now - $this->outstanding;
+    }
+    public function save()
+    {
+        $this->validate([
+            'order_id' => 'required|exists:orders,id',
+            'pay_now' => 'nullable|numeric|min:1',
+        ]);
 
-            DB::beginTransaction();
+        DB::beginTransaction();
 
-            try {
+        try {
 
 
 
             // Pembayaran (kalau ada)
             $payAmount = (float)($this->pay_now ?? 0);
+            // 5) Lihat pembayaran dulu, lebih atau tidak
+            $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
+            $pickup = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
+            $paid    = (float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0);
+            // dd($pickup->paid_sum);
+            // dd($paid);
+            $total   = (float) (($order->total_amount ?? 0) - (($order->paid_sum ?? 0) + ($pickup->paid_sum ?? 0)));
             if ($payAmount > 0) {
                 $this->pickup->payment()->create([
                     // 'order_id'       => $this->order_id, // tetap kaitkan ke order
                     'pickup_id'      => $this->pickup->id, // tetap kaitkan ke pickup
-                    'amount'         => $payAmount,
+                    'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
+                    'paid_amount'   => $payAmount,
                     'payment_method' => $this->payment_method,
                 ]);
             }
 
-            // 5) Update status order (unpaid/partially_paid/paid)
+            // 6) Update status order (unpaid/partially_paid/paid)
             $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
             $pickup = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
             $paid    = (float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0);

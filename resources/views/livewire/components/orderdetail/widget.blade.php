@@ -1,5 +1,5 @@
   <!-- Grid -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-6">
       <!-- Card -->
       <div
           class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
@@ -107,6 +107,24 @@
               <div class="mt-1 flex items-center gap-x-2">
                   <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
                        {{ $orderdetail->where('pickup_status', 'completed')->count() }}
+                  </h3>
+              </div>
+          </div>
+      </div>
+      <!-- End Card -->
+      <!-- Card -->
+      <div
+          class="flex flex-col bg-white border-l-2 border-green-700 shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+          <div class="p-4 md:p-5">
+              <div class="flex items-center gap-x-2">
+                  <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
+                      Pembayaran di Depan
+                  </p>
+              </div>
+
+              <div class="mt-1 flex items-center gap-x-2">
+                  <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                      Rp. {{ number_format($order_payment,0,',','.') }}
                   </h3>
               </div>
           </div>

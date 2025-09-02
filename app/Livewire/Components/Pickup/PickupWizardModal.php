@@ -241,7 +241,7 @@ class PickupWizardModal extends Component
                             'pickup_detail_id' => $pd->id,
                             'work_id' => $w['work']['id'],
                             'employee_id' => $w['employee_id'] ?? null,
-                            'pay_default' => (float)($w['fee'] ?? 0),
+                            'pay_default' => (float)($w['work']['default_pay'] ?? 0),
                             'created_at' => now(),
                             'updated_at' => now(),
                         ];
@@ -258,16 +258,25 @@ class PickupWizardModal extends Component
 
                 // 4) Pembayaran (kalau ada)
                 $payAmount = (float)($this->pay_now ?? 0);
+                // 5) Cek jumlah pembayaran dulu, untuk melihat lebih apa tidak
+                $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
+                $pickups = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
+                $paid    = (float)($order->paid_sum ?? 0) + (float)($pickups->paid_sum ?? 0 + $payAmount);
+                // dd($pickups->paid_sum);
+                // dd($paid);
+                $total   = (float)($order->total_amount ?? 0);
+
                 if ($payAmount > 0) {
                     $pickup->payment()->create([
                         // 'order_id'       => $this->order_id, // tetap kaitkan ke order
                         'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
-                        'amount'         => $payAmount,
+                        'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
+                        'paid_amount' => $payAmount,
                         'payment_method' => $this->payment_method,
                     ]);
                 }
 
-                // 5) Update status order (unpaid/partially_paid/paid)
+                // 6) Update status order (unpaid/partially_paid/paid) setelah pembayaran
                 $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
                 $pickups = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
                 $paid    = (float)($order->paid_sum ?? 0) + (float)($pickups->paid_sum ?? 0 + $payAmount);

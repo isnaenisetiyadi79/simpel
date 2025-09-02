@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id')->nullable();
             $table->unsignedBigInteger('pickup_id')->nullable();
             $table->float('amount');
+            $table->float('paid_amount');
             $table->enum('payment_method', ['cash', 'transfer'])->default('cash');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('pickup_id')->references('id')->on('pickups')->onDelete('cascade');

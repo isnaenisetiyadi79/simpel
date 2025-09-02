@@ -11,6 +11,7 @@
 
 
             @livewire('components.pickup.widget')
+            @livewire('components.salary.widget')
             @livewire('components.pickup.table')
         </div>
     </div>

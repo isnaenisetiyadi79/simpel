@@ -13,6 +13,8 @@ class Widget extends Component
     public $pickupdetail = [];
     public $total;
     public $total_payment;
+    public $order_payment;
+    public $pickup_payment;
 
     public function mount()
     {
@@ -26,13 +28,22 @@ class Widget extends Component
         $this->pickupdetail = PickupDetail::all();
         $this->total = DB::table('pickup_details')
             ->join('order_details', 'order_details.id', '=', 'pickup_details.order_detail_id') // filter pickup tertentu
-            ->select(DB::raw('COALESCE(SUM(order_details.qty * order_details.price), 0) as total'))
+            ->select(DB::raw('COALESCE(SUM(pickup_details.qty * order_details.price), 0) as total'))
             ->value('total');
-        $this->total_payment = DB::table('payments')
+        $this->order_payment = DB::table('payments')
+            // ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
             ->join('order_details', 'order_details.order_id', '=', 'payments.order_id')
             ->join('pickup_details', 'pickup_details.order_detail_id', '=', 'order_details.id')
             ->select(DB::raw('COALESCE(SUM(payments.amount), 0) as total_payment'))
-            ->value('total_payment');
+            ->value('order_payment');
+        $this->pickup_payment = DB::table('payments')
+            ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
+            // ->join('order_details', 'order_details.order_id', '=', 'payments.order_id')
+            // ->join('pickup_details', 'pickup_details.order_detail_id', '=', 'order_details.id')
+            ->select(DB::raw('COALESCE(SUM(payments.amount), 0) as total_payment'))
+            ->value('pickup_payment');
+        $this->total_payment = $this->order_payment + $this->pickup_payment;
+
     }
 
     #[On('success')]

@@ -7,9 +7,11 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\WithFileUploads;
 
 class Modalform extends Component
 {
+    use WithFileUploads;
     public $modalFormData = false;
 
     public $id;
@@ -19,6 +21,8 @@ class Modalform extends Component
     public $email;
     public $password;
     public $role;
+    public $profile_photo; // untuk database
+    public $newProfilePhoto; // untuk upload baru
     #[On('open-modal')]
     public function openModal()
     {
@@ -31,12 +35,13 @@ class Modalform extends Component
 
         $this->id = $id;
         $this->update_data = true;
-        $this->modalFormData = true;
 
         $user = User::find($id);
         $this->name = $user->name;
         $this->email = $user->email;
         $this->role = $user->roles->pluck('id')->toArray();
+        $this->profile_photo = $user->profile_photo;
+        $this->modalFormData = true;
     }
 
     public function closeModal()
@@ -54,7 +59,10 @@ class Modalform extends Component
         $this->validate([
             'name' => 'required',
             'email' => 'required|email:rfc,dns',
+            'newProfilePhoto' => 'nullable|image|max:2048',
         ]);
+
+
 
         if ($this->update_data) {
             $user = User::find($this->id);
@@ -62,6 +70,10 @@ class Modalform extends Component
             $user->email = $this->email;
             if ($this->password) {
                 $user->password = $this->password;
+            }
+            if ($this->newProfilePhoto) {
+                $path = $this->newProfilePhoto->store('profile_photos', 'public');
+                $user->profile_photo = $path;
             }
 
             $user->save();
@@ -77,7 +89,10 @@ class Modalform extends Component
             $user = User::create([
                 'name' => $this->name,
                 'email' => $this->email,
-                'password' => Hash::make($this->password)
+                'password' => Hash::make($this->password),
+                'profile_photo' => $this->profile_photo
+                    ? $this->profile_photo->store('profile_photos', 'public')
+                    : null,
             ]);
             $user->roles()->sync($this->role);
             $this->reset();

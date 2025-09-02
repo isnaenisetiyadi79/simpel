@@ -237,6 +237,7 @@ class Ordercreatemodal extends Component
                 Payment::create([
                     'order_id' => $order->id,
                     'amount' => $this->pay > $this->total_amount ? $this->total_amount : $this->pay,
+                    'paid_amount' => $this->pay,
                     'payment_method' => $this->payment_method == 'transfer' ? 'transfer' : 'cash',
                 ]);
 
