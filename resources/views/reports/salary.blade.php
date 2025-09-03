@@ -10,9 +10,9 @@
 
 
 
-            @livewire('components.order.widget')
+            {{-- @livewire('components.order.widget') --}}
             @livewire('components.salary.widget')
-            @livewire('components.receivable.table')
+            @livewire('components.salary.table')
         </div>
     </div>
     <!-- End Content -->

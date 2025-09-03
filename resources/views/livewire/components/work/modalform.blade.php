@@ -71,7 +71,8 @@
                         <div class="w-full mt-4">
                             <label for="input-label-with-helper-email"
                                 class="block text-sm font-medium mb-2 dark:text-white">Upah Karyawan</label>
-                            <input type="number" wire:model="default_pay" name="default_pay" id="input-label-with-helper-default_pay"
+                            <input type="number" wire:model="default_pay" name="default_pay"
+                                id="input-label-with-helper-default_pay"
                                 class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600
                                 @error('price') border-red-500 @enderror"
                                 placeholder="100000" aria-describedby="hs-input-helper-text">
@@ -90,6 +91,19 @@
                             @error('description')
                                 <span class="text-red-600 text-xs">{{ $message }}</span>
                             @enderror
+                        </div>
+                        <div class="w-full mt-4">
+                            <div class="flex">
+                                <input type="checkbox"
+                                    class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                    wire:model="one_time">
+                                <label for="hs-checked-checkbox"
+                                    class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Centang bila pembayaran hanya 1 kali di depan</label>
+                            </div>
+                            @error('unit')
+                                <span class="text-red-600 text-xs">{{ $message }}</span>
+                            @enderror
+
                         </div>
                     </div>
 

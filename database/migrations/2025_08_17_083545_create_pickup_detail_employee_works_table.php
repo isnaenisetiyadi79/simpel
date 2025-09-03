@@ -17,6 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('work_id');
             $table->unsignedBigInteger('employee_id');
             $table->decimal('pay_default',8,2)->default(0);
+            $table->boolean('is_paid')->default(false)
+            ->comment('untuk menandai pembayaran one_time atau tidak,
+             false untuk yang work bukan one_time');
             $table->timestamps();
             $table->foreign('pickup_detail_id')
             ->references('id')

@@ -8,6 +8,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ReceivableController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
@@ -44,6 +45,17 @@ Route::middleware(['authenticate'])->group(function () {
             Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
         });
     });
+    Route::middleware('role:owner,admin')->group(function() {
+
+        Route::get('report/salary', [ReportController::class, 'salary'])->name('report.salary');
+        // Route::get('/work', [WorkController::class, 'index'])->name('master.work');
+        // Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
+    });
+    Route::middleware('role:admin')->group(function() {
+        Route::get('/user', [UserController::class, 'index'])->name('user');
+        Route::get('/toko', [TokoController::class, 'index'])->name('toko');
+    });
+
 
     // Route Transaction
     Route::get('/transaction', [OrderController::class, 'index'])->name('order');
@@ -64,8 +76,6 @@ Route::middleware(['authenticate'])->group(function () {
 });
 Route::middleware(['authenticate','role:admin'])->group(function() {
 
-    Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::get('/toko', [TokoController::class, 'index'])->name('toko');
 });
 
 

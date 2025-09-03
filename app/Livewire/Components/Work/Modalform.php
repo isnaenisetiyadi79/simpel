@@ -15,6 +15,7 @@ class Modalform extends Component
     public $name;
     public $default_pay;
     public $description;
+    public $one_time = false;
 
 
     #[On('open-modal')]
@@ -39,6 +40,7 @@ class Modalform extends Component
         $this->name = $work->name;
         $this->default_pay = $work->default_pay;
         $this->description = $work->description;
+        $this->one_time = $work->one_time;
     }
 
     public function save()
@@ -55,6 +57,7 @@ class Modalform extends Component
                 'name' => $this->name,
                 'default_pay' => $this->default_pay,
                 'description' => $this->description,
+                'one_time' => $this->one_time,
 
             ]);
             $this->dispatch('success', 'Job updated successfully');
@@ -64,6 +67,7 @@ class Modalform extends Component
                 'name' => $this->name,
                 'default_pay' => $this->default_pay,
                 'description' => $this->description,
+                'one_time' => $this->one_time,
             ]);
             $this->dispatch('success', 'Job created successfully');
             $this->reset();

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->text('description')->nullable();
             $table->decimal('default_pay', 8, 2)->default(0);
+            $table->boolean('one_time')->default(false)
+            ->comment('Jika true, upah dibayar 1 kali saja, tidak berlaku kelipatan qty');
             $table->timestamps();
         });
     }

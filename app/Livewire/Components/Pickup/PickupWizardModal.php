@@ -233,21 +233,73 @@ class PickupWizardModal extends Component
                     'qty' => $od->qty_final, // jika nanti mau partial, ganti sesuai input
                 ]);
 
+                // // Simpan pivot pekerjaan per baris
+                // if (!empty($row['works'])) {
+                //     $pivotRows = [];
+                //     foreach ($row['works'] as $w) {
+                //         $pivotRows[] = [
+                //             'pickup_detail_id' => $pd->id,
+                //             'work_id' => $w['work']['id'],
+                //             'employee_id' => $w['employee_id'] ?? null,
+                //             'pay_default' => (float)($w['work']['default_pay'] ?? 0),
+                //             'created_at' => now(),
+                //             'updated_at' => now(),
+                //         ];
+                //     }
+                //     if (!empty($pivotRows)) {
+                //         DB::table('pickup_detail_employee_works')->insert($pivotRows);
+                //     }
+                // }
+
                 // Simpan pivot pekerjaan per baris
                 if (!empty($row['works'])) {
-                    $pivotRows = [];
                     foreach ($row['works'] as $w) {
-                        $pivotRows[] = [
+                        // $work = Work::findOrFail($w['work']['id']);
+                        $work = Work::find($w['work']['id']);
+                        // $employeeId = $w['employee_id'] ?? null;
+                        $employeeId = $w['employee_id'];
+
+                        // ambil service utk tahu dimensi/paket
+                        $service = Service::find($od->service_id);
+                        $isDimensional = $service ? !$service->is_package : true;
+
+                        // basis area: kalau dimensional pakai length*width, kalau paket = 1
+                        $length = (float)($od->length ?? 0);
+                        $width  = (float)($od->width ?? 0);
+                        $area   = $isDimensional ? max(0, $length) * max(0, $width) : 1;
+
+                        // qty pickup (bukan total order), aman untuk partial di masa depan
+                        $qtyPickup = (float)($pd->qty ?? 1);
+                        $defaultPay = (float)($work->default_pay ?? 0);
+
+                        if ($work->one_time) {
+                            // Cek: sudah pernah dicatat untuk order_detail + work ini?
+                            $alreadyCreated = DB::table('pickup_detail_employee_works as pdew')
+                                ->join('pickup_details as pd2', 'pd2.id', '=', 'pdew.pickup_detail_id')
+                                ->where('pd2.order_detail_id', $od->id)
+                                ->where('pdew.work_id', $work->id)
+                                ->exists();
+
+                            if ($alreadyCreated) {
+                                continue; // sudah pernah, jangan buat lagi
+                            }
+
+                            // Dibayar sekali berdasarkan area × 1 (bukan dikali qty lembar)
+                            $pay = $defaultPay * $area * 1;
+                        } else {
+                            // Dibayar per qty pickup (× area)
+                            $pay = $defaultPay * $qtyPickup;
+                        }
+
+                        DB::table('pickup_detail_employee_works')->insert([
                             'pickup_detail_id' => $pd->id,
-                            'work_id' => $w['work']['id'],
-                            'employee_id' => $w['employee_id'] ?? null,
-                            'pay_default' => (float)($w['work']['default_pay'] ?? 0),
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
-                    }
-                    if (!empty($pivotRows)) {
-                        DB::table('pickup_detail_employee_works')->insert($pivotRows);
+                            'work_id'          => $work->id,
+                            'employee_id'      => $employeeId,
+                            'pay_default'      => $pay,
+                            'is_paid'          => false, // akan di-set true saat proses payroll
+                            'created_at'       => now(),
+                            'updated_at'       => now(),
+                        ]);
                     }
                 }
 

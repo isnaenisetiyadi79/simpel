@@ -105,6 +105,14 @@
                                         </span>
                                     </div>
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Mode Bayar
+                                        </span>
+                                    </div>
+                                </th>
                                 <th scope="col" class="px-6 py-3 text-end"></th>
                             </tr>
                         </thead>
@@ -149,6 +157,29 @@
                                         <div class="px-6 py-3">
                                             <span
                                                 class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->description }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div>
+                                                @if ($item->one_time)
+                                                    <button type="button"
+                                                        class=" py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-sky-100 text-teal-900 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 256 256">
+                                                            <path fill="currentColor"
+                                                                d="M28 128a68.07 68.07 0 0 1 68-68h118.34l-17.17-17.17a4 4 0 0 1 5.66-5.66l24 24a4 4 0 0 1 0 5.66l-24 24a4 4 0 0 1-5.66-5.66L214.34 68H96a60.07 60.07 0 0 0-60 60a4 4 0 0 1-8 0m196-4a4 4 0 0 0-4 4a60.07 60.07 0 0 1-60 60H41.66l17.17-17.17a4 4 0 0 0-5.66-5.66l-24 24a4 4 0 0 0 0 5.66l24 24a4 4 0 1 0 5.66-5.66L41.66 196H160a68.07 68.07 0 0 0 68-68a4 4 0 0 0-4-4m-88 32a4 4 0 0 0 4-4v-48a4 4 0 0 0-5.79-3.58l-16 8a4 4 0 0 0 3.58 7.16l10.21-5.1V152a4 4 0 0 0 4 4" />
+                                                        </svg>
+                                                        Sekali
+                                                    </button>
+                                                @else
+                                                    <button type="button"
+                                                        class=" py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-green-100 text-green-800 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"><path fill="currentColor" d="M28 128a68.07 68.07 0 0 1 68-68h118.34l-17.17-17.17a4 4 0 0 1 5.66-5.66l24 24a4 4 0 0 1 0 5.66l-24 24a4 4 0 0 1-5.66-5.66L214.34 68H96a60.07 60.07 0 0 0-60 60a4 4 0 0 1-8 0m196-4a4 4 0 0 0-4 4a60.07 60.07 0 0 1-60 60H41.66l17.17-17.17a4 4 0 0 0-5.66-5.66l-24 24a4 4 0 0 0 0 5.66l24 24a4 4 0 1 0 5.66-5.66L41.66 196H160a68.07 68.07 0 0 0 68-68a4 4 0 0 0-4-4"/></svg>
+                                                        Kelipatan
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </div>
                                     </td>
 

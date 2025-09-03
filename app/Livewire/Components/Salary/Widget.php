@@ -12,6 +12,13 @@ class Widget extends Component
     public $end_date;
     public $gajiKaryawan = [];
 
+    protected $listeners = ['dateFilterUpdated' => 'updateDate'];
+
+    public function updateDate($start, $end)
+    {
+        $this->start_date = $start;
+        $this->end_date   = $end;
+    }
     public function mount()
     {
         // default nilai tanggal
@@ -40,14 +47,13 @@ class Widget extends Component
                 'e.name as employee_name',
                 DB::raw('
                 SUM(
-                    pd.qty *
                     COALESCE(pdew.pay_default)
                 ) as total_salary
             ')
             )
             ->groupBy('e.id', 'e.name')
             ->get();
-            // dd($this->gajiKaryawan);
+        // dd($this->gajiKaryawan);
     }
 
     public function render()
