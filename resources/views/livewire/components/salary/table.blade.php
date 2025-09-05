@@ -18,13 +18,34 @@
                         class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                Piutang (Pengambilan belum dibayar)
+                                Upah/ Gaji
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                Payments, complete or partially payments
+                                Berdasarkan pengambilan dan upah kerja
                             </p>
                         </div>
+                        <div>
+                            <div class="inline-flex gap-x-2">
 
+
+                                <button type="button" wire:click="print"
+                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none" stroke="currentColor" stroke-width="1">
+                                            <path
+                                                d="M18 13.5h.5c.943 0 1.414 0 1.707-.293s.293-.764.293-1.707v-1c0-1.886 0-2.828-.586-3.414S18.386 6.5 16.5 6.5h-9c-1.886 0-2.828 0-3.414.586S3.5 8.614 3.5 10.5v2c0 .471 0 .707.146.854c.147.146.383.146.854.146H6" />
+                                            <path
+                                                d="M6.5 19.806V11.5c0-.943 0-1.414.293-1.707S7.557 9.5 8.5 9.5h7c.943 0 1.414 0 1.707.293s.293.764.293 1.707v8.306c0 .317 0 .475-.104.55s-.254.025-.554-.075l-2.168-.723a.5.5 0 0 0-.173-.042a.5.5 0 0 0-.171.052l-2.144.858a.5.5 0 0 1-.186.055a.5.5 0 0 1-.186-.055l-2.144-.858c-.084-.034-.126-.05-.17-.052s-.088.013-.174.042l-2.168.723c-.3.1-.45.15-.554.075s-.104-.233-.104-.55Z" />
+                                            <path stroke-linecap="round" d="M9.5 13.5h4m-4 3h5" />
+                                            <path
+                                                d="M17.5 6.5v-.4c0-1.697 0-2.546-.527-3.073S15.597 2.5 13.9 2.5h-3.8c-1.697 0-2.546 0-3.073.527S6.5 4.403 6.5 6.1v.4" />
+                                        </g>
+                                    </svg>
+                                    Print
+                                </button>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- End Header -->
@@ -55,6 +76,7 @@
                             <input type="date" wire:model.live.debounce.100ms="end_date"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                         </div>
+
                     </div>
                     <!-- End Search Item -->
                     <!-- Table -->
@@ -141,14 +163,14 @@
                                     </div>
                                 </th>
                                 @foreach ($employees as $emp)
-                                <th scope="col" class="px-6 py-3">
-                                    <div class="flex justify-end gap-x-2">
-                                        <span
-                                            class="text-end text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                            {{ $emp }}
-                                        </span>
-                                    </div>
-                                </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex justify-end gap-x-2">
+                                            <span
+                                                class="text-end text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                {{ $emp }}
+                                            </span>
+                                        </div>
+                                    </th>
                                 @endforeach
 
 
@@ -191,9 +213,8 @@
 
                                                 <div class="grow">
 
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ $row->customer }}
+                                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                        {{ $row->customer }}
                                                     </span>
                                                 </div>
                                             </div>
@@ -205,9 +226,8 @@
 
                                                 <div class="grow">
 
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ number_format($row->width,0,',','.') }}
+                                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                        {{ number_format($row->width, 0, ',', '.') }}
                                                     </span>
                                                 </div>
                                             </div>
@@ -216,75 +236,57 @@
                                     <td class="size-px whitespace-nowrap">
                                         <div class="ps-6  pe-6 py-3">
                                             <div class="flex items-center gap-x-3 ">
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ number_format($row->length,0,',','.') }}
-                                                    </span>
+                                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{ number_format($row->length, 0, ',', '.') }}
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="ps-6  pe-6 py-3">
                                             <div class="flex items-center gap-x-3 justify-end">
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ number_format($row->qty,0,',','.') }}
-                                                    </span>
+                                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{ number_format($row->qty, 0, ',', '.') }}
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="ps-6  pe-6 py-3">
                                             <div class="flex items-center gap-x-3 justify-end">
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ number_format($row->qty_final,0,',','.') }}
-                                                    </span>
+                                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{ number_format($row->qty_final, 0, ',', '.') }}
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="ps-6  pe-6 py-3">
                                             <div class="flex items-center gap-x-3 justify-end">
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ number_format($row->subtotal,0,',','.') }}
-                                                    </span>
+                                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{ number_format($row->subtotal, 0, ',', '.') }}
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
-                                     @foreach($employees as $emp)
-                                    <td class="size-px whitespace-nowrap">
-                                        <div class="ps-6  pe-6 py-3">
-                                            <div class="flex items-center gap-x-3 justify-end">
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{ number_format($row->$emp ?? 0, 0, ',', '.') }}
-                                                    </span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    @endforeach
-                                    {{-- <td class="size-px whitespace-nowrap">
-                                        <div class="ps-6  pe-6 py-3">
-                                            <div class="flex items-center gap-x-3">
-
-                                                <div class="grow">
-
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                   {{ number_format($row->pay_default,0,',','.') }}
+                                    @foreach ($employees as $emp)
+                                        <td class="size-px whitespace-nowrap">
+                                            <div class="ps-6  pe-6 py-3">
+                                                <div class="flex items-center gap-x-3 justify-end">
+                                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                        {{ number_format($row->$emp ?? 0, 0, ',', '.') }}
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td> --}}
+                                        </td>
+                                    @endforeach
+
 
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-sm px-4 py-6 text-center text-gray-500">Tidak ada
-                                        Hutang yang belum di bayar
+                                    <td colspan="8" class="text-sm px-4 py-6 text-center text-gray-500">Tidak ada
+                                        Beluma ada data pengambilan dibayar
                                     </td>
                                 </tr>
                             @endforelse
@@ -339,7 +341,5 @@
         </div>
     </div>
     <!-- End Card -->
-    {{-- Nothing in the world is as soft and yielding as water. --}}
-    {{-- @livewire('components.pickup.pickup-wizard-modal') --}}
-    {{-- @livewire('components.receivable.modalbayarhutang') --}}
+
 </div>

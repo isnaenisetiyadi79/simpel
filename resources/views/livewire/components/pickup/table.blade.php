@@ -270,7 +270,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-sm px-4 py-6 text-center text-gray-500">Belum ada
+                                    <td colspan="8" class="text-sm px-4 py-6 text-center text-gray-500">Belum ada
                                         pickup (pengambilan barang)
                                     </td>
                                 </tr>

@@ -113,8 +113,18 @@ class Table extends Component
 
         return $paginator;
     }
+
+    public function print()
+    {
+        // dd('sampai sini');
+        return redirect()->route('printsalary', [
+            'start_date' => $this->start_date,
+            'end_date'   => $this->end_date,
+        ]);
+    }
     public function render()
     {
+
         return view('livewire.components.salary.table', [
             'rows' => $this->getRowsProperty(),
             'employees' => $this->employees,

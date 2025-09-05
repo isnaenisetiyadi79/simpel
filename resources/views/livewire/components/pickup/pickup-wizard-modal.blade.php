@@ -178,9 +178,10 @@
                                         <td class="p-1 border border-t-gray-400 text-end">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200 text-end">
                                                 {{-- {{ $row['qty'] }} --}}
-                                                <input type="number" wire:model="pickupQty.{{ $row['qty'] }}"
-                                                    min="1" max="{{ $row['qty_remaining'] }}"
-                                                    class="w-16 border rounded px-1 text-center">
+                                                <input type="number" wire:model="{{ $row['qty'] }}"
+                                                    min="1" max="{{ $row['qty_remaining'] }}" value="{{ $row['qty_remaining'] }}"
+                                                    class="w-16 border rounded px-1 text-center"
+                                                    >
                                             </span>
                                         </td>
                                         <td class="p-1 border border-t-gray-400 text-end">

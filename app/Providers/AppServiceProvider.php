@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Toko;
 use Illuminate\Support\ServiceProvider;
+use View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,5 +22,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        $toko = Toko::first();
+
+        View::share('toko', $toko);
     }
 }

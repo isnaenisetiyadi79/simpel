@@ -11,20 +11,30 @@
     dark:bg-neutral-800 dark:border-neutral-700"
     role="dialog" tabindex="-1" aria-label="Sidebar">
     <div class="relative flex flex-col h-full max-h-full">
-        <div class="px-6 pt-4 flex items-center">
+        <div class="px-6 pt-2 flex items-center">
             <!-- Logo -->
             <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-hidden focus:opacity-80"
                 href="{{ route('dashboard') }}" aria-label="Preline">
 
-                <div class="flex items-center">
+                <div class="flex items-center p-0 m-0">
+                    <div class="p-0 m-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 48 48">
+                            <path fill="#06ac75"
+                                d="M11 7.75a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0v-7.5a.75.75 0 0 0-1.5 0v10.574c0 .79.163 1.57.478 2.295l1.36 3.127a3.75 3.75 0 0 0 3.44 2.254h3.04c1.427 0 2.803-.858 3.73-2.214c2.668-3.904 6.158-6.306 7.852-7.323c-.274-.451-.64-.841-1.092-.996c-.461-.157-1.46-.211-3.271 1.255A1.25 1.25 0 0 1 19 17.25v-9.5a.75.75 0 0 0-1.5 0v7.5a1.25 1.25 0 1 1-2.5 0v-9a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0zm10.5 7.21c1.33-.63 2.538-.727 3.617-.358c1.512.517 2.328 1.816 2.702 2.581c.567 1.16-.076 2.306-.912 2.793c-1.424.83-4.785 3.049-7.296 6.72C18.349 28.547 16.276 30 13.82 30h-3.042a6.25 6.25 0 0 1-5.73-3.756l-1.362-3.128A8.25 8.25 0 0 1 3 19.824V9.25a3.25 3.25 0 0 1 4.39-3.045a3.25 3.25 0 0 1 4-1.5a3.25 3.25 0 0 1 5.72 0A3.25 3.25 0 0 1 21.5 7.75zm-6.38 16.937C16.051 39.286 22.358 45 30 45c8.285 0 15-6.716 15-15s-6.715-15-15-15q-.578 0-1.145.043c.355.482.601.935.761 1.262c.198.404.321.805.382 1.195H30c6.904 0 12.5 5.596 12.5 12.5S36.904 42.5 30 42.5c-6.529 0-11.889-5.006-12.451-11.389a8.4 8.4 0 0 1-2.43.786m7.698 1.305a1.25 1.25 0 0 1 1.73.366A6.47 6.47 0 0 0 30 36.5a6.47 6.47 0 0 0 5.452-2.932a1.25 1.25 0 1 1 2.096 1.364A8.97 8.97 0 0 1 30 39a8.97 8.97 0 0 1-7.548-4.068a1.25 1.25 0 0 1 .366-1.73M34 29a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-6-2a2 2 0 1 1-4 0a2 2 0 0 1 4 0" />
+                        </svg>
+                    </div>
+                    <div class="leading p-0 m-0">
+                        <div class="m-0 pt-0 -mb-2">
+                            <span class="font-extrabold text-green-600 pl-3 italic text-2xl tracking-widest">Sim</span>
+                            <span class="font-extrabold text-orange-400 pr-3 italic text-2xl tracking-widest">Pel</span>
 
+                        </div>
+                        <div class="m-0 pt-0 -mt-4">
+                            <span
+                                class="pl-3 font-medium text-orange-400 pr-3 italic text-sm tracking-widest">{{ $toko->name ?? 'Nama Toko' }}</span>
+                        </div>
+                    </div>
 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-                        <path fill="#06ac75"
-                            d="M11 7.75a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0v-7.5a.75.75 0 0 0-1.5 0v10.574c0 .79.163 1.57.478 2.295l1.36 3.127a3.75 3.75 0 0 0 3.44 2.254h3.04c1.427 0 2.803-.858 3.73-2.214c2.668-3.904 6.158-6.306 7.852-7.323c-.274-.451-.64-.841-1.092-.996c-.461-.157-1.46-.211-3.271 1.255A1.25 1.25 0 0 1 19 17.25v-9.5a.75.75 0 0 0-1.5 0v7.5a1.25 1.25 0 1 1-2.5 0v-9a.75.75 0 0 0-1.5 0v9a1.25 1.25 0 1 1-2.5 0zm10.5 7.21c1.33-.63 2.538-.727 3.617-.358c1.512.517 2.328 1.816 2.702 2.581c.567 1.16-.076 2.306-.912 2.793c-1.424.83-4.785 3.049-7.296 6.72C18.349 28.547 16.276 30 13.82 30h-3.042a6.25 6.25 0 0 1-5.73-3.756l-1.362-3.128A8.25 8.25 0 0 1 3 19.824V9.25a3.25 3.25 0 0 1 4.39-3.045a3.25 3.25 0 0 1 4-1.5a3.25 3.25 0 0 1 5.72 0A3.25 3.25 0 0 1 21.5 7.75zm-6.38 16.937C16.051 39.286 22.358 45 30 45c8.285 0 15-6.716 15-15s-6.715-15-15-15q-.578 0-1.145.043c.355.482.601.935.761 1.262c.198.404.321.805.382 1.195H30c6.904 0 12.5 5.596 12.5 12.5S36.904 42.5 30 42.5c-6.529 0-11.889-5.006-12.451-11.389a8.4 8.4 0 0 1-2.43.786m7.698 1.305a1.25 1.25 0 0 1 1.73.366A6.47 6.47 0 0 0 30 36.5a6.47 6.47 0 0 0 5.452-2.932a1.25 1.25 0 1 1 2.096 1.364A8.97 8.97 0 0 1 30 39a8.97 8.97 0 0 1-7.548-4.068a1.25 1.25 0 0 1 .366-1.73M34 29a2 2 0 1 0 0-4a2 2 0 0 0 0 4m-6-2a2 2 0 1 1-4 0a2 2 0 0 1 4 0" />
-                    </svg>
-                    <span class="font-extrabold text-green-600 pt-3 pl-3 italic text-2xl tracking-widest">Sim</span>
-                    <span class="font-extrabold text-orange-400 pt-3 pr-3 italic text-2xl tracking-widest">Pel</span>
                 </div>
             </a>
             <!-- End Logo -->
@@ -90,13 +100,13 @@
                                 <li>
                                     <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.employee') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                                         href="{{ route('master.employee') }}">
-                                        Employees
+                                        Karyawan
                                     </a>
                                 </li>
                                 <li>
                                     <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.work') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                                         href="{{ route('master.work') }}">
-                                        Payrate
+                                        Upah Karyawan
                                     </a>
                                 </li>
                                 <li>
@@ -105,13 +115,14 @@
                                 <li>
                                     <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('master.service') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                                         href="{{ route('master.service') }}">
-                                        Service
+                                        Jenis Layanan
                                     </a>
                                 </li>
 
                             </ul>
                         </div>
                     </li>
+
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('order') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('order') }}">
@@ -120,13 +131,14 @@
                                 <path fill="currentColor"
                                     d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18t1.463-3.537T18 13t3.538 1.463T23 18t-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v6.675q-.475-.225-.975-.375T19 11.075V5H5v14.05h6.075q.125.775.388 1.475t.687 1.325L12 22l-1.5-1.5L9 22l-1.5-1.5L6 22l-1.5-1.5zm3-5h5.075q.075-.525.225-1.025t.375-.975H6zm0-4h7.1q.95-.925 2.213-1.463T18 11H6zm-1 6.05V5z" />
                             </svg>
-                            Transaction
+                            Pesanan
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('pickup') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('pickup') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24">
                                 <g fill="none" stroke="currentColor" stroke-linecap="round"
                                     stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1">
                                     <path
@@ -135,44 +147,36 @@
                                     <path d="M14.5 21.5v-11H8l-1.5 4v2l2.778 5m3.222-7v-4m-1 6h1m2 0h9" />
                                 </g>
                             </svg>
-                            Pickup
+                            Pengambilan
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('receivable') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
                             href="{{ route('receivable') }}">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M14 2.222q-.97-.198-2-.2c-5.523 0-10 4.472-10 9.989S6.477 22 12 22s10-4.472 10-9.989q-.002-1.027-.2-1.998"/><path d="M12 9.014c-1.105 0-2 .671-2 1.499c0 .827.895 1.498 2 1.498s2 .67 2 1.498s-.895 1.499-2 1.499m0-5.994c.87 0 1.612.417 1.886 1m-1.886-1v-.999m0 6.993c-.87 0-1.612-.417-1.886-1m1.886 1v.999"/><path stroke-linejoin="round" d="M21.995 2L17.82 6.174m-.824-3.653l.118 3.088c0 .728.435 1.182 1.228 1.239l3.124.147"/></g></svg>
-                            Receivable
-                        </a>
-                    </li>
-                    <li>
-                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('user') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
-                            href="{{ route('user') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                 viewBox="0 0 24 24">
-                                <g fill="none" stroke="currentColor" stroke-linecap="round"
-                                    stroke-linejoin="round" stroke-width="2">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
                                     <path
-                                        d="M10 15H6a4 4 0 0 0-4 4v2m12.305-4.47l.923-.382m0-2.296l-.923-.383m2.547-1.241l-.383-.923m.383 6.467l-.383.924m2.679-6.468l.383-.923m-.001 7.391l-.382-.924m1.624-3.92l.924-.383m-.924 2.679l.924.383" />
-                                    <circle cx="18" cy="15" r="3" />
-                                    <circle cx="9" cy="7" r="4" />
+                                        d="M14 2.222q-.97-.198-2-.2c-5.523 0-10 4.472-10 9.989S6.477 22 12 22s10-4.472 10-9.989q-.002-1.027-.2-1.998" />
+                                    <path
+                                        d="M12 9.014c-1.105 0-2 .671-2 1.499c0 .827.895 1.498 2 1.498s2 .67 2 1.498s-.895 1.499-2 1.499m0-5.994c.87 0 1.612.417 1.886 1m-1.886-1v-.999m0 6.993c-.87 0-1.612-.417-1.886-1m1.886 1v.999" />
+                                    <path stroke-linejoin="round"
+                                        d="M21.995 2L17.82 6.174m-.824-3.653l.118 3.088c0 .728.435 1.182 1.228 1.239l3.124.147" />
                                 </g>
                             </svg>
-                            User Management
-                        </a>
-                    </li>
-                    <li>
-                        <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('toko') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
-                            href="{{ route('toko') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6H4V4h16zm-6 10.13l-3 3V20H4v-6H3v-2l1-5h16l.61 3.07c-.45.1-.88.33-1.22.67l-.57.57L18.36 9H5.64l-.6 3h13.09l-2 2H14zM12 14H6v4h6zm10.85-.53l-1.32-1.32c-.2-.2-.53-.2-.72 0l-.98.98l2.04 2.04l.98-.98c.2-.19.2-.52 0-.72M13 19.96V22h2.04l6.13-6.12l-2.04-2.05z"/></svg>
-                            Identitas Toko
+                            Hutang Piutang
                         </a>
                     </li>
                     <li class="hs-accordion {{ Route::is('report.*') ? 'active' : '' }}" id="projects-accordion">
                         <button type="button"
                             class="hs-accordion-toggle w-full text-start flex {{ Route::is('report.*') ? 'bg-gray-100' : '' }} items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                             aria-expanded="true" aria-controls="projects-accordion-child">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32"><path fill="currentColor" d="M15 20h2v4h-2zm5-2h2v6h-2zm-10-4h2v10h-2z"/><path fill="currentColor" d="M25 5h-3V4a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v21a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2M12 4h8v4h-8Zm13 24H7V7h3v3h12V7h3Z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 32 32">
+                                <path fill="currentColor" d="M15 20h2v4h-2zm5-2h2v6h-2zm-10-4h2v10h-2z" />
+                                <path fill="currentColor"
+                                    d="M25 5h-3V4a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v21a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2M12 4h8v4h-8Zm13 24H7V7h3v3h12V7h3Z" />
+                            </svg>
                             Laporan
 
                             <svg class="hs-accordion-active:block ms-auto hidden size-4"
@@ -203,6 +207,60 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="hs-accordion {{ Route::is('admin.*') ? 'active' : '' }}" id="projects-accordion">
+                        <button type="button"
+                            class="hs-accordion-toggle w-full text-start flex {{ Route::is('admin.*') ? 'bg-gray-100' : '' }} items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                            aria-expanded="true" aria-controls="projects-accordion-child">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12 14v2a6 6 0 0 0-6 6H4a8 8 0 0 1 8-8m0-1c-3.315 0-6-2.685-6-6s2.685-6 6-6s6 2.685 6 6s-2.685 6-6 6m0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m9 6h1v5h-8v-5h1v-1a3 3 0 1 1 6 0zm-2 0v-1a1 1 0 1 0-2 0v1z" />
+                            </svg>
+                            Admin
+
+                            <svg class="hs-accordion-active:block ms-auto hidden size-4"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m18 15-6-6-6 6" />
+                            </svg>
+
+                            <svg class="hs-accordion-active:hidden ms-auto block size-4"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+
+                        <div id="projects-accordion-child"
+                            class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 {{ Route::is('admin.*') ? 'block' : 'hidden' }}"
+                            role="region" aria-labelledby="projects-accordion">
+                            <ul class="ps-8 pt-1 space-y-1">
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('admin.user') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                        href="{{ route('admin.user') }}">
+                                        User Management
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm {{ Route::is('admin.toko') ? 'bg-gray-100' : '' }} text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
+                                        href="{{ route('admin.toko') }}">
+                                        Identitas Toko
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {{-- <div id="projects-accordion-child"
+                            class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 {{ Route::is('admin.*') ? 'block' : 'hidden' }}"
+                            role="region" aria-labelledby="projects-accordion">
+                            <ul class="ps-8 pt-1 space-y-1">
+
+                            </ul>
+                        </div> --}}
+                    </li>
+
+
                     {{-- <li><a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200"
                             href="#">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -236,6 +294,18 @@
             </nav>
         </div>
         <!-- End Content -->
+        <!-- Sidebar -->
+        <aside class="flex flex-col w-64 bg-gray-100 text-white">
+            <!-- Konten Sidebar Lain -->
+
+
+            <!-- Footer di Bawah -->
+            <div class="p-2 text-sm text-gray-800 ">
+                &copy; 2025
+                <br>
+                Version : {{ \App\Models\AppVersion::current()->version ?? 'Unknown' }}
+            </div>
+        </aside>
     </div>
 </div>
 <!-- End Sidebar -->

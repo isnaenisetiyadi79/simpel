@@ -48,25 +48,27 @@ Route::middleware(['authenticate'])->group(function () {
     Route::middleware('role:owner,admin')->group(function() {
 
         Route::get('report/salary', [ReportController::class, 'salary'])->name('report.salary');
+        Route::get('report/salarysalary', [ReportController::class, 'printsalary'])->name('printsalary');
+        Route::get('report/print', [ReportController::class, 'print'])->name('report.print');
         // Route::get('/work', [WorkController::class, 'index'])->name('master.work');
         // Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
     });
     Route::middleware('role:admin')->group(function() {
-        Route::get('/user', [UserController::class, 'index'])->name('user');
-        Route::get('/toko', [TokoController::class, 'index'])->name('toko');
+        Route::get('/admin/user', [UserController::class, 'index'])->name('admin.user');
+        Route::get('/admin/toko', [TokoController::class, 'index'])->name('admin.toko');
     });
 
 
     // Route Transaction
     Route::get('/transaction', [OrderController::class, 'index'])->name('order');
     Route::get('/transaction/print/{id}', [OrderController::class, 'print'])->name('order.print');
+    Route::get('receivable', [ReceivableController::class, 'index'])->name('receivable');
 
     // Route Pickup
     Route::get('pickup', [PickupController::class, 'index'])->name('pickup');
     Route::get('/pickup/print/{id}', [PickupController::class, 'print'])->name('pickup.print');
 
     // Route Receivable
-    Route::get('receivable', [ReceivableController::class, 'index'])->name('receivable');
 
     // Route User
 

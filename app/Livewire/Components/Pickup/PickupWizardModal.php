@@ -161,8 +161,7 @@ class PickupWizardModal extends Component
         // Bangun rows final (Step 2)
         $details = OrderDetail::with(['service.work', 'service.employees']) // relasi bantuan (lihat catatan di bawah)
             ->whereIn('id', $this->selectedDetailIds)->get();
-
-
+        // dd($this->selectedDetailIds);
         $this->selectedRows = $details->map(function ($od) {
             return [
                 'order_detail' => $od,
@@ -178,7 +177,6 @@ class PickupWizardModal extends Component
                 'note'      => $od->description,
             ];
         });
-        // dd($this->selectedRows);
         $this->step = 2;
         // dd($this->selectedRows);
     }

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Role;
-
+use Database\Seeders\Versions\Version_Beta_Seeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +52,12 @@ class DatabaseSeeder extends Seeder
             // OrderDetailsTableSeeder::class,
             // WorksTableSeeder::class,
             // EmployeesTableSeeder::class,
-            TokoSeeder::class
+            TokoSeeder::class,
+
+            // Ini khusus seeder untuk versi
+            // jadi tidak dihapus, tapi ditambah dengan file
+            // versi-versi berikutnya
+            Version_Beta_Seeder::class,
         ]);
         $admin->roles()->attach(Role::where('slug', 'admin')->first());
         $operator->roles()->attach(Role::where('slug', 'operator')->first());

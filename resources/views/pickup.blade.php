@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Pickup')
+@section('title', 'Pengambilan')
 
 
 @section('content')
@@ -11,7 +11,7 @@
 
 
             @livewire('components.pickup.widget')
-            @livewire('components.salary.widget')
+            {{-- @livewire('components.salary.widget') --}}
             @livewire('components.pickup.table')
         </div>
     </div>
