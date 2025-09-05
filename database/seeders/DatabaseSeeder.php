@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
             // jadi tidak dihapus, tapi ditambah dengan file
             // versi-versi berikutnya
             Version_Beta_Seeder::class,
+            // Format pembuatan versi ada di file Version_Beta_Seeder
         ]);
         $admin->roles()->attach(Role::where('slug', 'admin')->first());
         $operator->roles()->attach(Role::where('slug', 'operator')->first());
