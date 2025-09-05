@@ -69,7 +69,7 @@ class Modalform extends Component
             $user->name = $this->name;
             $user->email = $this->email;
             if ($this->password) {
-                $user->password = $this->password;
+                $user->password = Hash::make($this->password);
             }
             if ($this->newProfilePhoto) {
                 $path = $this->newProfilePhoto->store('profile_photos', 'public');
