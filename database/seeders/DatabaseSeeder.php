@@ -27,15 +27,15 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('simpel'),
         ]);
 
-        $operator = User::create([
+        $operator1 = User::create([
             'name' => 'Operator User',
-            'email' => 'operator@yahoo.com',
+            'email' => 'operator1@gmail.com',
             'password' => Hash::make('password'),
         ]);
 
-        $siswa = User::create([
+        $operator2 = User::create([
             'name' => 'Siswa User',
-            'email' => 'siswa@google.com',
+            'email' => 'operator2@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $owner = User::create([
@@ -61,8 +61,8 @@ class DatabaseSeeder extends Seeder
             // Format pembuatan versi ada di file Version_Beta_Seeder
         ]);
         $admin->roles()->attach(Role::where('slug', 'admin')->first());
-        $operator->roles()->attach(Role::where('slug', 'operator')->first());
-        $siswa->roles()->attach(Role::where('slug', 'kasir')->first());
+        $operator1->roles()->attach(Role::where('slug', 'operator')->first());
+        $operator2->roles()->attach(Role::where('slug', 'operator')->first());
         $owner->roles()->attach(Role::where('slug', 'owner')->first());
 
         // Role::factory()->create([
