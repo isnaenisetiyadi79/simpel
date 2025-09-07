@@ -112,7 +112,7 @@
                             <thead class="bg-gray-100 border border-t-gray-500 border-b-gray-500">
                                 <tr>
                                     <th class="px-6 py-3">
-                                        <input type="checkbox" wire:model.live.debounce="selectAll"
+                                        <input type="checkbox" wire:model.lazy="selectAll"
                                             class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-start truncate">
@@ -164,7 +164,8 @@
                                 @forelse ($availableOrderDetails as $row)
                                     <tr class="mb-2 ">
                                         <td class="p-1 text-center">
-                                            <input type="checkbox" wire:model.live.debounce="selectedDetailIds"
+                                            {{-- <input type="checkbox" wire:model.live.debounce="selectedDetailIds" --}}
+                                            <input type="checkbox" wire:model.lazy="selectedDetailIds"
                                                 value="{{ $row['id'] }}"
                                                 class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
                                         </td>
@@ -178,13 +179,42 @@
                                         <td class="p-1 border border-t-gray-400 text-end">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200 text-end">
                                                 {{-- {{ $row['qty'] }} --}}
-                                                <input type="number" wire:model="{{ $row['qty'] }}"
-                                                    min="1" max="{{ $row['qty_remaining'] }}" value="{{ $row['qty_remaining'] }}"
-                                                    class="w-16 border rounded px-1 text-center"
-                                                    >
+                                                <input type="number" wire:model.live.debounce.30="pickupQty.{{ $row['id'] }}" min="1"
+                                                    max="{{ $row['qty_remaining'] }}"
+                                                    class="w-16 border rounded px-1 text-center">
                                             </span>
                                         </td>
                                         <td class="p-1 border border-t-gray-400 text-end">
+                                            <span class="text-sm text-gray-800 dark:text-neutral-200 ">
+                                                {{ number_format($row['price'], 0, ',', '.') }}
+                                            </span>
+                                        </td>
+
+                                        <td class="p-1 border border-t-gray-400 text-end">
+                                            <span class="text-sm text-gray-800 dark:text-neutral-200 ">
+                                                @php
+                                                    $qtyUsed = $pickupQty[$row['id']] ?? $row['qty_remaining'];
+                                                    if ($qtyUsed < 0) {
+                                                        $qtyUsed = 0;
+                                                    }
+
+                                                    if ($row['is_package']) {
+                                                        $lineSubtotal = $qtyUsed * $row['price'];
+                                                    } else {
+                                                        $lineSubtotal =
+                                                            $row['length'] * $row['width'] * $qtyUsed * $row['price'];
+                                                    }
+                                                @endphp
+                                                {{ number_format($lineSubtotal, 0, ',', '.') }}
+                                            </span>
+                                        </td>
+
+                                        <td class="p-1 border border-t-gray-400">
+                                            <span class="text-sm text-gray-800 dark:text-neutral-200">
+                                                {{ $row['description'] }}
+                                            </span>
+                                        </td>
+                                        {{-- <td class="p-1 border border-t-gray-400 text-end">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200 ">
                                                 {{ number_format($row['price'], 0, ',', '.') }}
                                             </span>
@@ -198,7 +228,8 @@
                                             <span class="text-sm text-gray-800 dark:text-neutral-200">
                                                 {{ $row['description'] }}
                                             </span>
-                                        </td>
+                                        </td> --}}
+
                                     </tr>
                                 @empty
                                     <tr>

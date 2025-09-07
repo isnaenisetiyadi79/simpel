@@ -11,8 +11,14 @@ class PickupDetailEmployeeWork extends Model
 
     public function pickupdetail()
     {
-        return $this->hasOne(PickupDetail::class);
+        return $this->belongsTo(PickupDetail::class);
+        // dirubah belongsTo atas saran chatGPT
     }
+
+    // public function pickupdetail()
+    // {
+    //     return $this->hasOne(PickupDetail::class);
+    // }
 
     public function work()
     {
@@ -22,4 +28,5 @@ class PickupDetailEmployeeWork extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
 }

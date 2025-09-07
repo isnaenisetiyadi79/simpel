@@ -21,7 +21,7 @@
                                 Piutang (Pengambilan belum dibayar)
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                Payments, complete or partially payments
+                                Fasilitas pembayaran hutang pelanggan
                             </p>
                         </div>
 
@@ -136,7 +136,7 @@
                                     <div class="flex justify-end gap-x-2">
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                           Hutang
+                                            Hutang
                                         </span>
                                     </div>
                                 </th>
@@ -209,7 +209,8 @@
                                                             {!! $pd->orderdetail->description ? $pd->orderdetail->description : '<i>Tanpa Nama Pesanan</i>' !!} |
                                                             Qty: {{ number_format($pd->qty, 0, ',', '.') }} |
                                                             Total:
-                                                            {{ number_format($pd->orderdetail->subtotal, 0, ',', '.') }}
+                                                            ({{ number_format($pd->orderdetail->width, 0, ',', '.') }} x
+                                                            {{ number_format($pd->orderdetail->length, 0, ',', '.') }})
                                                         </li>
                                                     @empty
                                                         <span class="text-sm text-gray-500 dark:text-neutral-500">Tidak
@@ -225,8 +226,23 @@
                                         <div class="px-6 py-3">
                                             <ul class="text-end list-disc list-inside text-sm text-gray-700">
                                                 <span class="text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{-- {{ $item->pickupdetail->first()->orderdetail->subtotal }} --}}
-                                                    {{ number_format($item->subtotal, 0, ',', '.') }}
+                                                    @forelse ($item->pickupdetail as $pd)
+                                                        <li>
+
+                                                            @if ($pd->orderdetail->service->is_package)
+                                                                {{ number_format($pd->qty * $pd->orderdetail->price, 0, ',', '.') }}
+                                                                |
+                                                            @else
+                                                                {{ number_format($pd->qty * $pd->orderdetail->price * $pd->orderdetail->width * $pd->orderdetail->length, 0, ',', '.') }}
+                                                                |
+                                                            @endif
+
+                                                        </li>
+                                                    @empty
+                                                        <span class="text-sm text-gray-500 dark:text-neutral-500">Tidak
+                                                            ada
+                                                            pesanan</span>
+                                                    @endforelse
                                                 </span>
                                             </ul>
                                         </div>
@@ -235,8 +251,11 @@
                                         <div class="px-6 py-3">
                                             <ul class="text-end list-disc list-inside text-sm text-gray-700">
                                                 <span class="text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{-- {{ $item->pickupdetail->first()->orderdetail->subtotal }} --}}
-                                                    {{ number_format($item->payment->sum('amount') + $item->pickupdetail->first()->orderdetail->order->payment->sum('amount'), 0, ',', '.') }}
+                                                    {{ number_format($item->paid_total, 0, ',', '.') }}
+
+                                                    {{-- {{ dd($item) }} --}}
+
+
                                                 </span>
                                             </ul>
                                         </div>
@@ -245,8 +264,8 @@
                                         <div class="px-6 py-3">
                                             <ul class="text-end list-disc list-inside text-sm text-gray-700">
                                                 <span class="text-sm text-gray-500 dark:text-neutral-500">
-                                                    {{-- {{ $item->pickupdetail->first()->orderdetail->subtotal }} --}}
-                                                    {{ number_format($item->subtotal - ($item->payment->sum('amount') + $item->pickupdetail->first()->orderdetail->order->payment->sum('amount')), 0, ',', '.') }}
+                                                    {{ number_format($item->outstanding, 0, ',', '.') }}
+
                                                 </span>
                                             </ul>
                                         </div>
@@ -284,7 +303,6 @@
                                                 <button type="button"
                                                     class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-gray-400 text-white shadow-2xs hover:bg-gray-500 focus:outline-hidden focus:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                     wire:click="print({{ $item->id }})"
-
                                                     {{ $item->pickup_status === 'completed' ? 'disabled' : '' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                         height="20" viewBox="0 0 24 24">

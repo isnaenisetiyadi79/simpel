@@ -18,6 +18,6 @@ class OrderDetail extends Model
 
     public function pickupdetail()
     {
-        return $this->hasOne(PickupDetail::class, 'order_detail_id');
+        return $this->hasMany(PickupDetail::class, 'order_detail_id');
     }
 }

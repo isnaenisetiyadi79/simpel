@@ -18,10 +18,10 @@
                         class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                Pickup (Pengambilan)
+                                Penyerahan/ Pengambilan Pesanan
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                Add Pickup, edit and more.
+                                Penyerahan barang ke pelanggan
                             </p>
                         </div>
 
@@ -37,7 +37,7 @@
                                         <path d="M5 12h14" />
                                         <path d="M12 5v14" />
                                     </svg>
-                                    Add Pickup
+                                    Serahkan Pesanan
                                 </button>
                             </div>
                         </div>
@@ -100,6 +100,14 @@
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
                                             Order
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Detail Order
                                         </span>
                                     </div>
                                 </th>
@@ -191,6 +199,17 @@
 
                                         </div>
                                     </td>
+                                    <td class="h-px w-72 whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            @if ($item->orderdetail->service->is_package)
+                                                {{ number_format($item->qty, 0, ',', '.') }}
+                                            @else
+                                                {{ number_format($item->qty, 0, ',', '.') }}
+                                               ( {{ number_format($item->orderdetail->width, 0, ',', '.') }} x {{  number_format($item->orderdetail->length, 0, ',', '.')}} )
+                                            @endif
+
+                                        </div>
+                                    </td>
 
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
@@ -211,8 +230,14 @@
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
                                             <ul class="text-end list-disc list-inside text-sm text-gray-700">
-                                                <span
-                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->orderdetail->subtotal, 0, ',', '.') }}</span>
+                                                <span class="text-sm text-gray-500 dark:text-neutral-500">
+                                                    @if ($item->orderdetail->service->is_package)
+                                                        {{ number_format($item->orderdetail->price * $item->qty, 0, ',', '.') }}
+                                                    @else
+                                                        {{ number_format($item->orderdetail->price * $item->orderdetail->width * $item->orderdetail->length * $item->qty, 0, ',', '.') }}
+                                                    @endif
+
+                                                </span>
                                             </ul>
                                         </div>
                                     </td>
@@ -242,8 +267,7 @@
                                             <div class="hs-tooltip inline-block">
                                                 <button type="button"
                                                     class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-gray-400 text-white shadow-2xs hover:bg-gray-500 focus:outline-hidden focus:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                                    wire:click="print({{ $item->pickup->id }})"
-                                                    >
+                                                    wire:click="print({{ $item->pickup->id }})">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                         height="20" viewBox="0 0 24 24">
                                                         <g fill="none" stroke="currentColor" stroke-width="1">

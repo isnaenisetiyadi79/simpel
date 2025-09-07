@@ -21,4 +21,7 @@ class PickupDetail extends Model
     {
         return $this->orderDetail->service ?? null;
     }
+     public function employeeWorks() {
+        return $this->hasMany(PickupDetailEmployeeWork::class);
+    }
 }

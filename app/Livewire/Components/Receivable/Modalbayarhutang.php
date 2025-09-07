@@ -38,11 +38,25 @@ class Modalbayarhutang extends Component
         $this->order_id = $this->pickup->pickupdetail->first()->orderdetail->order_id;
         $this->order = Order::find($this->order_id);
         $this->status = $this->order->status;
-        $this->total_amount = number_format($this->order->total_amount, 0, ',', '.');
+        // $this->total_amount = number_format($this->order->total_amount, 0, ',', '.');
+
+        foreach ($this->pickup->pickupdetail as $pd) {
+            if ($pd->orderdetail->width != 0) {
+// dd('disini');
+                $this->total_amount = $this->total_amount +
+                    ($pd->qty * $pd->orderdetail->width * $pd->orderdetail->length * $pd->orderdetail->price);
+            } else {
+                $this->total_amount = $this->total_amount +
+                    ($pd->qty * $pd->orderdetail->price);
+            }
+        }
+        // $this->total_amount = number_format($this->pickup->pickupdetail()->sum('qty'), 0, ',', '.');
+        // dd($this->total_amount);
         $this->spending = number_format(($this->amount - $this->order->total_amount), 0, ',', '.');
         $order = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
         $pickup = Pickup::withSum('payment as paid_sum', 'amount')->find($id);
-        $this->order_total = (float)($order->total_amount ?? 0);
+        // $this->order_total = (float)($order->total_amount ?? 0);
+        $this->order_total = (float)($this->total_amount ?? 0);
         $this->paid_total = (float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0);
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
         $this->modalFormBayarDepe = true;

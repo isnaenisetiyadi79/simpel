@@ -31,4 +31,10 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
+    public function getPaidTotalAttribute()
+    {
+         $this->loadMissing('payment');
+        return $this->payment->sum('amount');
+    }
+
 }

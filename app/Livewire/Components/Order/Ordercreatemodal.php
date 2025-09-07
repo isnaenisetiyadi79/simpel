@@ -177,17 +177,6 @@ class Ordercreatemodal extends Component
             }
             $this->total_amount = (float)array_sum(array_column($this->details, 'subtotal'));
         }
-
-        // if ($name == 'pay') {
-
-        //     $this->validate([
-        //         'total_amount' => 'required|numeric',
-        //         'pay' => 'required|numeric',
-        //     ]);
-
-        //     dd($this->total_amount);
-        //     $this->change = (float) $this->pay - (float) $this->total_amount;
-        // }
     }
     public function save()
     {

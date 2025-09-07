@@ -18,10 +18,10 @@
                         class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                Orderan
+                                Pesanan/ Orderan
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                Tambah Baru, Edit dan Hapus
+                                Tambah Pesanan baru, Edit dan Hapus
                             </p>
                         </div>
 
@@ -225,7 +225,10 @@
                                             <div class="px-6 py-3">
 
                                                 <span
-                                                    class="block text-sm text-gray-500 dark:text-neutral-500">{{ $item->qty_final }}</span>
+                                                    class="block text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->qty, 0, ',', '.') }}
+                                                    ({{ number_format($item->width, 0, ',', '.') }} x
+                                                    {{ number_format($item->length, 0, ',', '.') }})
+                                                </span>
                                             </div>
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">
@@ -325,6 +328,23 @@
                                                                 <path d="m9 12 2 2 4-4"></path>
                                                             </svg>
                                                             Sudah
+                                                        </span>
+                                                    </div>
+                                                    @elseif ($item->pickup_status == 'partially')
+                                                    <div>
+                                                        <span
+                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                            <svg class="shrink-0 size-3"
+                                                                xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path
+                                                                    d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z">
+                                                                </path>
+                                                                <path d="m9 12 2 2 4-4"></path>
+                                                            </svg>
+                                                           Sebagian {{ number_format($item->pickupdetail()->sum('qty'), 0, ',', '.') }} / {{ number_format($item->qty, 0, ',', '.') }}
                                                         </span>
                                                     </div>
                                                 @else
@@ -456,11 +476,12 @@
                                         </td>
                                     </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="9" class="text-sm px-4 py-6 text-center text-gray-500">Belum ada
-                                        pesanan
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="9" class="text-sm px-4 py-6 text-center text-gray-500">Belum
+                                            ada
+                                            pesanan
+                                        </td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>

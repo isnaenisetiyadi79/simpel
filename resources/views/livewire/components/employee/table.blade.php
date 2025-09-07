@@ -18,10 +18,10 @@
                         class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                Employees
+                                Karyawan
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                Add Employee, edit and more.
+                                Tambah Karyawan, edit lain-lain
                             </p>
                         </div>
 
@@ -37,7 +37,7 @@
                                         <path d="M5 12h14" />
                                         <path d="M12 5v14" />
                                     </svg>
-                                    Add Employee
+                                    Karyawan Baru
                                 </button>
                             </div>
                         </div>

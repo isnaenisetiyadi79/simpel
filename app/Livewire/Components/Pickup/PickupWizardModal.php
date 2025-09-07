@@ -83,6 +83,10 @@ class PickupWizardModal extends Component
     {
         // kalau semua dicentang manual, selectAll juga otomatis aktif
         $this->selectAll = count($this->selectedDetailIds) === count($this->availableOrderDetails);
+
+        // refresh total setiap pilihan berubah
+        $this->order_total = $this->pickupGrandTotal;
+        $this->outstanding = max(0, $this->order_total - $this->paid_total);
     }
     public function resetWizard()
     {
@@ -110,6 +114,9 @@ class PickupWizardModal extends Component
         $this->order_id = null;
         $this->availableOrders = Order::query()
             ->where('customer_id', $this->customer_id)
+            ->whereHas('orderdetail', function ($query) {
+                $query->whereIn('pickup_status', ['pending', 'partially']);
+            })
             ->orderByDesc('id')
             ->get(['id', 'total_amount', 'payment_status'])
             ->toArray();
@@ -118,6 +125,43 @@ class PickupWizardModal extends Component
         $this->selectedDetailIds = [];
     }
 
+    // public function updatedOrderId()
+    // {
+    //     // Ambil order details yang boleh di-pickup
+    //     $ods = OrderDetail::query()
+    //         ->with(['service:id,name'])
+    //         ->where('order_id', $this->order_id)
+    //         ->where('process_status', 'done')
+    //         ->whereIn('pickup_status', ['pending', 'partially'])
+    //         ->get();
+
+    //     $this->pickupQty = $ods->mapWithKeys(function ($od) {
+    //         $picked = $od->pickupdetail()->sum('qty');
+    //         $remaining = max(0, $od->qty - $picked);
+    //         return [$od->id => $remaining];
+    //     })->toArray();
+
+    //     $this->availableOrderDetails = $ods->map(function ($od) {
+    //         $picked = $od->pickupdetail()->sum('qty');
+    //         return [
+    //             'id' => $od->id,
+    //             'service_name' => optional($od->service)->name,
+    //             'qty' => (float)$od->qty,
+    //             'qty_remaining' => max(0, (float)$od->qty - $picked),
+    //             'price' => (float)$od->price,
+    //             'subtotal' => (float)$od->subtotal,
+    //             'description' => $od->description,
+    //         ];
+    //     })->toArray();
+
+    //     // Hitung total & pembayaran existing
+    //     $order = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
+    //     $this->order_total = (float)($order->total_amount ?? 0);
+    //     $this->paid_total = (float)($order->paid_sum ?? 0);
+    //     $this->outstanding = max(0, $this->order_total - $this->paid_total);
+    //     // $this->change = (float) $this->outstanding - $this->pay_now;
+    //     $this->selectedDetailIds = [];
+    // }
     public function updatedOrderId()
     {
         // Ambil order details yang boleh di-pickup
@@ -128,41 +172,188 @@ class PickupWizardModal extends Component
             ->whereIn('pickup_status', ['pending', 'partially'])
             ->get();
 
+        $this->pickupQty = $ods->mapWithKeys(function ($od) {
+            $picked = $od->pickupdetail()->sum('qty');
+            $remaining = max(0, $od->qty - $picked);
+            return [$od->id => $remaining];
+        })->toArray();
+
         $this->availableOrderDetails = $ods->map(function ($od) {
             $picked = $od->pickupdetail()->sum('qty');
+            $qtyRemaining = max(0, (float)$od->qty - $picked);
+            // dd($od->qty);
             return [
                 'id' => $od->id,
+                'service_id' => $od->service_id,
                 'service_name' => optional($od->service)->name,
-                'qty' => (float)$od->qty,
-                'qty_remaining' => max(0, (float)$od->qty - $picked),
-                'price' => (float)$od->price,
-                'subtotal' => (float)$od->subtotal,
+                'is_package' => (bool) (optional($od->service)->is_package ?? false),
+                'length' => (float) $od->length,
+                'width' => (float) $od->width,
+                'qty' => (float) $od->qty,
+                'qty_remaining' => $qtyRemaining,
+                'price' => (float) $od->price,
+                'subtotal' => (float) $od->subtotal, // subtotal original (boleh disimpan, tapi kita hitung ulang saat pickup)
                 'description' => $od->description,
             ];
         })->toArray();
 
         // Hitung total & pembayaran existing
         $order = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
-        $this->order_total = (float)($order->total_amount ?? 0);
-        $this->paid_total = (float)($order->paid_sum ?? 0);
-        $this->outstanding = max(0, $this->order_total - $this->paid_total);
-        // $this->change = (float) $this->outstanding - $this->pay_now;
+        // $this->order_total = (float)($order->total_amount ?? 0);
+        // $this->paid_total = (float)($order->paid_sum ?? 0);
+        // $this->outstanding = max(0, $this->order_total - $this->paid_total);
         $this->selectedDetailIds = [];
     }
+    public function updatedPickupQty($value, $key)
+    {
+
+        // dd('proses sampai di sini A');
+        // $key adalah order_detail id (karena pickupQty[order_detail_id])
+        $detailId = (int) $key;
+
+        // cari data detail di availableOrderDetails
+        $detail = collect($this->availableOrderDetails)->firstWhere('id', $detailId);
+        if (!$detail) return;
+
+        $max = $detail['qty_remaining'] ?? 0;
+
+        if ($value === null) {
+            // bila kosongan, restore ke max (atau 0)
+            $this->pickupQty[$detailId] = $max;
+            return;
+        }
+
+        $val = (float) $value;
+        if ($val < 1) {
+            $this->pickupQty[$detailId] = 1;
+        } elseif ($val > $max) {
+            $this->pickupQty[$detailId] = $max;
+        } else {
+            // valid, sudah di-set otomatis oleh Livewire
+            $this->pickupQty[$detailId] = $val;
+        }
+
+        // refresh total setiap qty berubah
+        $this->order_total = $this->pickupGrandTotal;
+        $this->outstanding = max(0, $this->order_total - $this->paid_total);
+    }
+    // public function nextFromStep1()
+    // {
+    //     // Validasi ada pilihan
+    //     if (empty($this->selectedDetailIds)) {
+    //         $this->addError('selectedDetailIds', 'Pilih minimal 1 item untuk bisa melanjutkan');
+    //         return;
+    //     }
+
+    //     // Bangun rows final (Step 2)
+    //     $details = OrderDetail::with(['service.work', 'service.employees']) // relasi bantuan (lihat catatan di bawah)
+    //         ->whereIn('id', $this->selectedDetailIds)->get();
+    //     // dd($this->selectedDetailIds);
+    //     $this->selectedRows = $details->map(function ($od) {
+    //         return [
+    //             'order_detail' => $od,
+    //             'service'      => $od->service,
+    //             'works'        => $od->service->work->map(function ($w) {
+    //                 return [
+    //                     'work'        => $w,
+    //                     'employee_id' => $w->pivot->employee_id ?? null,
+    //                     'fee'         => (float) optional(optional($w->pivot)->service)->default_pay ?? 0,
+    //                 ];
+    //             }) ?? collect(),
+    //             'employees' => Employee::orderBy('name')->get(), // kalau semua karyawan
+    //             'note'      => $od->description,
+    //         ];
+    //     });
+    //     $this->step = 2;
+
+
+
+    //     // dd($this->selectedRows);
+    // }
+
+    // public function nextFromStep1()
+    // {
+    //     if (empty($this->selectedDetailIds)) {
+    //         $this->addError('selectedDetailIds', 'Pilih minimal 1 item untuk bisa melanjutkan');
+    //         return;
+    //     }
+
+    //     $details = OrderDetail::with(['service.work', 'service.employees'])
+    //         ->whereIn('id', $this->selectedDetailIds)
+    //         ->get();
+
+    //     $this->selectedRows = $details->map(function ($od) {
+    //         // qty sesuai hasil step 1
+    //         $qty = $this->pickupQty[$od->id] ?? $od->qty_remaining;
+
+    //         // subtotal dihitung ulang sesuai tipe service
+    //         $subtotal = $od->service->is_package
+    //             ? $qty * $od->price
+    //             : $od->length * $od->width * $qty * $od->price;
+
+    //         return [
+    //             'order_detail' => $od,
+    //             'service'      => $od->service,
+    //             'works'        => $od->service->work->map(function ($w) {
+    //                 return [
+    //                     'work'        => $w,
+    //                     'employee_id' => $w->pivot->employee_id ?? null,
+    //                     'fee'         => (float) optional(optional($w->pivot)->service)->default_pay ?? 0,
+    //                 ];
+    //             }) ?? collect(),
+    //             'employees' => Employee::orderBy('name')->get(),
+    //             'note'      => $od->description,
+
+    //             // tambahan hasil step 1
+    //             'qty'        => $qty,
+    //             'subtotal'   => $subtotal,
+    //         ];
+    //     });
+
+    //     // update total & outstanding sesuai step 1
+    //     $this->order_total = $this->pickupGrandTotal;
+    //     $this->outstanding = max(0, $this->order_total - $this->paid_total);
+
+    //     $this->step = 2;
+    // }
 
     public function nextFromStep1()
     {
         // Validasi ada pilihan
         if (empty($this->selectedDetailIds)) {
-            $this->addError('selectedDetailIds', 'Pilih minimal 1 item.');
+            $this->addError('selectedDetailIds', 'Pilih minimal 1 item untuk bisa melanjutkan');
             return;
         }
 
-        // Bangun rows final (Step 2)
-        $details = OrderDetail::with(['service.work', 'service.employees']) // relasi bantuan (lihat catatan di bawah)
-            ->whereIn('id', $this->selectedDetailIds)->get();
-        // dd($this->selectedDetailIds);
+        // Ambil detail lengkap (service + relasinya)
+        $details = OrderDetail::with(['service.work', 'service.employees'])
+            ->whereIn('id', $this->selectedDetailIds)
+            ->get();
+
         $this->selectedRows = $details->map(function ($od) {
+            // hitung sisa di DB (untuk limit dan safety)
+            $picked = $od->pickupdetail()->sum('qty');
+            $qtyRemaining = max(0, $od->qty - $picked);
+
+            // ambil qty yang dipilih di Step 1 (fallback ke sisa jika tidak ada)
+            $qtyUsed = $this->pickupQty[$od->id] ?? $qtyRemaining;
+            $qtyUsed = (float) max(0, min($qtyUsed, $qtyRemaining));
+
+            // hitung subtotal sesuai tipe service
+            $subtotal = 0.0;
+            $price = (float) $od->price;
+            if ($od->service && $od->service->is_package) {
+                $subtotal = $qtyUsed * $price;
+            } else {
+                $length = (float) $od->length;
+                $width = (float) $od->width;
+                $subtotal = $length * $width * $qtyUsed * $price;
+            }
+
+            // **Mutate model instance (memory only)** agar Blade yang memakai $row['order_detail']->qty/subtotal langsung menampilkan nilai baru
+            $od->qty = $qtyUsed;
+            $od->subtotal = $subtotal;
+
             return [
                 'order_detail' => $od,
                 'service'      => $od->service,
@@ -173,13 +364,44 @@ class PickupWizardModal extends Component
                         'fee'         => (float) optional(optional($w->pivot)->service)->default_pay ?? 0,
                     ];
                 }) ?? collect(),
-                'employees' => Employee::orderBy('name')->get(), // kalau semua karyawan
+                'employees' => Employee::orderBy('name')->get(),
                 'note'      => $od->description,
             ];
-        });
+        })->values();
+
+        // sinkronkan total / outstanding sesuai pilihan
+        $this->order_total = $this->pickupGrandTotal;
+        $this->outstanding = max(0, $this->order_total - $this->paid_total);
+
         $this->step = 2;
-        // dd($this->selectedRows);
     }
+
+
+
+    public function getPickupGrandTotalProperty()
+    {
+        //  dd('proses sampai di sini B');
+        $total = 0;
+
+        foreach ($this->availableOrderDetails as $row) {
+            // hanya jumlahkan bila baris dipilih
+            if (!in_array($row['id'], $this->selectedDetailIds ?? [])) continue;
+
+            $qty = $this->pickupQty[$row['id']] ?? $row['qty_remaining'] ?? 0;
+            if ($qty <= 0) continue;
+
+            if ($row['is_package']) {
+                $line = $qty * $row['price'];
+            } else {
+                $line = $row['length'] * $row['width'] * $qty * $row['price'];
+            }
+
+            $total += $line;
+        }
+
+        return $total;
+    }
+
 
     public function backToStep1()
     {
@@ -222,32 +444,48 @@ class PickupWizardModal extends Component
                 'note' => $this->note,
             ]);
 
+            // dd($this->selectedRows);
             foreach ($this->selectedRows as $row) {
+                // $od = OrderDetail::find($row['order_detail']['id']);
+                // $qtyPicked = (float) ($row['order_detail']['qty']);
                 $od = OrderDetail::find($row['order_detail']['id']);
+                if (!$od) {
+                    throw new \RuntimeException("OrderDetail id {$row['order_detail']['id']} tidak ditemukan.");
+                }
 
+                // Ambil qty yang dipilih user — PRIORITAS:
+                // 1) nilai yang ada di selectedRows (hasil nextFromStep1) — bisa berupa model atau array
+                // 2) nilai yang ada di pickupQty (hasil Step 1 array)
+                // Jika tidak ditemukan, jangan fallback diam-diam: lempar exception supaya mudah debug.
+                $selectedQty = null;
+
+                $odData = $row['order_detail'];
+                if (is_array($odData) && array_key_exists('qty', $odData)) {
+                    $selectedQty = $odData['qty'];
+                } elseif (is_object($odData) && property_exists($odData, 'qty')) {
+                    $selectedQty = $odData->qty;
+                }
+
+                if ($selectedQty === null) {
+                    // coba dari pickupQty (nilai yang di-bind di Step 1)
+                    if (isset($this->pickupQty[$od->id])) {
+                        $selectedQty = $this->pickupQty[$od->id];
+                    }
+                }
+
+                // kalau masih null, stop dan beri pesan jelas (biar nggak silent-fail)
+                if ($selectedQty === null) {
+                    throw new \RuntimeException("Qty terpilih untuk order_detail id {$od->id} tidak ditemukan. Periksa selectedRows/pickupQty.");
+                }
+
+                $qtyPicked = (float) $selectedQty;
                 $pd = PickupDetail::create([
                     'pickup_id' => $pickup->id,
                     'order_detail_id' => $od->id,
-                    'qty' => $od->qty_final, // jika nanti mau partial, ganti sesuai input
+                    'qty' => $qtyPicked, // jika nanti mau partial, ganti sesuai input
                 ]);
+                // dd($qtyPicked, $pd->qty);
 
-                // // Simpan pivot pekerjaan per baris
-                // if (!empty($row['works'])) {
-                //     $pivotRows = [];
-                //     foreach ($row['works'] as $w) {
-                //         $pivotRows[] = [
-                //             'pickup_detail_id' => $pd->id,
-                //             'work_id' => $w['work']['id'],
-                //             'employee_id' => $w['employee_id'] ?? null,
-                //             'pay_default' => (float)($w['work']['default_pay'] ?? 0),
-                //             'created_at' => now(),
-                //             'updated_at' => now(),
-                //         ];
-                //     }
-                //     if (!empty($pivotRows)) {
-                //         DB::table('pickup_detail_employee_works')->insert($pivotRows);
-                //     }
-                // }
 
                 // Simpan pivot pekerjaan per baris
                 if (!empty($row['works'])) {
@@ -286,7 +524,7 @@ class PickupWizardModal extends Component
                             $pay = $defaultPay * $area * 1;
                         } else {
                             // Dibayar per qty pickup (× area)
-                            $pay = $defaultPay * $qtyPickup;
+                            $pay = $defaultPay * $qtyPickup * $length * $width;
                         }
 
                         DB::table('pickup_detail_employee_works')->insert([
@@ -302,9 +540,18 @@ class PickupWizardModal extends Component
                 }
 
                 // 3) Update status order_detail → completed
-                $od->update([
-                    'pickup_status' => 'completed',
-                ]);
+                $totalPicked = PickupDetail::where('order_detail_id', $od->id)->sum('qty');
+                $totalOrder  = (float) $od->qty;
+
+                if ($totalPicked <= 0) {
+                    $status = 'pending';
+                } elseif ($totalPicked < $totalOrder) {
+                    $status = 'partially';
+                } else {
+                    $status = 'completed';
+                }
+
+                $od->update(['pickup_status' => $status]);
 
                 // 4) Pembayaran (kalau ada)
                 $payAmount = (float)($this->pay_now ?? 0);

@@ -90,6 +90,7 @@ class Modalform extends Component
     }
     public function closeModal()
     {
+        $this->update_data = false;
         $this->modalFormData = false;
         $this->resetForm();
     }
