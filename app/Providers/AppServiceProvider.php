@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Toko;
 use Illuminate\Support\ServiceProvider;
+use Schema;
 use View;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,8 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        $toko = Toko::first();
+        if (Schema::hasTable('tokos')) {
+            $toko = Toko::first();
 
-        View::share('toko', $toko);
+            View::share('toko', $toko);
+        }
     }
 }
