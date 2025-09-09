@@ -26,9 +26,24 @@ class Widget extends Component
         //         ->count()
         // );
         $this->pickupdetail = PickupDetail::all();
+        // $this->total = DB::table('pickup_details')
+        //     ->join('order_details', 'order_details.id', '=', 'pickup_details.order_detail_id') // filter pickup tertentu
+        //     ->select(DB::raw('COALESCE(SUM(pickup_details.qty * order_details.price), 0) as total'))
+        //     ->value('total');
         $this->total = DB::table('pickup_details')
-            ->join('order_details', 'order_details.id', '=', 'pickup_details.order_detail_id') // filter pickup tertentu
-            ->select(DB::raw('COALESCE(SUM(pickup_details.qty * order_details.price), 0) as total'))
+            ->join('order_details', 'order_details.id', '=', 'pickup_details.order_detail_id')
+            ->join('services', 'services.id', '=', 'order_details.service_id')
+            ->select(DB::raw("
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN services.is_package = true
+                        THEN pickup_details.qty * order_details.price
+                    ELSE pickup_details.qty * order_details.width * order_details.length * order_details.price
+                END
+            ), 0
+        ) as total
+    "))
             ->value('total');
         $this->order_payment = DB::table('payments')
             // ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
@@ -43,7 +58,6 @@ class Widget extends Component
             ->select(DB::raw('COALESCE(SUM(payments.amount), 0) as total_payment'))
             ->value('pickup_payment');
         $this->total_payment = $this->order_payment + $this->pickup_payment;
-
     }
 
     #[On('success')]
