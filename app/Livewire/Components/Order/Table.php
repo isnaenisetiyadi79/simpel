@@ -33,6 +33,7 @@ class Table extends Component
 
     public function openModalBayarDepe($id)
     {
+        dd($id);
         $this->dispatch('open-modal-bayar-depe', $id);
     }
     // public function edit($id)
