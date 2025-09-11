@@ -128,6 +128,7 @@ class Table extends Component
             ->join('order_details as od', 'od.id', '=', 'pd.order_detail_id')
             ->join('orders as o', 'o.id', '=', 'od.order_id')
             ->join('customers as c', 'c.id', '=', 'o.customer_id')
+            ->join('services as s', 's.id', '=', 'od.service_id')
             ->leftJoin('employees as e', 'e.id', '=', 'pdew.employee_id')
             ->whereBetween('p.pickup_date', [$start, $end])
             ->select(
@@ -137,7 +138,13 @@ class Table extends Component
                 'od.length',
                 'pd.qty',
                 'od.qty_final',
-                DB::raw('(od.price * pd.qty) as subtotal'),
+                DB::raw("
+            CASE
+                WHEN s.is_package = true
+                    THEN pd.qty * od.price
+                ELSE pd.qty * od.width * od.length * od.price
+            END as subtotal
+        "),
                 'e.name as employee_name',
                 'pdew.pay_default'
             )

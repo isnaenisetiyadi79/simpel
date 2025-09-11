@@ -182,7 +182,16 @@
                     <td>{{ number_format($row->length, 2, ',', '.') }}</td>
                     <td>{{ number_format($row->qty, 0, ',', '.') }}</td>
                     <td>{{ number_format($row->qty_final, 0, ',', '.') }}</td>
-                    <td class="align-right">{{ number_format($row->subtotal, 2, ',', '.') }}</td>
+                    <td class="align-right">
+                        {{-- {{ dd($row) }} --}}
+                        {{-- @if (!$row->service->is_pakage)
+                        {{ number_format($row->qty*$row->width*$row->length *$row->price, 2, ',', '.') }}
+
+                        @endif --}}
+                        {{ number_format($row->subtotal, 2, ',', '.') }}
+
+
+                    </td>
                     @foreach ($employees as $emp)
                         <td class="align-right">{{ number_format($row->$emp, 2, ',', '.') ?? 0 }}</td>
                     @endforeach
