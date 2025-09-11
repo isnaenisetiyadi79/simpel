@@ -32,7 +32,8 @@ class Modalbayarhutang extends Component
     // Register listener manual
 
 
-    #[On('open-modal-bayar-hutang')]
+    protected $listeners = ['open-modal-bayar-hutang' => 'openModalBayarHutang'];
+    // #[On('open-modal-bayar-hutang')]
     public function openModalBayarHutang($id)
     {
         $this->pickup = Pickup::find($id);
