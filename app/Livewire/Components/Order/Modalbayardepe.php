@@ -27,6 +27,9 @@ class Modalbayardepe extends Component
     public $change = 0;
     public $payment_method = 'cash';
 
+
+
+
     #[On('open-modal-bayar-depe')]
     public function openModalBayarDepe($id)
     {

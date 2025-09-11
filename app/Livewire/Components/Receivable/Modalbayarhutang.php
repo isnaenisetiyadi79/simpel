@@ -29,6 +29,8 @@ class Modalbayarhutang extends Component
     public $change = 0;
     public $payment_method = 'cash';
 
+    // Register listener manual
+
 
     #[On('open-modal-bayar-hutang')]
     public function openModalBayarHutang($id)
@@ -42,7 +44,7 @@ class Modalbayarhutang extends Component
 
         foreach ($this->pickup->pickupdetail as $pd) {
             if ($pd->orderdetail->width != 0) {
-// dd('disini');
+                // dd('disini');
                 $this->total_amount = $this->total_amount +
                     ($pd->qty * $pd->orderdetail->width * $pd->orderdetail->length * $pd->orderdetail->price);
             } else {
@@ -61,6 +63,7 @@ class Modalbayarhutang extends Component
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
         $this->modalFormBayarHutang = true;
     }
+
 
     public function closeModal()
     {
