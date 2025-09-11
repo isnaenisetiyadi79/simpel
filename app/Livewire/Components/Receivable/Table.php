@@ -19,7 +19,6 @@ class Table extends Component
     public $dateTo = null;
 
 
-
     #[On('success')]
     public function messageSuccess($message)
     {
