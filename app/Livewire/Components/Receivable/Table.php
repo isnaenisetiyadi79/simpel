@@ -25,9 +25,10 @@ class Table extends Component
         $this->resetPage();
         session()->flash('success', $message);
     }
-    public function openModalBayarDepe($id)
+
+    public function openModalBayarHutang($id)
     {
-        $this->dispatch('open-modal-bayar-depe', $id);
+        $this->dispatch('open-modal-bayar-hutang', $id);
     }
     // return PickupDetail::query()
     //     ->with(['pickup.customer', 'orderdetail.service'])

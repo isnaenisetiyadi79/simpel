@@ -81,7 +81,15 @@
                                     @foreach ($availableOrders as $o)
                                         <option value="{{ $o['id'] }}">#{{ $o['id'] }} — Total:
                                             {{ number_format($o['total_amount'] ?? 0, 0, ',', '.') }} —
-                                            {{ strtoupper($o['payment_status']) }}</option>
+                                            {{-- {{ strtoupper($o['payment_status']) }} --}}
+                                            <ul class="ml-4 list-disc">
+                                                @forelse ($o['orderdetail'] as $od)
+                                                    <li>{{ $od['description'] }}</li>
+                                                @empty
+                                                    <li>---</li>
+                                                @endforelse
+                                            </ul>
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -146,14 +154,14 @@
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 truncate text-start">
+                                    {{-- <th scope="col" class="px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
                                                 class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                 Keterangan
                                             </span>
                                         </div>
-                                    </th>
+                                    </th> --}}
 
 
 
@@ -171,7 +179,8 @@
                                         <td class="p-1 border border-t-gray-400">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200">
 
-                                                {{ $row['service_name'] }}
+                                                {{ $row['service_name'] }} <br>
+                                                {{ $row['description'] }}
                                             </span>
 
                                         </td>
@@ -213,11 +222,11 @@
                                             </span>
                                         </td>
 
-                                        <td class="p-1 border border-t-gray-400">
+                                        {{-- <td class="p-1 border border-t-gray-400">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200">
                                                 {{ $row['description'] }}
                                             </span>
-                                        </td>
+                                        </td> --}}
                                         {{-- <td class="p-1 border border-t-gray-400 text-end">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200 ">
                                                 {{ number_format($row['price'], 0, ',', '.') }}
@@ -354,7 +363,8 @@
                                             <td class="px-3 py-2">
                                                 <span class="text-sm text-gray-800 dark:text-neutral-200">
                                                     @if (!$row['order_detail']->service->is_package)
-                                                        ({{ number_format($row['order_detail']['length'], 2, ',', '.') }} x
+                                                        ({{ number_format($row['order_detail']['length'], 2, ',', '.') }}
+                                                        x
                                                         {{ number_format($row['order_detail']['width'], 2, ',', '.') }})
                                                     @endif
                                                     {{ $row['order_detail']->qty }}

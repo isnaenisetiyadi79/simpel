@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Modalbayarhutang extends Component
 {
-    public $modalFormBayarDepe = false;
+    public $modalFormBayarHutang = false;
 
     public $order;
     public $order_id;
@@ -30,8 +30,8 @@ class Modalbayarhutang extends Component
     public $payment_method = 'cash';
 
 
-    #[On('open-modal-bayar-depe')]
-    public function openModalBayarDepe($id)
+    #[On('open-modal-bayar-hutang')]
+    public function openModalBayarHutang($id)
     {
         $this->pickup = Pickup::find($id);
         $this->pickup_id = $id;
@@ -59,12 +59,12 @@ class Modalbayarhutang extends Component
         $this->order_total = (float)($this->total_amount ?? 0);
         $this->paid_total = (float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0);
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
-        $this->modalFormBayarDepe = true;
+        $this->modalFormBayarHutang = true;
     }
 
     public function closeModal()
     {
-        $this->modalFormBayarDepe = false;
+        $this->modalFormBayarHutang = false;
         $this->reset();
     }
 

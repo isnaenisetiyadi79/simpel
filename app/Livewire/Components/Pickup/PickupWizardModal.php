@@ -117,6 +117,9 @@ class PickupWizardModal extends Component
             ->whereHas('orderdetail', function ($query) {
                 $query->whereIn('pickup_status', ['pending', 'partially']);
             })
+            ->with(['orderdetail' => function ($query) {
+                $query->select('id', 'order_id', 'description', 'pickup_status');
+            }])
             ->orderByDesc('id')
             ->get(['id', 'total_amount', 'payment_status'])
             ->toArray();

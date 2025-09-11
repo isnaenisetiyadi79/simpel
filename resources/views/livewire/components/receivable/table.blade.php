@@ -278,7 +278,7 @@
                                             <div class="inline-block hs-tooltip">
                                                 <button type="button"
                                                     class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-orange-400 text-white shadow-2xs hover:bg-orange-500 focus:outline-hidden focus:bg-orange-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-                                                    wire:click="openModalBayarDepe({{ $item->id }})"
+                                                    wire:click="openModalBayarHutang({{ $item->id }})"
                                                     {{ $item->pickup_status == 'completed' ? 'disabled' : '' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                         height="20" viewBox="0 0 14 14">
