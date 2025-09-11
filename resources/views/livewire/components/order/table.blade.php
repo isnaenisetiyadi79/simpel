@@ -330,7 +330,7 @@
                                                             Sudah
                                                         </span>
                                                     </div>
-                                                    @elseif ($item->pickup_status == 'partially')
+                                                @elseif ($item->pickup_status == 'partially')
                                                     <div>
                                                         <span
                                                             class="inline-flex items-center px-2 py-1 text-xs font-medium text-teal-800 bg-teal-100 rounded-full gap-x-1 dark:bg-teal-500/10 dark:text-teal-500">
@@ -344,7 +344,9 @@
                                                                 </path>
                                                                 <path d="m9 12 2 2 4-4"></path>
                                                             </svg>
-                                                           Sebagian {{ number_format($item->pickupdetail()->sum('qty'), 0, ',', '.') }} / {{ number_format($item->qty, 0, ',', '.') }}
+                                                            Sebagian
+                                                            {{ number_format($item->pickupdetail()->sum('qty'), 0, ',', '.') }}
+                                                            / {{ number_format($item->qty, 0, ',', '.') }}
                                                         </span>
                                                     </div>
                                                 @else
@@ -395,8 +397,7 @@
                                         </td>
 
 
-                                        <td
-                                            class="size-px whitespace-nowrap">
+                                        <td class="size-px whitespace-nowrap">
                                             <div class="flex gap-2">
 
                                                 {{-- <div class="inline-block hs-tooltip">
@@ -512,7 +513,7 @@
                                 </button>
 
                                 <button type="button" {{ $details->onLastPage() ? 'disabled' : '' }}
-                                    class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                    class="py-1.5 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50  disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                     wire:click="nextPage" wire:loading.attr="disabled" rel="next">
                                     Next
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -531,8 +532,8 @@
     </div>
     <!-- End Card -->
 
+
     @livewire('components.order.ordercreatemodal')
     @livewire('components.orderdetail.changeprocess')
     @livewire('components.order.modalbayardepe')
-
 </div>
