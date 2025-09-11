@@ -1,7 +1,7 @@
 <div>
     {{-- Alert --}}
     @if (session()->has('success'))
-        <div class="mt-2 mb-5 bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500"
+        <div class="p-4 mt-2 mb-5 text-sm text-teal-800 bg-teal-100 border border-teal-200 rounded-lg dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500"
             role="alert" tabindex="-1" aria-labelledby="hs-soft-color-success-label">
             <span id="hs-soft-color-success-label" class="font-bold">Success</span> {{ session('success') }}
         </div>
@@ -12,10 +12,10 @@
         <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle">
                 <div
-                    class="bg-white border border-gray-200 rounded-xl shadow-2xs overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+                    class="overflow-hidden bg-white border border-gray-200 rounded-xl shadow-2xs dark:bg-neutral-800 dark:border-neutral-700">
                     <!-- Header -->
                     <div
-                        class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+                        class="grid gap-3 px-6 py-4 border-b border-gray-200 md:flex md:justify-between md:items-center dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
                                 Penyerahan/ Pengambilan Pesanan
@@ -30,7 +30,7 @@
 
 
                                 <button type="button" wire:click="openWizard"
-                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -44,16 +44,16 @@
                     </div>
                     <!-- End Header -->
                     <!-- Search Item -->
-                    {{-- <div class="py-3 px-4"> --}}
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 my-4 px-4">
+                    {{-- <div class="px-4 py-3"> --}}
+                    <div class="grid grid-cols-1 gap-3 px-4 my-4 md:grid-cols-4">
                         <div class="relative max-w-xs">
                             <label for="hs-table-search" class="sr-only">Search</label>
                             <input type="text" name="hs-table-search" wire:model.live.debounce.100ms="search"
                                 id="hs-table-search"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                 placeholder="Search for items">
-                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
-                                <svg class="size-4 text-gray-400 dark:text-neutral-500"
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+                                <svg class="text-gray-400 size-4 dark:text-neutral-500"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -78,18 +78,18 @@
                             <tr>
 
 
-                                <th scope="col" class="ps-6 pe-6 py-3 text-start">
+                                <th scope="col" class="py-3 ps-6 pe-6 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             NO
                                         </span>
                                     </div>
                                 </th>
-                                <th scope="col" class="ps-6 pe-6 py-3 text-start">
+                                <th scope="col" class="py-3 ps-6 pe-6 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Tanggal
                                         </span>
                                     </div>
@@ -98,7 +98,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Order
                                         </span>
                                     </div>
@@ -106,7 +106,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Detail Order
                                         </span>
                                     </div>
@@ -117,7 +117,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Customer
                                         </span>
                                     </div>
@@ -125,7 +125,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Jenis
                                         </span>
                                     </div>
@@ -133,7 +133,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Subtotal
                                         </span>
                                     </div>
@@ -141,7 +141,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Bayar DP
                                         </span>
                                     </div>
@@ -149,7 +149,7 @@
                                 <th scope="col" class="px-6 py-3 text-start">
                                     <div class="flex items-center gap-x-2">
                                         <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Bayar Pengambilan
                                         </span>
                                     </div>
@@ -166,7 +166,7 @@
                                 <tr>
 
                                     <td class="size-px whitespace-nowrap">
-                                        <div class="ps-6  pe-6 py-3">
+                                        <div class="py-3 ps-6 pe-6">
                                             <div class="flex items-center gap-x-3">
 
                                                 <div class="grow">
@@ -178,7 +178,7 @@
                                         </div>
                                     </td>
                                     <td class="size-px whitespace-nowrap">
-                                        <div class="ps-6  pe-6 py-3">
+                                        <div class="py-3 ps-6 pe-6">
                                             <div class="flex items-center gap-x-3">
 
                                                 <div class="grow">
@@ -202,10 +202,10 @@
                                     <td class="h-px w-72 whitespace-nowrap">
                                         <div class="px-6 py-3">
                                             @if ($item->orderdetail->service->is_package)
-                                                {{ number_format($item->qty, 0, ',', '.') }}
+                                                {{ number_format($item->qty, 2, ',', '.') }}
                                             @else
-                                                {{ number_format($item->qty, 0, ',', '.') }}
-                                               ( {{ number_format($item->orderdetail->width, 0, ',', '.') }} x {{  number_format($item->orderdetail->length, 0, ',', '.')}} )
+                                                {{ number_format($item->qty, 2, ',', '.') }}
+                                               ( {{ number_format($item->orderdetail->width, 2, ',', '.') }} x {{  number_format($item->orderdetail->length, 2, ',', '.')}} )
                                             @endif
 
                                         </div>
@@ -220,7 +220,7 @@
                                     {{-- {{ dd($item) }} --}}
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
-                                            <ul class="list-disc list-inside text-sm text-gray-700">
+                                            <ul class="text-sm text-gray-700 list-disc list-inside">
                                                 <span
                                                     class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->orderdetail->service->name }}</span>
 
@@ -229,12 +229,12 @@
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
-                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                            <ul class="text-sm text-gray-700 list-disc list-inside text-end">
                                                 <span class="text-sm text-gray-500 dark:text-neutral-500">
                                                     @if ($item->orderdetail->service->is_package)
-                                                        {{ number_format($item->orderdetail->price * $item->qty, 0, ',', '.') }}
+                                                        {{ number_format($item->orderdetail->price * $item->qty, 2, ',', '.') }}
                                                     @else
-                                                        {{ number_format($item->orderdetail->price * $item->orderdetail->width * $item->orderdetail->length * $item->qty, 0, ',', '.') }}
+                                                        {{ number_format($item->orderdetail->price * $item->orderdetail->width * $item->orderdetail->length * $item->qty, 2, ',', '.') }}
                                                     @endif
 
                                                 </span>
@@ -243,28 +243,27 @@
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
-                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                            <ul class="text-sm text-gray-700 list-disc list-inside text-end">
                                                 <span
-                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->dp, 0, ',', '.') }}</span>
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->dp, 2, ',', '.') }}</span>
                                             </ul>
                                         </div>
                                     </td>
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
-                                            <ul class="text-end list-disc list-inside text-sm text-gray-700">
+                                            <ul class="text-sm text-gray-700 list-disc list-inside text-end">
                                                 <span
-                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->bayarpickup, 0, ',', '.') }}</span>
+                                                    class="text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->bayarpickup, 2, ',', '.') }}</span>
                                             </ul>
                                         </div>
                                     </td>
                                     <td
-                                        class="size-px
-                                                whitespace-nowrap">
+                                        class="size-px whitespace-nowrap">
                                         <div class="flex gap-2">
 
 
 
-                                            <div class="hs-tooltip inline-block">
+                                            <div class="inline-block hs-tooltip">
                                                 <button type="button"
                                                     class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-gray-400 text-white shadow-2xs hover:bg-gray-500 focus:outline-hidden focus:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                     wire:click="print({{ $item->pickup->id }})">
@@ -281,7 +280,7 @@
                                                         </g>
                                                     </svg>
                                                     <span
-                                                        class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                                                        class="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible shadow-2xs dark:bg-neutral-700"
                                                         role="tooltip">
                                                         Print Struck
                                                     </span>
@@ -294,7 +293,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-sm px-4 py-6 text-center text-gray-500">Belum ada
+                                    <td colspan="8" class="px-4 py-6 text-sm text-center text-gray-500">Belum ada
                                         pickup (pengambilan barang)
                                     </td>
                                 </tr>
@@ -309,7 +308,7 @@
 
                     <!-- Footer -->
                     <div
-                        class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
+                        class="grid gap-3 px-6 py-4 border-t border-gray-200 md:flex md:justify-between md:items-center dark:border-neutral-700">
                         <div>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
                                 <span

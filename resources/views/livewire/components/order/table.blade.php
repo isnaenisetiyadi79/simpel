@@ -1,7 +1,7 @@
 <div>
     {{-- Alert --}}
     @if (session()->has('success'))
-        <div class="mt-2 mb-5 bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500"
+        <div class="p-4 mt-2 mb-5 text-sm text-teal-800 bg-teal-100 border border-teal-200 rounded-lg dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500"
             role="alert" tabindex="-1" aria-labelledby="hs-soft-color-success-label">
             <span id="hs-soft-color-success-label" class="font-bold">Success</span> {{ session('success') }}
         </div>
@@ -12,10 +12,10 @@
         <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle">
                 <div
-                    class="bg-white border border-gray-200 rounded-xl shadow-2xs overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+                    class="overflow-hidden bg-white border border-gray-200 rounded-xl shadow-2xs dark:bg-neutral-800 dark:border-neutral-700">
                     <!-- Header -->
                     <div
-                        class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+                        class="grid gap-3 px-6 py-4 border-b border-gray-200 md:flex md:justify-between md:items-center dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
                                 Pesanan/ Orderan
@@ -30,7 +30,7 @@
 
 
                                 <button type="button" wire:click="openModal"
-                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -44,14 +44,14 @@
                     </div>
                     <!-- End Header -->
                     <!-- Search Item -->
-                    <div class="flex flex-wrap gap-3 py-3 px-4 ">
+                    <div class="flex flex-wrap gap-3 px-4 py-3 ">
                         <div class="relative w-full lg:w-1/4">
                             <label class="sr-only">Search</label>
                             <input type="text" wire:model.live.debounce.100ms="search"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                 placeholder="Cari customer atau pesanan">
-                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
-                                <svg class="size-4 text-gray-400 dark:text-neutral-500"
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+                                <svg class="text-gray-400 size-4 dark:text-neutral-500"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -60,12 +60,12 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex ml-4 items-center gap-2 max-w-xs">
+                        <div class="flex items-center max-w-xs gap-2 ml-4">
                             <label for="hs-date-from"
                                 class="text-sm text-gray-800 dark:text-neutral-200">Tanggal</label>
                             <input type="date" wire:model.live.debounce.100ms="dateFrom" id="hs-date-from"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
                                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24">
                                     <path fill="currentColor"
@@ -76,11 +76,11 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex ml-4 items-center gap-2 max-w-xl">
+                        <div class="flex items-center max-w-xl gap-2 ml-4">
                             <label class="text-sm text-gray-800 dark:text-neutral-200">Sampai</label>
                             <input type="date" name="date-to" wire:model.live.debounce.100ms="dateTo"
                                 class="py-1.5 sm:py-2 px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
                                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24">
                                     <path fill="currentColor"
@@ -104,28 +104,28 @@
                                 <tr>
 
 
-                                    <th scope="col" class="w-8 ps-6 pe-6 py-3 text-start">
+                                    <th scope="col" class="w-8 py-3 ps-6 pe-6 text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 #
                                             </span>
                                         </div>
                                     </th>
 
-                                    <th scope="col" class="w-40 px-6 py-3 text-start truncate">
+                                    <th scope="col" class="w-40 px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Nama Customer
                                             </span>
                                         </div>
                                     </th>
 
-                                    <th scope="col" class="w-32 px-6 py-3 text-start truncate">
+                                    <th scope="col" class="w-32 px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Service
                                             </span>
                                         </div>
@@ -133,7 +133,7 @@
                                     <th scope="col" class="w-12 px-6 py-3 text-end">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Qty
                                             </span>
                                         </div>
@@ -141,15 +141,15 @@
                                     <th scope="col" class="w-24 px-6 py-3 text-end">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Subtotal
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="w-32 px-6 py-3 text-start sm:table-cell hidden">
+                                    <th scope="col" class="hidden w-32 px-6 py-3 text-start sm:table-cell">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Status Proses
                                             </span>
                                         </div>
@@ -157,15 +157,15 @@
                                     <th scope="col" class="w-32 px-6 py-3 text-start sm:table-cell hidde">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Pengambilan
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="w-32 px-6 py-3 text-start sm:table-cell hidden">
+                                    <th scope="col" class="hidden w-32 px-6 py-3 text-start sm:table-cell">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Pembayaran
                                             </span>
                                         </div>
@@ -174,7 +174,7 @@
                                     <th scope="col" class="w-32 px-6 py-3 text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                                 Order Date
                                             </span>
                                         </div>
@@ -190,7 +190,7 @@
                                     <tr>
 
                                         <td class="size-px whitespace-nowrap">
-                                            <div class="ps-6  pe-6 py-3">
+                                            <div class="py-3 ps-6 pe-6">
                                                 <div class="flex items-center gap-x-3">
 
                                                     <div class="grow">
@@ -226,8 +226,8 @@
 
                                                 <span
                                                     class="block text-sm text-gray-500 dark:text-neutral-500">{{ number_format($item->qty, 0, ',', '.') }}
-                                                    ({{ number_format($item->width, 0, ',', '.') }} x
-                                                    {{ number_format($item->length, 0, ',', '.') }})
+                                                    ({{ number_format($item->width, 2, ',', '.') }} x
+                                                    {{ number_format($item->length, 2, ',', '.') }})
                                                 </span>
                                             </div>
                                         </td>
@@ -235,7 +235,7 @@
                                             <div class="px-6 py-3">
 
                                                 <span class="block text-sm text-gray-500 dark:text-neutral-500">Rp
-                                                    {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                                                    {{ number_format($item->subtotal, 2, ',', '.') }}</span>
                                             </div>
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">
@@ -244,7 +244,7 @@
                                                     <div>
                                                         <button type="button"
                                                             wire:click="changeStatus({{ $item->id }})"
-                                                            class="cursor-pointer py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-100 hover:bg-gray-200 text-orange-800 hover:text-orange-500 rounded-full dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                            class="inline-flex items-center px-2 py-1 text-xs text-orange-800 bg-gray-100 rounded-full cursor-pointer gap-x-1 hover:bg-gray-200 hover:text-orange-500 dark:bg-neutral-500/20 dark:text-neutral-400">
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -293,7 +293,7 @@
                                                     <div>
                                                         <button type="button"
                                                             wire:click="changeStatus({{ $item->id }})"
-                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-sky-100 text-teal-800 hover:text-teal-500 rounded-full dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500 disabled:hover:bg-sky-100 disabled:hover:text-teal-800 enabled:cursor-pointer"
+                                                            class="inline-flex items-center px-2 py-1 text-xs font-medium text-teal-800 rounded-full gap-x-1 bg-sky-100 hover:text-teal-500 dark:bg-teal-500/10 hover:bg-teal-200 dark:text-teal-500 disabled:hover:bg-sky-100 disabled:hover:text-teal-800 enabled:cursor-pointer"
                                                             {{ $item->pickup_status != 'pending' ? 'disabled' : '' }}>
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
@@ -316,7 +316,7 @@
                                                 @if ($item->pickup_status == 'completed')
                                                     <div>
                                                         <span
-                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                            class="inline-flex items-center px-2 py-1 text-xs font-medium text-teal-800 bg-teal-100 rounded-full gap-x-1 dark:bg-teal-500/10 dark:text-teal-500">
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -333,7 +333,7 @@
                                                     @elseif ($item->pickup_status == 'partially')
                                                     <div>
                                                         <span
-                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                                                            class="inline-flex items-center px-2 py-1 text-xs font-medium text-teal-800 bg-teal-100 rounded-full gap-x-1 dark:bg-teal-500/10 dark:text-teal-500">
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -350,7 +350,7 @@
                                                 @else
                                                     <div>
                                                         <span
-                                                            class="py-1 px-2 inline-flex items-center gap-x-1 text-xs bg-gray-200  text-orange-800 rounded-sm dark:bg-neutral-500/20 dark:text-neutral-400">
+                                                            class="inline-flex items-center px-2 py-1 text-xs text-orange-800 bg-gray-200 rounded-sm gap-x-1 dark:bg-neutral-500/20 dark:text-neutral-400">
                                                             <svg class="shrink-0 size-3"
                                                                 xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
@@ -372,7 +372,7 @@
                                             <div class="px-6 py-3">
 
                                                 <span
-                                                    class="block text-sm text-gray-500 dark:text-neutral-500 capitalize">
+                                                    class="block text-sm text-gray-500 capitalize dark:text-neutral-500">
                                                     @if ($item->order->payment_status === 'unpaid')
                                                         Belum Dibayar
                                                     @elseif ($item->order->payment_status === 'partially')
@@ -396,11 +396,10 @@
 
 
                                         <td
-                                            class="size-px
-                                                whitespace-nowrap">
+                                            class="size-px whitespace-nowrap">
                                             <div class="flex gap-2">
 
-                                                {{-- <div class="hs-tooltip inline-block">
+                                                {{-- <div class="inline-block hs-tooltip">
                                                     <button type="button"
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-sky-400 text-white shadow-2xs hover:bg-sky-500 focus:outline-hidden focus:bg-sky-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                         wire:click="edit({{ $item->id }})"
@@ -418,13 +417,13 @@
                                                             </g>
                                                         </svg>
                                                         <span
-                                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                                                            class="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible shadow-2xs dark:bg-neutral-700"
                                                             role="tooltip">
                                                             Update
                                                         </span>
                                                     </button>
                                                 </div> --}}
-                                                <div class="hs-tooltip inline-block">
+                                                <div class="inline-block hs-tooltip">
                                                     <button type="button"
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-orange-400 text-white shadow-2xs hover:bg-orange-500 focus:outline-hidden focus:bg-orange-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                         wire:click="openModalBayarDepe({{ $item->order_id }})"
@@ -441,13 +440,13 @@
                                                             </g>
                                                         </svg>
                                                         <span
-                                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                                                            class="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible shadow-2xs dark:bg-neutral-700"
                                                             role="tooltip">
                                                             Bayar Depe
                                                         </span>
                                                     </button>
                                                 </div>
-                                                <div class="hs-tooltip inline-block">
+                                                <div class="inline-block hs-tooltip">
                                                     <button type="button"
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-gray-400 text-white shadow-2xs hover:bg-gray-500 focus:outline-hidden focus:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                         wire:click="print({{ $item->order->id }})"
@@ -465,7 +464,7 @@
                                                             </g>
                                                         </svg>
                                                         <span
-                                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                                                            class="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible shadow-2xs dark:bg-neutral-700"
                                                             role="tooltip">
                                                             Print Struck
                                                         </span>
@@ -477,7 +476,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-sm px-4 py-6 text-center text-gray-500">Belum
+                                        <td colspan="9" class="px-4 py-6 text-sm text-center text-gray-500">Belum
                                             ada
                                             pesanan
                                         </td>
@@ -490,7 +489,7 @@
 
                     <!-- Footer -->
                     <div
-                        class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
+                        class="grid gap-3 px-6 py-4 border-t border-gray-200 md:flex md:justify-between md:items-center dark:border-neutral-700">
                         <div>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
                                 <span

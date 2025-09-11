@@ -74,14 +74,14 @@ class Ordercreatemodal extends Component
             // default one empty row
             [
                 'service_id' => null,
-                'length' => 0,
-                'width' => 0,
-                'qty' => 0,
-                'qty_asli' => 0,
+                'length' => 0.00,
+                'width' => 0.00,
+                'qty' => 0.00,
+                'qty_asli' => 0.00,
                 'use_rounding' => false,
-                'qty_final' => 0,
-                'price' => 0,
-                'subtotal' => 0,
+                'qty_final' => 0.00,
+                'price' => 0.00,
+                'subtotal' => 0.00,
                 'description' => '',
             ]
         ];
@@ -91,14 +91,14 @@ class Ordercreatemodal extends Component
     {
         $this->details[] = [
             'service_id' => null,
-            'length' => 0,
-            'width' => 0,
-            'qty' => 0,
-            'qty_asli' => 0,
+            'length' => 0.00,
+            'width' => 0.00,
+            'qty' => 0.00,
+            'qty_asli' => 0.0000,
             'use_rounding' => false,
-            'qty_final' => 0,
-            'price' => 0,
-            'subtotal' => 0,
+            'qty_final' => 0.0000,
+            'price' => 0.00,
+            'subtotal' => 0.00,
             'description' => '',
         ];
     }

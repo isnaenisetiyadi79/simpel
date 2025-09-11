@@ -1,7 +1,7 @@
 <div>
     <div wire:show="showWizard" x-cloak>
-        <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-100">
-            <div class="bg-gray-100 rounded shadow-lg  md:w-3/4 lg:w-2/3 p-4 w-full">
+        <div class="fixed inset-0 flex items-center justify-center bg-black/50 z-100">
+            <div class="w-full p-4 bg-gray-100 rounded shadow-lg md:w-3/4 lg:w-2/3">
 
                 {{-- HEADER --}}
                 <div class="flex items-center justify-between px-6 pb-2 border-b border-gray-400">
@@ -11,7 +11,7 @@
                         {{ $step === 1 ? 'Pilih order dan pesanan (Step 1/2)' : 'Finalisasi Penyerahan & Pembayaran (Step 2/2)' }}
                     </h3>
                     <button type="button"
-                        class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
+                        class="inline-flex items-center justify-center text-gray-800 bg-gray-100 border border-transparent rounded-full size-8 gap-x-2 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
                         wire:click="closeWizard">
                         <span class="sr-only">Close</span>
                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -26,13 +26,13 @@
 
                 {{-- BODY --}}
                 @if (session()->has('error'))
-                    <div class="bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30" role="alert"
+                    <div class="p-4 border-red-500 bg-red-50 border-s-4 dark:bg-red-800/30" role="alert"
                         tabindex="-1" aria-labelledby="hs-bordered-red-style-label">
                         <div class="flex">
                             <div class="shrink-0">
                                 <!-- Icon -->
                                 <span
-                                    class="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800 dark:border-red-900 dark:bg-red-800 dark:text-red-400">
+                                    class="inline-flex items-center justify-center text-red-800 bg-red-200 border-4 border-red-100 rounded-full size-8 dark:border-red-900 dark:bg-red-800 dark:text-red-400">
                                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="ms-3">
                                 <h3 id="hs-bordered-red-style-label"
-                                    class="text-gray-800 font-semibold dark:text-white">
+                                    class="font-semibold text-gray-800 dark:text-white">
                                     Error!
                                 </h3>
                                 <p class="text-sm text-gray-700 dark:text-neutral-400">
@@ -60,24 +60,23 @@
                         <div class="grid grid-cols-3 gap-4 mb-4">
                             <div>
                                 <label
-                                    class="text-xs font-bold uppercase text-gray-600 dark:text-neutral-100">Customer</label>
+                                    class="text-xs font-bold text-gray-600 uppercase dark:text-neutral-100">Customer</label>
                                 <select wire:model.live.debounce.50ms="customer_id"
-                                    class="block w-full rounded-xl border-gray-300 shadow-sm
-           focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    class="block w-full border-gray-300 shadow-sm rounded-xl focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     <option value="">Pilih ...</option>
                                     @foreach ($customers as $s)
                                         <option value="{{ $s->id }}">{{ $s->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('customer_id')
-                                    <span class="text-red-600 text-xs">{{ $message }}</span>
+                                    <span class="text-xs text-red-600">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div>
                                 <label class="text-sm font-medium">Order</label>
                                 <select wire:model.live.debounce.50ms="order_id"
-                                    class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                    class="w-full border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                     <option value="">Pilih Order --</option>
                                     @foreach ($availableOrders as $o)
                                         <option value="{{ $o['id'] }}">#{{ $o['id'] }} — Total:
@@ -87,16 +86,16 @@
                                 </select>
                             </div>
                             @if ($order_id)
-                                <div class="mb-3 rounded-xl border p-3 bg-gray-50">
+                                <div class="p-3 mb-3 border rounded-xl bg-gray-50">
                                     <div class="text-sm text-end">
                                         <div>Total Order: <strong>Rp
-                                                {{ number_format($order_total, 0, ',', '.') }}</strong>
+                                                {{ number_format($order_total, 2, ',', '.') }}</strong>
                                         </div>
                                         <div>Sudah Dibayar (sebelumnya): <strong>Rp
-                                                {{ number_format($paid_total, 0, ',', '.') }}</strong></div>
+                                                {{ number_format($paid_total, 2, ',', '.') }}</strong></div>
                                         <div>Sisa: <strong
                                                 class="{{ $outstanding > 0 ? 'text-red-600' : 'text-green-600' }}">Rp
-                                                {{ number_format($outstanding, 0, ',', '.') }}</strong></div>
+                                                {{ number_format($outstanding, 2, ',', '.') }}</strong></div>
                                     </div>
                                 </div>
                             @endif
@@ -115,42 +114,42 @@
                                         <input type="checkbox" wire:model.lazy="selectAll"
                                             class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                    <th scope="col" class="px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                 Service
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                    <th scope="col" class="px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                 qty
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                    <th scope="col" class="px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                 Harga
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                    <th scope="col" class="px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                 Subtotal
                                             </span>
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-start truncate">
+                                    <th scope="col" class="px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
-                                                class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                 Keterangan
                                             </span>
                                         </div>
@@ -178,10 +177,15 @@
                                         </td>
                                         <td class="p-1 border border-t-gray-400 text-end">
                                             <span class="text-sm text-gray-800 dark:text-neutral-200 text-end">
+                                                @if (!$row['is_package'])
+                                                    ({{ number_format($row['length'], 2, ',', '.') }} x
+                                                    {{ number_format($row['width'], 2, ',', '.') }})
+                                                @endif
                                                 {{-- {{ $row['qty'] }} --}}
-                                                <input type="number" wire:model.live.debounce.30="pickupQty.{{ $row['id'] }}" min="1"
-                                                    max="{{ $row['qty_remaining'] }}"
-                                                    class="w-16 border rounded px-1 text-center">
+                                                <input type="number"
+                                                    wire:model.live.debounce.30="pickupQty.{{ $row['id'] }}"
+                                                    min="1" max="{{ $row['qty_remaining'] }}"
+                                                    class="w-16 px-1 text-center border rounded">
                                             </span>
                                         </td>
                                         <td class="p-1 border border-t-gray-400 text-end">
@@ -242,14 +246,14 @@
                             </tbody>
                         </table>
                         @error('selectedDetailIds')
-                            <div class="text-sm text-red-600 mt-2">{{ $message }}</div>
+                            <div class="mt-2 text-sm text-red-600">{{ $message }}</div>
                         @enderror
                     </div>
 
                     @if ($availableOrderDetails)
-                        <div class="mt-4 flex justify-end gap-2">
+                        <div class="flex justify-end gap-2 mt-4">
                             <button type="button" wire:click="closeWizard"
-                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-600 text-white hover:bg-orange-700 focus:outline-hidden focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none">
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-lg gap-x-2 hover:bg-orange-700 focus:outline-hidden focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 48 48">
                                     <g fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round"
@@ -262,7 +266,7 @@
                                 Batal
                             </button>
                             <button type="button" wire:click="nextFromStep1"
-                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                 Next Pickup
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24">
@@ -278,59 +282,59 @@
                     {{-- END : TABEL ORDER --}}
 
                     <div class="px-6 py-4 text-sm text-gray-700 border-gray-400">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                        <div class="grid grid-cols-1 gap-3 mb-4 md:grid-cols-3">
                             <div>
                                 <label class="text-sm font-medium">Tanggal Pickup</label>
                                 <input type="datetime-local" wire:model="pickup_date"
-                                    class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                                    class="w-full border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500">
                             </div>
                             <div class="md:col-span-2">
                                 <label class="text-sm font-medium">Catatan</label>
                                 <input type="text" wire:model="note"
-                                    class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                                    class="w-full border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500">
                             </div>
                         </div>
 
-                        <div class="overflow-x-auto rounded-xl border">
+                        <div class="overflow-x-auto border rounded-xl">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <th scope="col" class="px-6 py-3 truncate text-start">
                                             <div class="flex items-center gap-x-2">
                                                 <span
-                                                    class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                    class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                     Service
                                                 </span>
                                             </div>
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <th scope="col" class="px-6 py-3 truncate text-start">
                                             <div class="flex items-center gap-x-2">
                                                 <span
-                                                    class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                    class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                     Qty
                                                 </span>
                                             </div>
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <th scope="col" class="px-6 py-3 truncate text-start">
                                             <div class="flex items-center gap-x-2 text-end">
                                                 <span
-                                                    class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                    class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                     Harga @
                                                 </span>
                                             </div>
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <th scope="col" class="px-6 py-3 truncate text-start">
                                             <div class="flex items-center gap-x-2">
                                                 <span
-                                                    class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                    class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                     Subtotal
                                                 </span>
                                             </div>
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-start truncate">
+                                        <th scope="col" class="px-6 py-3 truncate text-start">
                                             <div class="flex items-center gap-x-2">
                                                 <span
-                                                    class="text-xs font-bold uppercase text-gray-800 dark:text-neutral-200">
+                                                    class="text-xs font-bold text-gray-800 uppercase dark:text-neutral-200">
                                                     Work & Karyawan
                                                 </span>
                                             </div>
@@ -349,6 +353,10 @@
                                             </td>
                                             <td class="px-3 py-2">
                                                 <span class="text-sm text-gray-800 dark:text-neutral-200">
+                                                    @if (!$row['order_detail']->service->is_package)
+                                                        ({{ number_format($row['order_detail']['length'], 2, ',', '.') }} x
+                                                        {{ number_format($row['order_detail']['width'], 2, ',', '.') }})
+                                                    @endif
                                                     {{ $row['order_detail']->qty }}
                                                 </span>
 
@@ -367,13 +375,13 @@
                                                 @if (!empty($row['works']))
                                                     <div class="space-y-2">
                                                         @foreach ($row['works'] as $j => $w)
-                                                            <div class="grid grid-cols-5 gap-2 items-center">
+                                                            <div class="grid items-center grid-cols-5 gap-2">
                                                                 <div class="col-span-2 text-sm">{{ $w['work']->name }}
                                                                 </div>
                                                                 <div class="col-span-2">
                                                                     <select
                                                                         wire:model="selectedRows.{{ $i }}.works.{{ $j }}.employee_id"
-                                                                        class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                                                                        class="w-full border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500">
                                                                         {{-- <option value="">Pilih Karyawan — --}}
                                                                         </option>
                                                                         @foreach ($row['employees'] as $emp)
@@ -388,7 +396,7 @@
                                                                 {{-- <div>
                                                                 <input type="number" step="0.01"
                                                                     wire:model.lazy="selectedRows.{{ $i }}.works.{{ $j }}.fee"
-                                                                    class="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                                                                    class="w-full border-gray-300 rounded-xl focus:border-blue-500 focus:ring-blue-500"
                                                                     placeholder="Fee">
                                                             </div> --}}
                                                             </div>
@@ -404,9 +412,9 @@
                             </table>
                         </div>
                         {{-- Pembayaran --}}
-                        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="grid grid-cols-1 gap-3 mt-4 md:grid-cols-3">
                             {{-- Ringkasan Order --}}
-                            <div class="rounded-xl border p-3 bg-gray-50">
+                            <div class="p-3 border rounded-xl bg-gray-50">
                                 <div class="text-sm">Total Order:
                                     <strong>Rp {{ number_format($order_total, 0, ',', '.') }}</strong>
                                 </div>
@@ -422,12 +430,12 @@
 
                             {{-- Form Pembayaran --}}
                             @if ($outstanding > 0)
-                                <div class="md:col-span-2 space-y-4">
+                                <div class="space-y-4 md:col-span-2">
 
                                     {{-- Total Rp --}}
-                                    <div class="grid grid-cols-3 gap-2 items-center">
+                                    <div class="grid items-center grid-cols-3 gap-2">
 
-                                        <label class="col-span-1 font-bold uppercase text-gray-600">TOTAL RP.</label>
+                                        <label class="col-span-1 font-bold text-gray-600 uppercase">TOTAL RP.</label>
                                         <div class="col-span-2">
 
                                             <input type="text" wire:model.live.debounce.300ms="outstanding"
@@ -437,21 +445,21 @@
                                     </div>
 
                                     {{-- Bayar Rp --}}
-                                    <div class="grid grid-cols-3 gap-2 items-center">
-                                        <label class="font-bold uppercase text-gray-600">BAYAR RP.</label>
-                                        <div class="col-span-2 flex items-center gap-2 w-full">
+                                    <div class="grid items-center grid-cols-3 gap-2">
+                                        <label class="font-bold text-gray-600 uppercase">BAYAR RP.</label>
+                                        <div class="flex items-center w-full col-span-2 gap-2">
                                             <label
                                                 class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
                                                 <input type="radio" wire:model.live.debounce.50ms="payment_method"
                                                     value="cash">
-                                                <span class="uppercase text-sm">Cash</span>
+                                                <span class="text-sm uppercase">Cash</span>
                                             </label>
 
                                             <label
                                                 class="flex items-center gap-2 p-2 border rounded-lg cursor-pointer">
                                                 <input type="radio" wire:model.live.debounce.50ms="payment_method"
                                                     value="transfer">
-                                                <span class="uppercase text-sm">Transfer</span>
+                                                <span class="text-sm uppercase">Transfer</span>
                                             </label>
 
                                             <input type="number" wire:model.live.debounce.300ms="pay_now"
@@ -461,8 +469,8 @@
                                     </div>
 
                                     {{-- Kembalian Rp --}}
-                                    <div class="grid grid-cols-3 gap-2 items-center">
-                                        <label class="col-span-1 font-bold uppercase text-gray-600">KEMBALIAN
+                                    <div class="grid items-center grid-cols-3 gap-2">
+                                        <label class="col-span-1 font-bold text-gray-600 uppercase">KEMBALIAN
                                             RP.</label>
                                         <div class="col-span-2">
 
@@ -475,9 +483,9 @@
 
                                 </div>
                             @else
-                                <div class="md:col-span-2 flex items-center">
+                                <div class="flex items-center md:col-span-2">
                                     <span
-                                        class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-100 text-green-800">
+                                        class="inline-flex items-center gap-2 px-3 py-2 text-green-800 bg-green-100 rounded-xl">
                                         ✅ Order sudah LUNAS — tidak perlu pembayaran lagi
                                     </span>
                                 </div>
@@ -485,9 +493,9 @@
                         </div>
 
 
-                        <div class="mt-4 flex justify-between">
+                        <div class="flex justify-between mt-4">
                             <button type="button"
-                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
                                 wire:click="backToStep1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="24"
                                     viewBox="0 0 12 24">
@@ -499,7 +507,7 @@
                             {{-- Tombol --}}
                             <div class="flex justify-end gap-2">
                                 <button type="button" wire:click="closeWizard"
-                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-600 text-white hover:bg-orange-700 focus:outline-hidden focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-lg gap-x-2 hover:bg-orange-700 focus:outline-hidden focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 48 48">
                                         <g fill="none" stroke="#FFF" stroke-linecap="round"
@@ -513,7 +521,7 @@
                                 </button>
                                 <button type="button" wire:click="save"
                                     {{ !empty($selectedDetailIds) && count($selectedDetailIds) > 0 ? '' : 'disabled' }}
-                                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24">
                                         <g fill="none" stroke="currentColor" stroke-width="1">

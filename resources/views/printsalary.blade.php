@@ -178,13 +178,13 @@
                 <tr>
                     <td>{{ $row->pickup_date }}</td>
                     <td>{{ $row->customer }}</td>
-                    <td>{{ number_format($row->width, 0, ',', '.') }}</td>
-                    <td>{{ number_format($row->length, 0, ',', '.') }}</td>
+                    <td>{{ number_format($row->width, 2, ',', '.') }}</td>
+                    <td>{{ number_format($row->length, 2, ',', '.') }}</td>
                     <td>{{ number_format($row->qty, 0, ',', '.') }}</td>
                     <td>{{ number_format($row->qty_final, 0, ',', '.') }}</td>
-                    <td class="align-right">{{ number_format($row->subtotal, 0, ',', '.') }}</td>
+                    <td class="align-right">{{ number_format($row->subtotal, 2, ',', '.') }}</td>
                     @foreach ($employees as $emp)
-                        <td class="align-right">{{ number_format($row->$emp, 0, ',', '.') ?? 0 }}</td>
+                        <td class="align-right">{{ number_format($row->$emp, 2, ',', '.') ?? 0 }}</td>
                     @endforeach
                 </tr>
             @endforeach

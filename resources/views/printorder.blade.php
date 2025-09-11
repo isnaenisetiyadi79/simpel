@@ -170,11 +170,11 @@
                 <tr>
                     <td>
                         {{ $pd->description }} <br>
-                        qty: {{ number_format($pd->qty, 0, ',', '.') }}
+                        qty: {{ number_format($pd->qty, 1, ',', '.') }}
                         {{-- @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width) --}}
                         @if ($pd->length != 0 && $pd->width != 0)
-                            > ({{ number_format($pd->length, 0, ',', '.') }} x
-                            {{ number_format($pd->width, 0, ',', '.') }})
+                            > ({{ number_format($pd->length, 1, ',', '.') }} x
+                            {{ number_format($pd->width, 1, ',', '.') }})
                         @endif
                         {{-- @endif --}}
 
@@ -182,7 +182,7 @@
                     <td class="align-right">{{ number_format($pd->qty_final, 0, ',', '.') }}
                         {{ $pd->service->unit }}</td>
                     <td class="align-right">{{ number_format($pd->price, 0, ',', '.') }}</td>
-                    <td class="align-right">{{ number_format($pd->subtotal, 0, ',', '.') }}</td>
+                    <td class="align-right">{{ number_format($pd->subtotal, 2, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -191,22 +191,22 @@
     <div class="total-section">
         <div class="total-row">
             <span>Total:</span>
-            <span>{{ number_format($total_order, 0, ',', '.') }}</span>
+            <span>{{ number_format($total_order, 2, ',', '.') }}</span>
         </div>
         <div class="total-row">
             <span>Pembayaran:</span>
-            <span>{{ number_format($order->paid_sum, 0, ',', '.') }}</span>
+            <span>{{ number_format($order->paid_sum, 2, ',', '.') }}</span>
         </div>
         @if ($kembali > 0)
             <div class="total-row">
                 <span>Kembali:</span>
-                <span>{{ number_format($kembali, 0, ',', '.') }}</span>
+                <span>{{ number_format($kembali, 2, ',', '.') }}</span>
             </div>
         @endif
         @if ($outstanding > 0)
             <div class="total-row">
                 <span>Sisa Hutang:</span>
-                <span>{{ number_format($outstanding, 0, ',', '.') }}</span>
+                <span>{{ number_format($outstanding, 2, ',', '.') }}</span>
             </div>
         @endif
     </div>
