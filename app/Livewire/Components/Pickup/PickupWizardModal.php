@@ -77,6 +77,9 @@ class PickupWizardModal extends Component
             // kosongkan
             $this->selectedDetailIds = [];
         }
+        // refresh total setiap pilihan berubah
+        $this->order_total = $this->pickupGrandTotal;
+        $this->outstanding = max(0, $this->order_total - $this->paid_total);
     }
 
     public function updatedSelectedDetailIds()
@@ -203,7 +206,7 @@ class PickupWizardModal extends Component
 
         // Hitung total & pembayaran existing
         $order = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
-        // $this->order_total = (float)($order->total_amount ?? 0);
+        $this->order_total = (float)($order->total_amount ?? 0);
         $this->paid_total = (float)($order->paid_sum ?? 0);
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
         $this->selectedDetailIds = [];
