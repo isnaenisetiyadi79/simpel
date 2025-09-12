@@ -215,7 +215,7 @@
 
                                                     <span class="block text-sm text-gray-500 dark:text-neutral-500">
                                                         {{ $row->customer }}<br>
-                                                        {{ $row->description }}
+                                                        {{ $row->service_name }} : {{ $row->description }}
                                                     </span>
                                                 </div>
                                             </div>

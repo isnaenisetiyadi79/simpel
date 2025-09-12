@@ -139,6 +139,7 @@ class Table extends Component
                 'pd.qty',
                 'od.qty_final',
                 'od.description',
+                's.name as service_name',
                 DB::raw("
             CASE
                 WHEN s.is_package = true
@@ -167,6 +168,7 @@ class Table extends Component
                 $row->qty_final,
                 $row->subtotal,
                 $row->description,
+                $row->service_name,
             ]);
         });
 
@@ -184,6 +186,7 @@ class Table extends Component
                 'qty_final'   => $first->qty_final,
                 'subtotal'    => $first->subtotal,
                 'description'   => $first->description,
+                'service_name' => $first->service_name,
             ];
 
             // kolom dinamis gaji per karyawan

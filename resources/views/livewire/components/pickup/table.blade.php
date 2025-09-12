@@ -201,13 +201,15 @@
                                     </td>
                                     <td class="h-px w-72 whitespace-nowrap">
                                         <div class="px-6 py-3">
-                                            @if ($item->orderdetail->service->is_package)
-                                                {{ number_format($item->qty, 2, ',', '.') }}
-                                            @else
-                                                {{ number_format($item->qty, 2, ',', '.') }}
-                                               ( {{ number_format($item->orderdetail->width, 2, ',', '.') }} x {{  number_format($item->orderdetail->length, 2, ',', '.')}} )
-                                            @endif
-
+                                            <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                @if ($item->orderdetail->service->is_package)
+                                                    {{ number_format($item->qty, 2, ',', '.') }}
+                                                @else
+                                                    {{ number_format($item->qty, 2, ',', '.') }}
+                                                    ({{ number_format($item->orderdetail->width, 2, ',', '.') }} x
+                                                    {{ number_format($item->orderdetail->length, 2, ',', '.') }})
+                                                @endif
+                                            </span>
                                         </div>
                                     </td>
 
@@ -257,8 +259,7 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td
-                                        class="size-px whitespace-nowrap">
+                                    <td class="size-px whitespace-nowrap">
                                         <div class="flex gap-2">
 
 
