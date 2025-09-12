@@ -214,7 +214,8 @@
                                                 <div class="grow">
 
                                                     <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                        {{ $row->customer }}
+                                                        {{ $row->customer }}<br>
+                                                        {{ $row->description }}
                                                     </span>
                                                 </div>
                                             </div>
