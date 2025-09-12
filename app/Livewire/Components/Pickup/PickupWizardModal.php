@@ -87,6 +87,7 @@ class PickupWizardModal extends Component
         // refresh total setiap pilihan berubah
         $this->order_total = $this->pickupGrandTotal;
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
+        // dd($this->paid_total);
     }
     public function resetWizard()
     {
@@ -203,8 +204,8 @@ class PickupWizardModal extends Component
         // Hitung total & pembayaran existing
         $order = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
         // $this->order_total = (float)($order->total_amount ?? 0);
-        // $this->paid_total = (float)($order->paid_sum ?? 0);
-        // $this->outstanding = max(0, $this->order_total - $this->paid_total);
+        $this->paid_total = (float)($order->paid_sum ?? 0);
+        $this->outstanding = max(0, $this->order_total - $this->paid_total);
         $this->selectedDetailIds = [];
     }
     public function updatedPickupQty($value, $key)
@@ -240,85 +241,7 @@ class PickupWizardModal extends Component
         $this->order_total = $this->pickupGrandTotal;
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
     }
-    // public function nextFromStep1()
-    // {
-    //     // Validasi ada pilihan
-    //     if (empty($this->selectedDetailIds)) {
-    //         $this->addError('selectedDetailIds', 'Pilih minimal 1 item untuk bisa melanjutkan');
-    //         return;
-    //     }
 
-    //     // Bangun rows final (Step 2)
-    //     $details = OrderDetail::with(['service.work', 'service.employees']) // relasi bantuan (lihat catatan di bawah)
-    //         ->whereIn('id', $this->selectedDetailIds)->get();
-    //     // dd($this->selectedDetailIds);
-    //     $this->selectedRows = $details->map(function ($od) {
-    //         return [
-    //             'order_detail' => $od,
-    //             'service'      => $od->service,
-    //             'works'        => $od->service->work->map(function ($w) {
-    //                 return [
-    //                     'work'        => $w,
-    //                     'employee_id' => $w->pivot->employee_id ?? null,
-    //                     'fee'         => (float) optional(optional($w->pivot)->service)->default_pay ?? 0,
-    //                 ];
-    //             }) ?? collect(),
-    //             'employees' => Employee::orderBy('name')->get(), // kalau semua karyawan
-    //             'note'      => $od->description,
-    //         ];
-    //     });
-    //     $this->step = 2;
-
-
-
-    //     // dd($this->selectedRows);
-    // }
-
-    // public function nextFromStep1()
-    // {
-    //     if (empty($this->selectedDetailIds)) {
-    //         $this->addError('selectedDetailIds', 'Pilih minimal 1 item untuk bisa melanjutkan');
-    //         return;
-    //     }
-
-    //     $details = OrderDetail::with(['service.work', 'service.employees'])
-    //         ->whereIn('id', $this->selectedDetailIds)
-    //         ->get();
-
-    //     $this->selectedRows = $details->map(function ($od) {
-    //         // qty sesuai hasil step 1
-    //         $qty = $this->pickupQty[$od->id] ?? $od->qty_remaining;
-
-    //         // subtotal dihitung ulang sesuai tipe service
-    //         $subtotal = $od->service->is_package
-    //             ? $qty * $od->price
-    //             : $od->length * $od->width * $qty * $od->price;
-
-    //         return [
-    //             'order_detail' => $od,
-    //             'service'      => $od->service,
-    //             'works'        => $od->service->work->map(function ($w) {
-    //                 return [
-    //                     'work'        => $w,
-    //                     'employee_id' => $w->pivot->employee_id ?? null,
-    //                     'fee'         => (float) optional(optional($w->pivot)->service)->default_pay ?? 0,
-    //                 ];
-    //             }) ?? collect(),
-    //             'employees' => Employee::orderBy('name')->get(),
-    //             'note'      => $od->description,
-
-    //             // tambahan hasil step 1
-    //             'qty'        => $qty,
-    //             'subtotal'   => $subtotal,
-    //         ];
-    //     });
-
-    //     // update total & outstanding sesuai step 1
-    //     $this->order_total = $this->pickupGrandTotal;
-    //     $this->outstanding = max(0, $this->order_total - $this->paid_total);
-
-    //     $this->step = 2;
-    // }
 
     public function nextFromStep1()
     {
