@@ -73,4 +73,14 @@ composer install
 php artisan key:generate
 
 # Setup database dan sesuaikan konfigurasi .env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=[dbase]
+DB_USERNAME=[username]
+DB_PASSWORD=[password]
+
+# Lakukan migrasi database
 php artisan migrate --seed
+
+
