@@ -62,7 +62,7 @@
                         <div class="w-full mt-4">
                             <label for="input-label-with-helper-text"
                                 class="block text-sm font-medium mb-2 dark:text-white">Layanan</label>
-                            <select wire:model="service_id"
+                            <select wire:model.live.debounce.50ms="service_id"
                                 class="py-3 mb-2 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                                 <option selected="">Pilih Layanan</option>
                                 @foreach ($services as $item)
@@ -131,7 +131,7 @@
                                 <label for="input-price"
                                     class="block text-sm font-medium mb-2 dark:text-white">Harga</label>
                                 <input type="number" step="0.01" name="input-price"
-                                    wire:model.live.debounce.300ms="price"
+                                    wire:model.live.debounce.30ms="price"
                                     class="text-end block w-full rounded-md border-gray-300 shadow-sm
                                 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>

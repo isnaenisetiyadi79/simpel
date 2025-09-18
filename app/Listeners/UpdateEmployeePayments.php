@@ -29,7 +29,7 @@ class UpdateEmployeePayments
         $orderDetail->load('service');
 
         // Load relasi 'pickupDetails' beserta 'pickupDetailEmployeeWorks' dan 'work'
-        $pickupDetails = $orderDetail->pickupDetails()
+        $pickupDetails = $orderDetail->pickupdetail()
             ->with('pickupDetailEmployeeWorks.work')
             ->get();
 

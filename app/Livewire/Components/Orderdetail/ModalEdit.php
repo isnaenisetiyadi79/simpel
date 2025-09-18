@@ -63,7 +63,25 @@ class ModalEdit extends Component
         // $this->reset();
     }
 
+    public function updatedServiceId() {
+
+        $this->validate(
+            [
+                'service_id' => 'required'
+            ]
+        );
+
+        $service = Service::find($this->service_id);
+        $this->price = $service->price;
+        $this->recalculatedSubtotal();
+    }
+
     public function updated($propertyName) {
+        $this->recalculatedSubtotal();
+    }
+
+    public function recalculatedSubtotal()
+    {
         $this->validate([
             'width' => 'required|numeric',
             'length' => 'required|numeric',
@@ -72,6 +90,7 @@ class ModalEdit extends Component
         ]);
 
         $this->subtotal = (float)$this->width * $this->length * $this->qty * $this->price;
+
     }
     protected function rules()
     {
@@ -100,6 +119,7 @@ class ModalEdit extends Component
             $orderDetail->description = $this->description;
             $orderDetail->length = $this->length;
             $orderDetail->width = $this->width;
+            $orderDetail->qty = $this->qty;
             $orderDetail->qty_asli = $this->qty_asli;
             $orderDetail->qty_final = $this->qty_final;
             $orderDetail->price = $this->price;
@@ -108,7 +128,7 @@ class ModalEdit extends Component
             $orderDetail->pickup_status = $this->pickup_status;
 
             // Hitung ulang subtotal
-            $orderDetail->subtotal = $this->qty_final * $this->price;
+            // $orderDetail->subtotal = $this->qty_final * $this->price;
 
             // 4. Simpan perubahan ke database
             $orderDetail->save();
@@ -117,7 +137,8 @@ class ModalEdit extends Component
             event(new OrderDetailUpdated($orderDetail));
 
             // 6. Feedback dan tutup modal
-            session()->flash('message', 'Data order detail berhasil diperbarui!');
+            // session()->flash('message', 'Data order detail berhasil diperbarui!');
+            $this->dispatch('success', message: 'Data order detail berhasil diperbarui!');
             $this->closeModal();
 
             // 7. Opsional: Panggil event Livewire untuk update tabel lain di halaman yang sama

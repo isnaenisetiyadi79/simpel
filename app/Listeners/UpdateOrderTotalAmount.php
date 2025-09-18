@@ -29,7 +29,7 @@ class UpdateOrderTotalAmount
             $order->total_amount = $newTotalAmount;
 
             // Logika tambahan untuk menangani kelebihan bayar
-            $paidAmount = $order->payments()->sum('paid_amount');
+            $paidAmount = $order->payment()->sum('paid_amount');
             if ($paidAmount >= $newTotalAmount) {
                 // Atur status menjadi 'paid' meskipun ada kelebihan bayar
                 $order->payment_status = 'paid';
