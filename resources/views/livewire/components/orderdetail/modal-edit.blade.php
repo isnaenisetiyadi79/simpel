@@ -89,8 +89,8 @@
                         {{-- END: Komponen Input Name --}}
 
 
-                        <div class="mt-4 {{ $service->is_package ?? false ? 'columns-2' : 'columns-4' }}">
-                            <div class="{{ $service->is_package ?? false ? 'hidden' : '' }}">
+                        <div class="mt-4 {{ $this->service->is_package ?? false ? 'columns-2' : 'columns-4' }}">
+                            <div class="{{ $this->service->is_package ?? false ? 'hidden' : '' }}">
                                 <label for="input-length"
                                     class="block text-sm font-medium mb-2 dark:text-white">Panjang</label>
                                 <input type="number" step="0.01" name="input-length"
@@ -98,7 +98,7 @@
                                     class="text-end block w-full rounded-md border-gray-300 shadow-sm
                                 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>
-                            <div class="{{ $service->is_package ?? false ? 'hidden' : '' }}">
+                            <div class="{{ $this->service->is_package ?? false ? 'hidden' : '' }}">
                                 <label for="input-width"
                                     class="block text-sm font-medium mb-2 dark:text-white">Lebar</label>
                                 <input type="number" step="0.01" name="input-width"
