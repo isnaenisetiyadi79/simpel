@@ -35,15 +35,11 @@ class Table extends Component
     {
         $this->dispatch('open-modal-bayar-depe', $id);
     }
-    // public function edit($id)
-    // {
-    //     $this->dispatch('edit-modal', $id);
-    //     $order = Order::find($id);
-    //     $this->dispatch('value', [
-    //         'customer' => $order->customer_id,
-    //         'service' => $order->detail->service_id,
-    //     ]);
-    // }
+
+    public function openModalEdit($id)
+    {
+        $this->dispatch('open-modal-edit', $id);
+    }
 
     public function changeStatus($id)
     {
