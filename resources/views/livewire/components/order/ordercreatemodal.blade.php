@@ -113,7 +113,7 @@
                     @error('customer_id')
                         <span class="text-red-600 text-xs">{{ $message }}</span>
                     @enderror
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto overflow-y-auto h-96">
                         <table class="w-full table-auto">
                             <thead class="bg-gray-100 border border-t-gray-500 border-b-gray-500">
                                 <tr>

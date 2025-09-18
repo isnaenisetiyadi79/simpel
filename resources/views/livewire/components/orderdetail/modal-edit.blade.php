@@ -116,12 +116,12 @@
                                 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>
                             <div>
-                                <label for="input-qty_final" class="block text-sm font-medium mb-2 dark:text-white">Qty
-                                    Final</label>
-                                <input type="number" name="input-qty_final" readonly wire:model="qty_final"
+                                <label for="input-qty_final"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Jumlah Total</label>
+                                <input type="text" name="input-qty_final" readonly
+                                    value="{{ number_format($qty_final, 2, ',', '.') }}"
                                     class="pointer-events-none text-end block w-full rounded-md border-gray-300 shadow-sm
                         focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-
                             </div>
                         </div>
                         <div class="mt-4 columns-2">
@@ -137,82 +137,14 @@
                             <div>
                                 <label for="input-subtotal"
                                     class="block text-sm font-medium mb-2 dark:text-white">Subtotal</label>
-                                <input type="number" step="0.01" name="input-subtotal" wire:model="subtotal"
-                                    readonly
+                                <input type="text" step="0.01" name="input-subtotal"
+                                    value="{{ number_format($subtotal, 2, ',', '.') }}" readonly
                                     class="read-only:pointer-events-none text-end block w-full rounded-md border-gray-300 shadow-sm
                         focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
 
                             </div>
                         </div>
-                        {{-- Komponen Input EMail --}}
-                        {{-- <div class="w-full mt-4">
-                            <label for="input-label-with-helper-total"
-                                class="block text-sm font-medium mb-2 dark:text-white">Email</label>
-                            <input type="text" wire:model="email" name="email" id="input-label-with-helper-total"
-                                class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 "
-                                placeholder="johndoe@gmail.com" aria-describedby="hs-input-helper-text">
-                            @error('email')
-                                <span class="text-red-600 text-xs">{{ $message }}</span>
-                            @enderror
-                        </div> --}}
-                        {{-- END: Komponen Input Email --}}
 
-                        {{-- Komponen Input Password --}}
-                        {{-- <div class="w-full mt-4">
-                            <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
-                            <div class="relative">
-                                <input type="password" wire:model="password" id="password" name="password"
-                                    value="{{ old('password') }}"
-                                    class="py-2.5 sm:py-3 px-4 pe-11 block w-full border-gray-200 rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 @error('password') border-red-500 @enderror""
-                                    {{ $update_data ? '' : 'required' }}
-                                    placeholder="{{ $update_data ? '[Biarkan kosong bila tidak ingin merubah password]' : '********' }}">
-
-                                <div class="hs-tooltip absolute inset-y-0 end-0 flex items-center cursor-pointer z-20 pe-4 "
-                                    id="toggle-password">
-                                    <div class="hs-tooltip-toggle" id="hs-password-tooptip">
-                                        <svg id="passwordshow"
-                                            class="hidden shrink-0 size-6 text-gray-800  dark:text-neutral-500"
-                                            xmlns="http://www.w3.org/2000/svg" width="576" height="512"
-                                            viewBox="0 0 576 512">
-                                            <path fill="currentColor"
-                                                d="M288 144a111 111 0 0 0-31.24 5a55.4 55.4 0 0 1 7.24 27a56 56 0 0 1-56 56a55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144m284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19M288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400" />
-                                        </svg>
-                                        <svg id="passwordhide"
-                                            class="shrink-0 size-6 text-gray-800  dark:text-neutral-500"
-                                            xmlns="http://www.w3.org/2000/svg" width="512" height="512"
-                                            viewBox="0 0 512 512">
-                                            <path fill="currentColor"
-                                                d="M432 448a15.92 15.92 0 0 1-11.31-4.69l-352-352a16 16 0 0 1 22.62-22.62l352 352A16 16 0 0 1 432 448M248 315.85l-51.79-51.79a2 2 0 0 0-3.39 1.69a64.11 64.11 0 0 0 53.49 53.49a2 2 0 0 0 1.69-3.39m16-119.7L315.87 248a2 2 0 0 0 3.4-1.69a64.13 64.13 0 0 0-53.55-53.55a2 2 0 0 0-1.72 3.39" />
-                                            <path fill="currentColor"
-                                                d="M491 273.36a32.2 32.2 0 0 0-.1-34.76c-26.46-40.92-60.79-75.68-99.27-100.53C349 110.55 302 96 255.68 96a226.5 226.5 0 0 0-71.82 11.79a4 4 0 0 0-1.56 6.63l47.24 47.24a4 4 0 0 0 3.82 1.05a96 96 0 0 1 116 116a4 4 0 0 0 1.05 3.81l67.95 68a4 4 0 0 0 5.4.24a343.8 343.8 0 0 0 67.24-77.4M256 352a96 96 0 0 1-93.3-118.63a4 4 0 0 0-1.05-3.81l-66.84-66.87a4 4 0 0 0-5.41-.23c-24.39 20.81-47 46.13-67.67 75.72a31.92 31.92 0 0 0-.64 35.54c26.41 41.33 60.39 76.14 98.28 100.65C162.06 402 207.92 416 255.68 416a238.2 238.2 0 0 0 72.64-11.55a4 4 0 0 0 1.61-6.64l-47.47-47.46a4 4 0 0 0-3.81-1.05A96 96 0 0 1 256 352" />
-                                        </svg>
-                                        <span
-                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
-                                            role="tooltip" id="tooltip-name">
-                                            Show
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @error('password')
-                            <p class=" text-xs text-red-600 mt-2" id="password-error">{{ $message }}</p>
-                        @enderror --}}
-                        {{-- END: Komponen Input Password --}}
-
-                        {{-- <div class="w-full mt-4">
-                            <label for="input-label-with-helper-text"
-                                class="block text-sm font-medium mb-2 dark:text-white">Level Akses</label>
-                            <select wire:model="role"
-                                class="py-3 mb-2 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                                <option selected="">Pilih Level Akses ...</option>
-                                @foreach ($roles as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->name }}</option>
-                                @endforeach
-
-                            </select>
-                        </div> --}}
 
 
                     </div>

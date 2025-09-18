@@ -173,7 +173,7 @@ class PickupWizardModal extends Component
     {
         // Ambil order details yang boleh di-pickup
         $ods = OrderDetail::query()
-            ->with(['service:id,name'])
+            ->with(['service:id,name,is_package'])
             ->where('order_id', $this->order_id)
             ->where('process_status', 'done')
             ->whereIn('pickup_status', ['pending', 'partially'])
@@ -193,7 +193,7 @@ class PickupWizardModal extends Component
                 'id' => $od->id,
                 'service_id' => $od->service_id,
                 'service_name' => optional($od->service)->name,
-                'is_package' => (bool) (optional($od->service)->is_package ?? false),
+                'is_package' => (bool) (optional($od->service)->is_package),
                 'length' => (float) $od->length,
                 'width' => (float) $od->width,
                 'qty' => (float) $od->qty,
@@ -209,6 +209,7 @@ class PickupWizardModal extends Component
         $this->order_total = (float)($order->total_amount ?? 0);
         $this->paid_total = (float)($order->paid_sum ?? 0);
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
+        $this->pay_now = $this->outstanding;
         $this->selectedDetailIds = [];
     }
     public function updatedPickupQty($value, $key)
