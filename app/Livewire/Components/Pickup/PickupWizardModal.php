@@ -244,6 +244,7 @@ class PickupWizardModal extends Component
         // refresh total setiap qty berubah
         $this->order_total = $this->pickupGrandTotal;
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
+        $this->pay_now = $this->outstanding;
     }
 
 
@@ -302,6 +303,7 @@ class PickupWizardModal extends Component
         // sinkronkan total / outstanding sesuai pilihan
         $this->order_total = $this->pickupGrandTotal;
         $this->outstanding = max(0, $this->order_total - $this->paid_total);
+        $this->pay_now = $this->outstanding;
 
         $this->step = 2;
     }
