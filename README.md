@@ -68,17 +68,22 @@ Project ini dirancang agar dapat dengan mudah dikembangkan untuk kebutuhan berba
 ```bash
 git clone https://github.com/isnaenisetiyadi79/simpel.git
 cd simpel
-cp .env.example .env
 composer install
-php artisan key:generate
 
 # Setup database dan sesuaikan konfigurasi .env
+cp .env.example .env
+
+#edit isinya sesuai database
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
 DB_DATABASE=[dbase]
 DB_USERNAME=[username]
 DB_PASSWORD=[password]
+
+#Generate key aplikasi
+php artisan key:generate
+
 
 # Lakukan migrasi database
 php artisan migrate --seed
