@@ -29,12 +29,12 @@ class ModalEdit extends Component
 
     // Variabel data
     public $services;
-    #[On('open-modal-edit')]
+    public $service;
+
+    protected $listeners = ['open-modal-edit' => 'openModal'];
+    // #[On('open-modal-edit')]
     public function openModal($id)
     {
-
-
-
         $this->id = $id;
         $orderDetail = OrderDetail::find($id);
         if ($orderDetail) {
@@ -50,6 +50,8 @@ class ModalEdit extends Component
             $this->process_status = $orderDetail->process_status;
             $this->pickup_status = $orderDetail->pickup_status;
         }
+        $this->service = Service::find($orderDetail->service_id);
+
         $this->modalFormData = true;
     }
 
@@ -63,7 +65,8 @@ class ModalEdit extends Component
         // $this->reset();
     }
 
-    public function updatedServiceId() {
+    public function updatedServiceId()
+    {
 
         $this->validate(
             [
@@ -71,12 +74,13 @@ class ModalEdit extends Component
             ]
         );
 
-        $service = Service::find($this->service_id);
-        $this->price = $service->price;
+        $this->service = Service::find($this->service_id);
+        $this->price = $this->service->price;
         $this->recalculatedSubtotal();
     }
 
-    public function updated($propertyName) {
+    public function updated($propertyName)
+    {
         $this->recalculatedSubtotal();
     }
 
@@ -89,9 +93,25 @@ class ModalEdit extends Component
             'price' => 'required|numeric'
         ]);
 
-        $this->subtotal = (float)$this->width * $this->length * $this->qty * $this->price;
+        if (!$this->service->is_package) {
+            $this->qty_final = $this->width * $this->length * $this->qty;
+            $this->subtotal = (float)$this->width * $this->length * $this->qty * $this->price;
+        }else {
+            $this->qty_final = $this->qty;
+            $this->subtotal = (float)$this->qty * $this->price;
 
+        }
     }
+    public function getSubtotalFormattedProperty()
+    {
+        return number_format($this->subtotal, 2, ',', '.');
+    }
+
+    public function getQtyFinalFormattedProperty()
+    {
+        return number_format($this->qty_final, 2, ',', '.');
+    }
+
     protected function rules()
     {
         return [

@@ -89,8 +89,8 @@
                         {{-- END: Komponen Input Name --}}
 
 
-                        <div class="mt-4 {{ $item->service->is_package ?? false ? 'columns-2' : 'columns-4' }}">
-                            <div class="{{ $item->service->is_package ?? false ? 'hidden' : '' }}">
+                        <div class="mt-4 {{ $service->is_package ?? false ? 'columns-2' : 'columns-4' }}">
+                            <div class="{{ $service->is_package ?? false ? 'hidden' : '' }}">
                                 <label for="input-length"
                                     class="block text-sm font-medium mb-2 dark:text-white">Panjang</label>
                                 <input type="number" step="0.01" name="input-length"
@@ -98,7 +98,7 @@
                                     class="text-end block w-full rounded-md border-gray-300 shadow-sm
                                 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>
-                            <div class="{{ $item->service->is_package ?? false ? 'hidden' : '' }}">
+                            <div class="{{ $service->is_package ?? false ? 'hidden' : '' }}">
                                 <label for="input-width"
                                     class="block text-sm font-medium mb-2 dark:text-white">Lebar</label>
                                 <input type="number" step="0.01" name="input-width"
@@ -110,7 +110,7 @@
                             <div>
                                 <label for="input-qty"
                                     class="block text-sm font-medium mb-2 dark:text-white">Qty</label>
-                                <input type="number" step="0.01" name="input-qty"
+                                <input type="number" step="1.00" name="input-qty"
                                     wire:model.live.debounce.300ms="qty"
                                     class="text-end block w-full rounded-md border-gray-300 shadow-sm
                                 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
@@ -118,9 +118,8 @@
                             <div>
                                 <label for="input-qty_final" class="block text-sm font-medium mb-2 dark:text-white">Qty
                                     Final</label>
-                                <input type="number" step="0.01" name="input-qty_final" readonly
-                                    wire:model.live.debounce.300ms="width"
-                                    class="text-end block w-full rounded-md border-gray-300 shadow-sm
+                                <input type="number" name="input-qty_final" readonly wire:model="qty_final"
+                                    class="pointer-events-none text-end block w-full rounded-md border-gray-300 shadow-sm
                         focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
 
                             </div>
@@ -138,8 +137,8 @@
                             <div>
                                 <label for="input-subtotal"
                                     class="block text-sm font-medium mb-2 dark:text-white">Subtotal</label>
-                                <input type="number" step="0.01" name="input-subtotal"
-                                    wire:model.live.debounce.300ms="subtotal" readonly
+                                <input type="number" step="0.01" name="input-subtotal" wire:model="subtotal"
+                                    readonly
                                     class="read-only:pointer-events-none text-end block w-full rounded-md border-gray-300 shadow-sm
                         focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
 
