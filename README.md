@@ -88,4 +88,7 @@ php artisan key:generate
 # Lakukan migrasi database
 php artisan migrate --seed
 
-
+# Jalankan aplikasi
+login akun default:
+username: simpel@gmail.com
+password: simpel
