@@ -208,9 +208,9 @@
                                                             {{ $item->pickupdetail->count() > 1 ? $loop->iteration : '' }}
                                                             {!! $pd->orderdetail->description ? $pd->orderdetail->description : '<i>Tanpa Nama Pesanan</i>' !!} |
                                                             Qty: {{ number_format($pd->qty, 0, ',', '.') }} |
-                                                            Total:
-                                                            ({{ number_format($pd->orderdetail->width, 0, ',', '.') }} x
-                                                            {{ number_format($pd->orderdetail->length, 0, ',', '.') }})
+                                                            Dimensi:
+                                                            ({{ number_format($pd->orderdetail->width, 2, ',', '.') }} x
+                                                            {{ number_format($pd->orderdetail->length, 2, ',', '.') }})
                                                         </li>
                                                     @empty
                                                         <span class="text-sm text-gray-500 dark:text-neutral-500">Tidak

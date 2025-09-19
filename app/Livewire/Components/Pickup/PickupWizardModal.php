@@ -500,7 +500,7 @@ class PickupWizardModal extends Component
                     // 'order_id'       => $this->order_id, // tetap kaitkan ke order
                     'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
                     'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
-                    'paid_amount' => $payAmount,
+                    'paid_amount'    => $payAmount,
                     'payment_method' => $this->payment_method,
                 ]);
             }

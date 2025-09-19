@@ -68,7 +68,6 @@ Project ini dirancang agar dapat dengan mudah dikembangkan untuk kebutuhan berba
 ```bash
 git clone https://github.com/isnaenisetiyadi79/simpel.git
 cd simpel
-composer install
 
 # Setup database dan sesuaikan konfigurasi .env
 cp .env.example .env
@@ -82,6 +81,7 @@ DB_USERNAME=[username]
 DB_PASSWORD=[password]
 
 #Generate key aplikasi
+composer install
 php artisan key:generate
 
 
@@ -89,6 +89,6 @@ php artisan key:generate
 php artisan migrate --seed
 
 # Jalankan aplikasi
-login akun default:
+login menggunakan akun default:
 username: simpel@gmail.com
 password: simpel
