@@ -77,6 +77,9 @@ class Table extends Component
     {
         $this->redirectRoute('order.print', $id);
     }
+    public function printStatus($id) {
+        $this->redirectRoute('orderdetail.printStatus', $id);
+    }
 
     public function render()
     {

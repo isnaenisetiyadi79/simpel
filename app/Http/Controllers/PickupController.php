@@ -37,12 +37,15 @@ class PickupController extends Controller
         } else {
             $kembali = abs($total_order - ($pickup->paid_sum + $order->paid_sum));
         }
-        // dd($total_order);
+
+        $order_payments = Order::with('payment')->where('id', $order_id)->get();
+        $pickup_payments = Pickup::with('payment')->where('id', $id)->get();
+        // dd($order_payments);
         // dd($outstanding);
         // query toko
         $toko = Toko::first();
 
         // render
-        return view('printpickup', compact('pickup', 'toko', 'total_order', 'paid_sum', 'outstanding', 'kembali'));
+        return view('printpickup', compact('pickup', 'toko', 'total_order', 'paid_sum', 'outstanding', 'kembali', 'order_payments', 'pickup_payments'));
     }
 }

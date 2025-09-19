@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ReceivableController;
 use App\Http\Controllers\ReportController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -63,7 +65,7 @@ Route::middleware(['authenticate'])->group(function () {
     Route::get('/transaction', [OrderController::class, 'index'])->name('order');
     Route::get('/transaction/print/{id}', [OrderController::class, 'print'])->name('order.print');
     Route::get('receivable', [ReceivableController::class, 'index'])->name('receivable');
-
+    Route::get('/transaction/printstatus/{id}', [OrderDetailController::class, 'printStatus'])->name('orderdetail.printStatus');
     // Route Pickup
     Route::get('pickup', [PickupController::class, 'index'])->name('pickup');
     Route::get('/pickup/print/{id}', [PickupController::class, 'print'])->name('pickup.print');

@@ -210,7 +210,39 @@
             </div>
         @endif
     </div>
+    <div class="transaction-info">
+        {{-- @if ($order_payments) --}}
 
+        @if ($paid_sum > 0)
+            <div class="info-row">
+                <span>RINCIAN PEMBAYARAN</span>
+            </div>
+        @endif
+        @foreach ($order_payments as $od)
+            @foreach ($od->payment as $pym)
+                <div class="info-row">
+                    <span>
+                        {{-- {{ $loop->iteration }}. --}}
+                        {{ date('d F Y', strtotime($pym->created_at)) }}</span>
+                    <span>{{ number_format($pym->amount, 2, ',', '.') }}</span>
+                </div>
+            @endforeach
+        @endforeach
+        {{-- @endif --}}
+        @foreach ($pickup_payments as $pd)
+            {{-- <div class="info-row">
+            <span>Pembayaran</span>
+        </div> --}}
+            @foreach ($pd->payment as $pym)
+                <div class="info-row">
+                    <span>
+                        {{-- {{ $loop->iteration }}. --}}
+                        {{ date('d F Y', strtotime($pym->created_at)) }}</span>
+                    <span>{{ number_format($pym->amount, 2, ',', '.') }}</span>
+                </div>
+            @endforeach
+        @endforeach
+    </div>
     <div class="divider"></div>
 
     <div class="footer">

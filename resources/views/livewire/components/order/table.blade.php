@@ -307,6 +307,19 @@
                                                             </svg>
                                                             Selesai
                                                         </button>
+                                                        @if ($item->pickup_status != 'completed')
+                                                            <button type="button"
+                                                                wire:click="printStatus({{ $item->id }})"
+                                                                class=" items-center px-2 py-1 text-xs font-medium text-gray-800 rounded-full gap-x-1 bg-sky-100 hover:text-gray-500 dark:bg-gray-500/10 hover:bg-gray-200 dark:text-gray-500 disabled:hover:bg-sky-100 disabled:hover:text-gray-800 enabled:cursor-pointer
+                                                            ">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" viewBox="0 0 24 24">
+                                                                    <path fill="currentColor"
+                                                                        d="m17.95 18.062l3.19-3.19q.136-.141.34-.141q.203 0 .349.14q.165.146.155.357q-.009.21-.155.357l-3.314 3.313q-.242.243-.565.243t-.565-.243l-1.214-1.194q-.165-.148-.165-.345t.165-.367q.166-.155.354-.155t.354.16zM8.616 20q-.667 0-1.141-.475T7 18.386V16H5.192q-.666 0-1.14-.475t-.475-1.14v-3.77q0-.85.577-1.424q.577-.576 1.423-.576h12.846q.85 0 1.425.576t.575 1.424q0 .064-.049.096t-.107.003q-.12.203-.388.36t-.67.118q-1.569 0-2.973.768q-1.403.767-2.203 2.117q-.103.173-.269.279t-.372.106H8.616q-.27 0-.443.173T8 15.077v3.308q0 .269.173.442t.443.173h4.85q.212 0 .356.144t.144.357t-.144.356t-.356.143zm-.8-12.154q-.356 0-.586-.233T7 7.038v-.81q0-.667.475-1.14q.474-.472 1.14-.472h6.77q.666 0 1.14.476q.475.475.475 1.143v.809q0 .343-.232.573q-.233.23-.576.23z" />
+                                                                </svg>
+
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 @endif
                                             </div>
@@ -427,7 +440,13 @@
                                                         class="cursor-pointer hs-tooltip-toggle py-1.5 px-2 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md bg-teal-400 text-white shadow-2xs hover:bg-teal-500 focus:outline-hidden focus:bg-teal-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                         wire:click="openModalEdit({{ $item->id }})"
                                                         {{ $item->pickup_status == 'completed' ? 'disabled' : '' }}>
-                                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0zM15 6l3 3m-5 11h8"/></svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                            height="20" viewBox="0 0 24 24">
+                                                            <path fill="none" stroke="currentColor"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="1.5"
+                                                                d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0zM15 6l3 3m-5 11h8" />
+                                                        </svg>
                                                         <span
                                                             class="absolute z-10 invisible inline-block px-2 py-1 text-xs font-medium text-white transition-opacity bg-gray-900 rounded-md opacity-0 hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible shadow-2xs dark:bg-neutral-700"
                                                             role="tooltip">

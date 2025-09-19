@@ -123,44 +123,77 @@
 
     {{-- END: TOMBOL Untuk print manual --}}
     <div class="header">
-        <div class="shop-name">{{ $toko->name }}</div>
-        <div class="shop-address">{{ $toko->address }}</div>
-        <div class="shop-address">Telp: {{ $toko->phone_number }}</div>
+        <div class="shop-name">PEKERJAAN SELESAI</div>
+        <div class="shop-address">
+            Tgl: {{ \Illuminate\Support\Carbon::parse($orderdetail->updated_at)->locale('id')->translatedFormat('d F Y') }}
+            Pukul: {{ \Illuminate\Support\Carbon::parse($orderdetail->updated_at)->locale('id')->translatedFormat('H:i') }}
+
+        </div>
     </div>
     <div class="divider"></div>
 
     <div class="transaction-info">
         <div class="info-row">
-            <span>Tanggal:</span>
-            {{-- <span>{{ date('d-F-Y H:i', strtotime($order->created_at)) }}</span> --}}
-            <span>{{ \Illuminate\Support\Carbon::parse($order->order_date)->locale('id')->translatedFormat('d F Y H:i') }}</span>
+            <span>{{ $orderdetail->order->customer->name }}</span>
+            <span>{{ $orderdetail->order->customer->phone_number }}</span>
         </div>
         <div class="info-row">
-            <span>Pelanggan:</span>
-            <span>{{ $order->customer->name }}</span>
-        </div>
-        <div class="info-row">
-            <span>No. HP:</span>
-            <span>{{ $order->customer->phone_number }}</span>
-        </div>
-        <div class="info-row">
-            <span>Order No: # {{ $order->id }}</span>
-            <span>{{ $order->note }}</span>
+            <span>{{ $orderdetail->order->note }}</span>
         </div>
     </div>
 
     <div class="divider"></div>
     <table class="items-table">
-        <thead>
+        {{-- <thead>
             <tr>
                 <th>Item</th>
-                <th class="align-right">Qty</th>
-                <th class="align-right">Harga</th>
-                <th class="align-right">Subtotal</th>
+                <th class="align-right">Status</th>
             </tr>
-        </thead>
+        </thead> --}}
         <tbody>
-            @foreach ($order->orderdetail as $pd)
+            {{-- @foreach ($orderdetail as $pd) --}}
+                <tr>
+                    <td>
+                        {{ $orderdetail->description }} <br>
+                        qty: {{ number_format($orderdetail->qty, 1, ',', '.') }}
+                        {{-- @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width) --}}
+                        @if ($orderdetail->length != 0 && $orderdetail->width != 0)
+                            > ({{ number_format($orderdetail->length, 1, ',', '.') }} x
+                            {{ number_format($orderdetail->width, 1, ',', '.') }})
+                        @endif
+                        {{-- @endif --}}
+
+                    </td>
+                    {{-- <td class="align-right">
+                        @if ($pd->process_status == 'done')
+                            SELESAI
+                        @elseif ($pd->process_status == 'process')
+                            PROSES
+                        @else
+                            BELUM DIPROSES
+                        @endif
+                    </td> --}}
+                </tr>
+            {{-- @endforeach --}}
+        </tbody>
+    </table>
+    <div class="divider"></div>
+    @if ($order->orderdetail->count() > 1)
+    <div class="transaction-info -mb-4">
+        <div class="info-row ">
+            <span class="font-bold">STATUS PESANAN DALAM 1 ORDER:</span>
+        </div>
+    </div>
+        <table class="items-table -mt-2 pt-0">
+            <thead class="p-0">
+                <tr>
+                    <th>Item</th>
+                    <th class="align-right">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($order->orderdetail as $pd)
+                @if ($pd->id != $orderdetail->id)
                 <tr>
                     <td>
                         {{ $pd->description }} <br>
@@ -173,16 +206,24 @@
                         {{-- @endif --}}
 
                     </td>
-                    <td class="align-right">{{ number_format($pd->qty_final, 0, ',', '.') }}
-                        {{ $pd->service->unit }}</td>
-                    <td class="align-right">{{ number_format($pd->price, 0, ',', '.') }}</td>
-                    <td class="align-right">{{ number_format($pd->subtotal, 2, ',', '.') }}</td>
+                    <td class="align-right">
+                        @if ($pd->process_status == 'done')
+                            SELESAI
+                        @elseif ($pd->process_status == 'process')
+                            PROSES
+                        @else
+                            BELUM DIPROSES
+                        @endif
+                    </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+                @endif
+                @endforeach
+            </tbody>
+        </table>
+        <div class="divider"></div>
+    @endif
 
-    <div class="total-section">
+    {{-- <div class="total-section">
         <div class="total-row">
             <span>Total:</span>
             <span>{{ number_format($total_order, 2, ',', '.') }}</span>
@@ -203,15 +244,14 @@
                 <span>{{ number_format($outstanding, 2, ',', '.') }}</span>
             </div>
         @endif
-    </div>
+    </div> --}}
 
 
-    <div class="divider"></div>
-
+    {{--
     <div class="footer">
         <div>{{ $toko->note }}</div>
         <div><b>{{ $toko->slogan }}</b></div>
-    </div>
+    </div> --}}
 
     <script>
         // Fungsi untuk mencetak otomatis saat halaman dimuat

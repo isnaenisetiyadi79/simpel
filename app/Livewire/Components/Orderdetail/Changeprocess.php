@@ -39,15 +39,24 @@ class Changeprocess extends Component
             $orderdetail = OrderDetail::find($this->id);
             $orderdetail->process_status = $this->process_status;
             $orderdetail->save();
-            DB::commit();
-            $this->dispatch('success', message: 'Status order sudah dirubah menjadi ' . $this->process_status);
-            $this->closeModal();
         }catch(\Throwable $th) {
             DB::rollBack();
             session()->flash('error', $th->getMessage());
         }
+        DB::commit();
+        $this->dispatch('success', message: 'Status order sudah dirubah menjadi ' . $this->process_status);
+        // dd($this->process_status);
+        if ($this->process_status == 'done') {
+            $this->redirectRoute('orderdetail.printStatus', $this->id);
+        }
+        $this->closeModal();
     }
 
+    public function printStatusPesanan($id){
+       return redirect()->route('orderdetail.printStatus', $id);
+
+
+    }
     public function render()
     {
         return view('livewire.components.orderdetail.changeprocess');
