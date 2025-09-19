@@ -43,7 +43,7 @@ class Table extends Component
     public function getOrderQuery()
     {
         return Order::query()
-            ->with(['detail', 'detail.pickupdetail', 'payment', 'detail.pickupdetail.pickup', 'customer'])
+            ->with(['orderdetail', 'orderdetail.pickupdetail', 'payment', 'orderdetail.pickupdetail.pickup', 'customer'])
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
                     $sub->whereHas(
@@ -52,7 +52,7 @@ class Table extends Component
                         $q2->where('name', 'ilike', '%' . $this->search . '%')
                     )
                         ->orWhereHas(
-                            'detail',
+                            'orderdetail',
                             fn($q3) =>
                             $q3->where('description', 'ilike', '%' . $this->search . '%')
                         )
@@ -63,7 +63,7 @@ class Table extends Component
                 $this->dateFrom,
                 fn($q) =>
                 $q->whereHas(
-                    'detail.pickupdetail.pickup',
+                    'orderdetail.pickupdetail.pickup',
                     fn($q2) =>
                     $q2->whereDate('pickup_date', '>=', $this->dateFrom)
                 )
@@ -72,7 +72,7 @@ class Table extends Component
                 $this->dateTo,
                 fn($q) =>
                 $q->whereHas(
-                    'detail.pickupdetail.pickup',
+                    'orderdetail.pickupdetail.pickup',
                     fn($q2) =>
                     $q2->whereDate('pickup_date', '<=', $this->dateTo)
                 )
@@ -197,6 +197,7 @@ class Table extends Component
     {
         return Pickup::with([
             'pickupdetail.orderdetail.service',
+            'pickupdetail.orderdetail.order',
             'payment',
             'customer'
         ])
@@ -218,6 +219,8 @@ class Table extends Component
             )
             ->when($this->dateFrom, fn($q) => $q->where('pickup_date', '>=', $this->dateFrom))
             ->when($this->dateTo,   fn($q) => $q->where('pickup_date', '<=', $this->dateTo))
+            // ->whereHas('pickupdetail.orderdetail.order', fn($q) => $q->where('payment_status','!=','paid'))
+            ->whereRelation('pickupdetail.orderdetail.order', 'payment_status', '!=', 'paid')
             ->latest('pickup_date')
             ->paginate(10);
     }
