@@ -23,7 +23,23 @@ class Table extends Component
     // protected $listeners = [
     //     'pickupSaved' => '$refresh',
     // ];
+    public function mount()
+    {
+        $this->dateFrom = now()->startOfMonth()->toDateString();
+        $this->dateTo   = now()->endOfMonth()->toDateString();
+    }
 
+    public function updated($field)
+    {
+        if (in_array($field, ['dateFrom', 'dateTo'])) {
+            // kirim ke komponen lain (WidgetSalary)
+            $this->dispatch(
+                'dateFilterUpdated',
+                start: $this->dateFrom,
+                end: $this->dateTo
+            );
+        }
+    }
     public function openWizard()
     {
         $this->dispatch('open-wizard');

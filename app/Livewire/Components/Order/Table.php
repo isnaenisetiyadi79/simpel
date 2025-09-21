@@ -17,7 +17,26 @@ class Table extends Component
     public $dateFrom = null;
     public $dateTo = null;
     // protected $listeners = ['orderCreated' => '$refresh'];
+    // public $dateFrom;
+    // public $end_date;
 
+    public function mount()
+    {
+        $this->dateFrom = now()->startOfMonth()->toDateString();
+        $this->dateTo   = now()->endOfMonth()->toDateString();
+    }
+
+    public function updated($field)
+    {
+        if (in_array($field, ['dateFrom', 'dateTo'])) {
+            // kirim ke komponen lain (WidgetSalary)
+            $this->dispatch(
+                'dateFilterUpdated',
+                start: $this->dateFrom,
+                end: $this->dateTo
+            );
+        }
+    }
     function openModal()
     {
         $this->dispatch('open-modal');
@@ -48,28 +67,28 @@ class Table extends Component
     }
     public function getItems()
     {
-        $query = OrderDetail::with(['order.customer', 'service'])
+        $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
                     $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
-                        ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%");
+                        ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%")
+                        ->orWhereRelation('order.orderdetail', 'description', 'ilike', "%{$this->search}%");
                 });
             })
-            ->when(
-                $this->dateFrom,
-                fn($q) =>
-                $q->whereDate('created_at', '>=', Carbon::parse($this->dateFrom))
-            )
-            ->when(
-                $this->dateTo,
-                fn($q) =>
-                $q->whereDate('created_at', '<=', Carbon::parse($this->dateTo))
-            )
-            ->latest();
+            ->where(function ($q) {
+                $q->where('pickup_status', '!=', 'completed')
+                    ->orWhere(function ($sub) {
+                        $sub->where('pickup_status', 'completed');
 
-        // return view('livewire.components.order.table', [
-        //     'details' => $query->paginate(10)
-        // ]);
+                        if ($this->dateFrom) {
+                            $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
+                        }
+                        if ($this->dateTo) {
+                            $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
+                        }
+                    });
+            })->latest();
+
         return $query->paginate(10);
     }
 
@@ -77,7 +96,8 @@ class Table extends Component
     {
         $this->redirectRoute('order.print', $id);
     }
-    public function printStatus($id) {
+    public function printStatus($id)
+    {
         $this->redirectRoute('orderdetail.printStatus', $id);
     }
 

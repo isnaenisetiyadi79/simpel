@@ -125,8 +125,10 @@
     <div class="header">
         <div class="shop-name">PEKERJAAN SELESAI</div>
         <div class="shop-address">
-            Tgl: {{ \Illuminate\Support\Carbon::parse($orderdetail->updated_at)->locale('id')->translatedFormat('d F Y') }}
-            Pukul: {{ \Illuminate\Support\Carbon::parse($orderdetail->updated_at)->locale('id')->translatedFormat('H:i') }}
+            Tgl:
+            {{ \Illuminate\Support\Carbon::parse($orderdetail->updated_at)->locale('id')->translatedFormat('d F Y') }}
+            Pukul:
+            {{ \Illuminate\Support\Carbon::parse($orderdetail->updated_at)->locale('id')->translatedFormat('H:i') }}
 
         </div>
     </div>
@@ -152,38 +154,49 @@
         </thead> --}}
         <tbody>
             {{-- @foreach ($orderdetail as $pd) --}}
-                <tr>
-                    <td>
-                        {{ $orderdetail->description }} <br>
-                        qty: {{ number_format($orderdetail->qty, 1, ',', '.') }}
-                        {{-- @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width) --}}
-                        @if ($orderdetail->length != 0 && $orderdetail->width != 0)
-                            > ({{ number_format($orderdetail->length, 1, ',', '.') }} x
-                            {{ number_format($orderdetail->width, 1, ',', '.') }})
-                        @endif
-                        {{-- @endif --}}
+            <tr>
+                <td>
+                    {{ $orderdetail->description }} <br>
+                    qty: {{ number_format($orderdetail->qty, 1, ',', '.') }}
+                    {{-- @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width) --}}
+                    @if ($orderdetail->length != 0 && $orderdetail->width != 0)
+                        > ({{ number_format($orderdetail->length, 1, ',', '.') }} x
+                        {{ number_format($orderdetail->width, 1, ',', '.') }})
+                    @endif
+                    {{-- @endif --}}
 
-                    </td>
-                    {{-- <td class="align-right">
-                        @if ($pd->process_status == 'done')
-                            SELESAI
-                        @elseif ($pd->process_status == 'process')
-                            PROSES
+                </td>
+                <td class="align-right">
+                    @if (!$orderdetail->service->is_package)
+                        @if ($orderdetail->qty_asli != $orderdetail->qty_final)
+                            {{ number_format($orderdetail->qty_final * $orderdetail->price, 1, ',', '.') }}
                         @else
-                            BELUM DIPROSES
+                            {{ number_format(
+                                $orderdetail->length * $orderdetail->width * $orderdetail->qty * $orderdetail->price,
+                                1,
+                                ',',
+                                '.',
+                            ) }}
                         @endif
-                    </td> --}}
-                </tr>
+                    @else
+                        @if ($orderdetail->qty_asli != $orderdetail->qty_final)
+                            {{ number_format($orderdetail->qty_final * $orderdetail->price, 1, ',', '.') }}
+                        @else
+                            {{ number_format($orderdetail->qty * $orderdetail->price, 1, ',', '.') }}
+                        @endif
+                    @endif
+                </td>
+            </tr>
             {{-- @endforeach --}}
         </tbody>
     </table>
     <div class="divider"></div>
     @if ($order->orderdetail->count() > 1)
-    <div class="transaction-info -mb-4">
-        <div class="info-row ">
-            <span class="font-bold">STATUS PESANAN DALAM 1 ORDER:</span>
+        <div class="transaction-info -mb-4">
+            <div class="info-row ">
+                <span class="font-bold">STATUS PESANAN DALAM 1 ORDER:</span>
+            </div>
         </div>
-    </div>
         <table class="items-table -mt-2 pt-0">
             <thead class="p-0">
                 <tr>
@@ -192,35 +205,73 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->orderdetail as $pd)
-                @if ($pd->id != $orderdetail->id)
-                <tr>
-                    <td>
-                        {{ $pd->description }} <br>
-                        qty: {{ number_format($pd->qty, 1, ',', '.') }}
-                        {{-- @if (optional($pd->orderdetail)->length && optional($pd->orderdetail)->width) --}}
-                        @if ($pd->length != 0 && $pd->width != 0)
-                            > ({{ number_format($pd->length, 1, ',', '.') }} x
-                            {{ number_format($pd->width, 1, ',', '.') }})
-                        @endif
-                        {{-- @endif --}}
+                @foreach ($order->orderdetail as $od)
+                    @if ($od->id != $orderdetail->id)
+                        <tr>
+                            <td>
+                                {{ $od->description }} <br>
+                                qty: {{ number_format($od->qty, 1, ',', '.') }}
+                                {{-- @if (optional($od->orderdetail)->length && optional($od->orderdetail)->width) --}}
+                                @if ($od->length != 0 && $od->width != 0)
+                                    > ({{ number_format($od->length, 1, ',', '.') }} x
+                                    {{ number_format($od->width, 1, ',', '.') }})
+                                @endif
+                                {{-- @endif --}}
 
-                    </td>
-                    <td class="align-right">
-                        @if ($pd->process_status == 'done')
-                            SELESAI
-                        @elseif ($pd->process_status == 'process')
-                            PROSES
-                        @else
-                            BELUM DIPROSES
-                        @endif
-                    </td>
-                </tr>
-                @endif
+                            </td>
+                            <td class="align-right">
+                                @if ($od->process_status == 'done')
+                                    SELESAI
+                                @elseif ($od->process_status == 'process')
+                                    PROSES
+                                @else
+                                    BELUM DIPROSES
+                                @endif
+                                <br>
+                                @if (!$od->service->is_package)
+                                    @if ($od->qty_asli != $od->qty_final)
+                                        {{ number_format($od->qty_final * $od->price, 1, ',', '.') }}
+                                    @else
+                                        {{ number_format($od->length * $od->width * $od->qty * $od->price, 1, ',', '.') }}
+                                    @endif
+                                @else
+                                    @if ($od->qty_asli != $od->qty_final)
+                                        {{ number_format($od->qty_final * $od->price, 1, ',', '.') }}
+                                    @else
+                                        {{ number_format($od->qty * $od->price, 1, ',', '.') }}
+                                    @endif
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
         <div class="divider"></div>
+    @endif
+    <div class="info-row">
+        <span>PEMBAYARAN:</span>
+    </div>
+    @if ($payment->count() > 0)
+        <table class="items-table">
+
+            @foreach ($payment as $pm)
+                <td>
+                    {{ \Illuminate\Support\Carbon::parse($pm->created_at)->locale('id')->translatedFormat('d F Y') }}
+                </td>
+                <td>
+                    {{ $pm->payment_method }}
+                </td>
+                <td class="align-right">
+                    {{ number_format($pm->amount, 1, ',', '.') }}
+                </td>
+                </tbody>
+            @endforeach
+        </table>
+    @else
+        <div class="info-row">
+            <span>Belum ada pembayaran</span>
+        </div>
     @endif
 
     {{-- <div class="total-section">
