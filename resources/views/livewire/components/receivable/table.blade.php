@@ -136,7 +136,7 @@
                                     <div class="flex justify-end gap-x-2">
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
-                                            Hutang
+                                            Piutang
                                         </span>
                                     </div>
                                 </th>

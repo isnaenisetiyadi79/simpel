@@ -55,7 +55,8 @@
                 </div>
                 <!-- End Card -->
             </div>
-
+            @livewire('components.pickup.widget')
+            @livewire('components.receivable.widget')
 
         </div>
     </div>

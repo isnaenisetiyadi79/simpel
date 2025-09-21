@@ -6,7 +6,7 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                      Total Pesanan Diambil
+                      Total Pesanan Diserahkan
                   </p>
                   <div class="hs-tooltip">
                       <div class="hs-tooltip-toggle">

@@ -6,7 +6,7 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                      Nilai Hutang
+                      Nilai Piutang
                   </p>
                   <div class="hs-tooltip">
                       <div class="hs-tooltip-toggle">
@@ -21,7 +21,7 @@
                           <span
                               class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
                               role="tooltip">
-                              Total transaksi hutang
+                              Total transaksi Piutang
                           </span>
                       </div>
                   </div>
@@ -44,7 +44,7 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                       Pembayaran Hutang
+                       Pembayaran Piutang
                   </p>
               </div>
 
@@ -62,7 +62,7 @@
           <div class="p-4 md:p-5">
               <div class="flex items-center gap-x-2">
                   <p class="text-xs uppercase text-gray-500 dark:text-neutral-500">
-                      Sisa Hutang
+                      Sisa Piutang
                   </p>
               </div>
 
