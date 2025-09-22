@@ -229,11 +229,12 @@ class Ordercreatemodal extends Component
                     'paid_amount' => $this->pay,
                     'payment_method' => $this->payment_method == 'transfer' ? 'transfer' : 'cash',
                 ]);
-
                 $order->update([
                     'payment_status' => $payment_status
                 ]);
+
             }
+
 
             DB::commit();
             $this->dispatch('success', message: 'Orders added succesfully');
