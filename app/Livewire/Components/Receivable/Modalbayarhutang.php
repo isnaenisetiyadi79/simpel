@@ -118,10 +118,10 @@ class Modalbayarhutang extends Component
             // 6) Update status order (unpaid/partially_paid/paid)
             $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
             $pickup = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
-            $paid    = (float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0);
+            $paid    = round((float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0),2);
             // dd($pickup->paid_sum);
             // dd($paid);
-            $total   = (float)($order->total_amount ?? 0);
+            $total   = round((float)($order->total_amount ?? 0),2);
             $status  = match (true) {
                 $paid <= 0        => 'unpaid',
                 $paid < $total    => 'partially',
