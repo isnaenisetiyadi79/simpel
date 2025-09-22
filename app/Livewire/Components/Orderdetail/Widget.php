@@ -41,7 +41,6 @@ class Widget extends Component
             $this->processStatus = $status;
             // dd('gass');
         }
-
     }
 
     public function loadData()
@@ -53,22 +52,47 @@ class Widget extends Component
         $end = $this->end_date
             ? Carbon::parse($this->end_date)->endOfDay()
             : now()->endOfMonth();
-        // $this->orderdetail = OrderDetail::all();
-        $this->orderdetail = OrderDetail::whereBetween('created_at', [
-            Carbon::parse($start),
-            Carbon::parse($end)
-        ])->get();
 
-        $this->orderdetail_notpickup = OrderDetail::where('pickup_status', '!=','completed')->get();
+        // $this->orderdetail = OrderDetail::whereBetween('created_at', [
+        //     Carbon::parse($start),
+        //     Carbon::parse($end)
+        // ])->get();
 
-        $this->order_payment = Payment::join('order_details', 'order_details.order_id', '=', 'payments.order_id')
-            ->whereBetween('order_details.created_at', [
-                Carbon::parse($start),
-                Carbon::parse($end),
-            ])
+        // $this->orderdetail_notpickup = OrderDetail::where('pickup_status', '!=', 'completed')->get();
+
+        // $this->order_payment = Payment::join('order_details', 'order_details.order_id', '=', 'payments.order_id')
+        //     ->whereBetween('order_details.created_at', [
+        //         Carbon::parse($start),
+        //         Carbon::parse($end),
+        //     ])
+        //     ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
+        //     ->value('total_payment');
+
+        // ambil orderdetail berdasar order.order_date
+        $this->orderdetail = OrderDetail::whereHas('order', function ($q) use ($start, $end) {
+            $q->whereBetween('order_date', [$start, $end]);
+        })
+            ->get();
+
+        // orderdetail yang belum pickup, tapi tetap filter berdasarkan order_date
+        // $this->orderdetail_notpickup = OrderDetail::where('pickup_status', '!=', 'completed')
+        //     ->whereHas('order', function ($q) use ($start, $end) {
+        //         $q->whereBetween('order_date', [$start, $end]);
+        //     })
+        //     ->get();
+        $this->orderdetail_notpickup = OrderDetail::with('order')
+            ->where('pickup_status', '!=', 'completed')
+            ->whereHas('order', function ($q) use ($start, $end) {
+                $q->whereNotBetween('order_date', [$start, $end]);
+            })
+            ->get();
+
+
+        // total payment berdasar order.order_date
+        $this->order_payment = Payment::join('orders', 'orders.id', '=', 'payments.order_id')
+            ->whereBetween('orders.order_date', [$start, $end])
             ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
             ->value('total_payment');
-
         // ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
         // ->join('pickup_details', 'pickup_details.order_detail_id', '=', 'order_details.id')
     }
