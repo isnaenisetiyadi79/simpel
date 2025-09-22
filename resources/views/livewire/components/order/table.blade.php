@@ -206,7 +206,17 @@
                                             <div class="px-6 py-3">
 
                                                 <span
-                                                    class="block text-sm text-gray-500 dark:text-neutral-500">{{ $item->order->customer->name }}</span>
+                                                    class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                  <ul>
+                                                    <li>
+                                                        {{ $item->order->customer->name }}
+                                                    </li>
+                                                    <li>
+                                                        {{ $item->order->note }}
+                                                    </li>
+                                                  </ul>
+
+                                                </span>
                                             </div>
                                         </td>
                                         <td class="h-px w-72 whitespace-nowrap">

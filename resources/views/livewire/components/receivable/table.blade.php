@@ -194,8 +194,16 @@
 
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
-                                            <span
-                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->customer->name }}</span>
+                                            <span class="text-sm text-gray-500 dark:text-neutral-500">
+                                                <ul>
+                                                    <li>
+                                                        {{ $item->customer->name }}
+                                                    </li>
+                                                    <li>
+                                                        {{ $item->pickupdetail->first()->orderdetail->first()->order->note }}
+                                                    </li>
+                                                </ul>
+                                            </span>
                                         </div>
                                     </td>
                                     <td class="h-px w-72 whitespace-nowrap">
@@ -270,8 +278,7 @@
                                             </ul>
                                         </div>
                                     </td>
-                                    <td
-                                        class="size-px whitespace-nowrap">
+                                    <td class="size-px whitespace-nowrap">
                                         <div class="flex gap-2">
 
 

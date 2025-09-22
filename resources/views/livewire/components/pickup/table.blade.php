@@ -216,7 +216,16 @@
                                     <td class="size-px whitespace-nowrap">
                                         <div class="px-6 py-3">
                                             <span
-                                                class="text-sm text-gray-500 dark:text-neutral-500">{{ $item->pickup->customer->name }}</span>
+                                                class="text-sm text-gray-500 dark:text-neutral-500">
+                                                <ul>
+                                                    <li>
+                                                        {{ $item->pickup->customer->name }}
+                                                    </li>
+                                                    <li>
+                                                        {{ $item->orderdetail->order->note }}
+                                                    </li>
+                                                </ul>
+                                            </span>
                                         </div>
                                     </td>
                                     {{-- {{ dd($item) }} --}}

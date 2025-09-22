@@ -214,7 +214,14 @@
                                                 <div class="grow">
 
                                                     <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                        {{ $row->customer }}<br>
+                                                        {{ $row->customer }}
+                                                        @if ($row->order_note)
+                                                            ({{ $row->order_note }})
+                                                        @endif
+                                                        @if ($row->pickup_note)
+                                                            ({{ $row->pickup_note }})
+                                                        @endif
+                                                        <br>
                                                         {{ $row->service_name }} : {{ $row->description }}
                                                     </span>
                                                 </div>
