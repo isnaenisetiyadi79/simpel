@@ -14,6 +14,11 @@ class Widget extends Component
     public $pickupdetail = [];
     public $total;
     public $total_payment;
+    public $pickup_payment_cash;
+    public $pickup_payment_transfer;
+    public $order_payment_transfer;
+    public $order_payment_cash;
+
     public $order_payment;
     public $pickup_payment;
     public $dateFrom = null;
@@ -68,24 +73,50 @@ class Widget extends Component
         ) as total
     "))
             ->value('total');
-        $this->order_payment = DB::table('payments')
-            // ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
+        // order payment cash
+        $this->order_payment_cash = DB::table('payments')
             ->join('order_details', 'order_details.order_id', '=', 'payments.order_id')
             ->join('pickup_details', 'pickup_details.order_detail_id', '=', 'order_details.id')
             ->whereBetween('pickup_details.created_at', [
                 Carbon::parse($start),
                 Carbon::parse($end),
             ])
-            ->select(DB::raw('COALESCE(SUM(payments.amount), 0) as total_payment'))
-            ->value('order_payment');
-        $this->pickup_payment = DB::table('payments')
+            ->where('payments.payment_method', 'cash')
+            ->sum('payments.amount');
+
+        // order payment transfer (selain cash)
+        $this->order_payment_transfer = DB::table('payments')
+            ->join('order_details', 'order_details.order_id', '=', 'payments.order_id')
+            ->join('pickup_details', 'pickup_details.order_detail_id', '=', 'order_details.id')
+            ->whereBetween('pickup_details.created_at', [
+                Carbon::parse($start),
+                Carbon::parse($end),
+            ])
+            ->where('payments.payment_method', '<>', 'cash')
+            ->sum('payments.amount');
+
+        // pickup payment cash
+        $this->pickup_payment_cash = DB::table('payments')
             ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
             ->whereBetween('pickups.created_at', [
                 Carbon::parse($start),
                 Carbon::parse($end),
             ])
-            ->select(DB::raw('COALESCE(SUM(payments.amount), 0) as total_payment'))
-            ->value('pickup_payment');
+            ->where('payments.payment_method', 'cash')
+            ->sum('payments.amount');
+
+        // pickup payment transfer (selain cash)
+        $this->pickup_payment_transfer = DB::table('payments')
+            ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
+            ->whereBetween('pickups.created_at', [
+                Carbon::parse($start),
+                Carbon::parse($end),
+            ])
+            ->where('payments.payment_method', '<>', 'cash')
+            ->sum('payments.amount');
+
+        $this->order_payment = $this->order_payment_cash + $this->order_payment_transfer;
+        $this->pickup_payment = $this->pickup_payment_cash + $this->pickup_payment_transfer;
         $this->total_payment = $this->order_payment + $this->pickup_payment;
     }
     #[On('success')]

@@ -18,6 +18,7 @@ class Widget extends Component
     public $start_date;
     public $end_date;
     public $orderdetail_notpickup;
+    public $processStatus;
 
     protected $listeners = ['dateFilterUpdated' => 'updateDate'];
     public function updateDate($start, $end)
@@ -29,6 +30,18 @@ class Widget extends Component
     {
         $this->start_date = now()->startOfMonth()->toDateString();
         $this->end_date   = now()->endOfMonth()->toDateString();
+    }
+
+    public function setProcessStatus($status)
+    {
+        if ($this->processStatus == 'pending') {
+            $this->processStatus = null;
+            // dd('null');
+        } else {
+            $this->processStatus = $status;
+            // dd('gass');
+        }
+
     }
 
     public function loadData()
