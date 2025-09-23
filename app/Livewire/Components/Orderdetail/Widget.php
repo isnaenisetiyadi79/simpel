@@ -14,12 +14,14 @@ class Widget extends Component
 
     public $orderdetail = [];
 
-    public $order_payment;
+    // public $order_payment;
     public $start_date;
     public $end_date;
     public $orderdetail_notpickup;
+    public $orderdetail_notpickup_date;
     public $processStatus;
     public $pendingStatus;
+    public $doneStatus;
 
     protected $listeners = ['dateFilterUpdated' => 'updateDate'];
     public function updateDate($start, $end)
@@ -61,6 +63,20 @@ class Widget extends Component
             processStatus: $this->processStatus
         );
     }
+    public function setDoneStatus($status)
+    {
+        if ($this->doneStatus == 'done') {
+            $this->doneStatus = null;
+            // dd('null');
+        } else {
+            $this->doneStatus = $status;
+            // dd('gass');
+        }
+        $this->dispatch(
+            'doneFilterUpdated',
+            doneStatus: $this->doneStatus
+        );
+    }
 
 
     public function loadData()
@@ -88,14 +104,20 @@ class Widget extends Component
                 $q->whereNotBetween('order_date', [$start, $end]);
             })
             ->get();
+        $this->orderdetail_notpickup_date = OrderDetail::with('order')
+            ->where('pickup_status', '!=', 'completed')
+            // ->whereHas('order', function ($q) use ($start, $end) {
+            //     $q->whereBetween('order_date', [$start, $end]);
+            // })
+            ->get();
 
 
         // total payment berdasar order.order_date
-        $this->order_payment = Payment::join('orders', 'orders.id', '=', 'payments.order_id')
-            ->whereBetween('orders.order_date', [$start, $end])
-            // ->where('orderdetails.process', $this->processStatus)
-            ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
-            ->value('total_payment');
+        // $this->order_payment = Payment::join('orders', 'orders.id', '=', 'payments.order_id')
+        //     ->whereBetween('orders.order_date', [$start, $end])
+        //     // ->where('orderdetails.process', $this->processStatus)
+        //     ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
+        //     ->value('total_payment');
     }
 
     #[On('success')]

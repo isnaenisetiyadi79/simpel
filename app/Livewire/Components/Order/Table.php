@@ -19,6 +19,7 @@ class Table extends Component
 
     public $pendingStatus;
     public $processStatus;
+    public $doneStatus;
     // protected $listeners = ['orderCreated' => '$refresh'];
     // public $dateFrom;
     // public $end_date;
@@ -26,6 +27,7 @@ class Table extends Component
     protected $listeners = [
         'pendingFilterUpdated' => 'updatePendingStatus',
         'processFilterUpdated' => 'updateProcessStatus',
+        'doneFilterUpdated' => 'updateDoneStatus',
     ];
 
     public function updatePendingStatus($pendingStatus)
@@ -38,6 +40,12 @@ class Table extends Component
     {
         // dd('sampai disini');
         $this->processStatus = $processStatus;
+        $this->getItems();
+    }
+    public function updateDoneStatus($doneStatus)
+    {
+        // dd('sampai disini');
+        $this->doneStatus = $doneStatus;
         $this->getItems();
     }
     public function mount()
@@ -87,6 +95,76 @@ class Table extends Component
     }
     public function getItems()
     {
+        // $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
+        //     ->when($this->search, function ($q) {
+        //         $q->where(function ($sub) {
+        //             $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
+        //                 ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%")
+        //                 ->orWhereRelation('order.orderdetail', 'description', 'ilike', "%{$this->search}%");
+        //         });
+        //     })
+        //     ->where(function ($q) {
+        //         $q->where('pickup_status', '!=', 'completed')
+        //             ->orWhere(function ($sub) {
+        //                 $sub->where('pickup_status', 'completed');
+
+        //                 if ($this->dateFrom) {
+        //                     $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
+        //                 }
+        //                 if ($this->dateTo) {
+        //                     $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
+        //                 }
+        //             });
+        //     })
+        //     ->when($this->pendingStatus && $this->processStatus, function ($q) {
+        //         $q->whereIn('process_status', [$this->pendingStatus, $this->processStatus]);
+        //     })
+        //     ->when($this->pendingStatus && !$this->processStatus, function ($q) {
+        //         $q->where('process_status', $this->pendingStatus);
+        //     })
+        //     ->when(!$this->pendingStatus && $this->processStatus, function ($q) {
+        //         $q->where('process_status', $this->processStatus);
+        //     })
+        //     ->latest();
+
+        // return $query->paginate(10);
+        // $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
+        //     ->when($this->search, function ($q) {
+        //         $q->where(function ($sub) {
+        //             $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
+        //                 ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%")
+        //                 ->orWhereRelation('order.orderdetail', 'description', 'ilike', "%{$this->search}%");
+        //         });
+        //     })
+        //     ->where(function ($q) {
+        //         $q->where('pickup_status', '!=', 'completed')
+        //             ->orWhere(function ($sub) {
+        //                 $sub->where('pickup_status', 'completed');
+
+        //                 if ($this->dateFrom) {
+        //                     $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
+        //                 }
+        //                 if ($this->dateTo) {
+        //                     $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
+        //                 }
+        //             });
+        //     })
+        //     ->when($this->pendingStatus && $this->processStatus, function ($q) {
+        //         $q->whereIn('process_status', [$this->pendingStatus, $this->processStatus]);
+        //     })
+        //     ->when($this->pendingStatus && !$this->processStatus, function ($q) {
+        //         $q->where('process_status', $this->pendingStatus);
+        //     })
+        //     ->when(!$this->pendingStatus && $this->processStatus, function ($q) {
+        //         $q->where('process_status', $this->processStatus);
+        //     })
+        //     ->when($this->doneStatus, function ($q) {
+        //         $q->where('pickup_status', '!=', 'completed')
+        //             ->where('process_status', $this->doneStatus);
+        //     })
+        //     ->latest();
+
+        // return $query->paginate(10);
         $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
@@ -108,14 +186,26 @@ class Table extends Component
                         }
                     });
             })
-            ->when($this->pendingStatus && $this->processStatus, function ($q) {
-                $q->whereIn('process_status', [$this->pendingStatus, $this->processStatus]);
-            })
-            ->when($this->pendingStatus && !$this->processStatus, function ($q) {
-                $q->where('process_status', $this->pendingStatus);
-            })
-            ->when(!$this->pendingStatus && $this->processStatus, function ($q) {
-                $q->where('process_status', $this->processStatus);
+            ->when($this->pendingStatus || $this->processStatus || $this->doneStatus, function ($q) {
+                $q->where(function ($sub) {
+                    // pending
+                    if ($this->pendingStatus) {
+                        $sub->orWhere('process_status', $this->pendingStatus);
+                    }
+
+                    // process
+                    if ($this->processStatus) {
+                        $sub->orWhere('process_status', $this->processStatus);
+                    }
+
+                    // done -> harus pickup_status != completed
+                    if ($this->doneStatus) {
+                        $sub->orWhere(function ($inner) {
+                            $inner->where('process_status', $this->doneStatus)
+                                ->where('pickup_status', '!=', 'completed');
+                        });
+                    }
+                });
             })
             ->latest();
 
