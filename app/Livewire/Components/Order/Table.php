@@ -16,10 +16,30 @@ class Table extends Component
     public $search;
     public $dateFrom = null;
     public $dateTo = null;
+
+    public $pendingStatus;
+    public $processStatus;
     // protected $listeners = ['orderCreated' => '$refresh'];
     // public $dateFrom;
     // public $end_date;
 
+    protected $listeners = [
+        'pendingFilterUpdated' => 'updatePendingStatus',
+        'processFilterUpdated' => 'updateProcessStatus',
+    ];
+
+    public function updatePendingStatus($pendingStatus)
+    {
+        // dd('sampai disini');
+        $this->pendingStatus = $pendingStatus;
+        $this->getItems();
+    }
+    public function updateProcessStatus($processStatus)
+    {
+        // dd('sampai disini');
+        $this->processStatus = $processStatus;
+        $this->getItems();
+    }
     public function mount()
     {
         $this->dateFrom = now()->startOfMonth()->toDateString();
@@ -87,7 +107,17 @@ class Table extends Component
                             $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
                         }
                     });
-            })->latest();
+            })
+            ->when($this->pendingStatus && $this->processStatus, function ($q) {
+                $q->whereIn('process_status', [$this->pendingStatus, $this->processStatus]);
+            })
+            ->when($this->pendingStatus && !$this->processStatus, function ($q) {
+                $q->where('process_status', $this->pendingStatus);
+            })
+            ->when(!$this->pendingStatus && $this->processStatus, function ($q) {
+                $q->where('process_status', $this->processStatus);
+            })
+            ->latest();
 
         return $query->paginate(10);
     }
