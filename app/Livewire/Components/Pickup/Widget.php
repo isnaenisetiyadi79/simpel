@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Pickup;
 
+use App\Models\Payment;
 use App\Models\PickupDetail;
 use Carbon\Carbon;
 use DB;
@@ -16,9 +17,12 @@ class Widget extends Component
     public $total_payment;
     public $pickup_payment_cash;
     public $pickup_payment_transfer;
-    public $order_payment_transfer;
     public $order_payment_cash;
+    public $order_payment_transfer;
+    public $order_payment_notpickup_cash;
+    public $order_payment_notpickup_transfer;
 
+    public $order_payment_notpickup;
     public $order_payment;
     public $pickup_payment;
     public $dateFrom = null;
@@ -105,6 +109,8 @@ class Widget extends Component
             ->where('payments.payment_method', 'cash')
             ->sum('payments.amount');
 
+
+
         // pickup payment transfer (selain cash)
         $this->pickup_payment_transfer = DB::table('payments')
             ->join('pickups', 'pickups.id', '=', 'payments.pickup_id')
@@ -115,6 +121,23 @@ class Widget extends Component
             ->where('payments.payment_method', '<>', 'cash')
             ->sum('payments.amount');
 
+        // total payment berdasar order.order_date (cash)
+        $this->order_payment_notpickup_cash = Payment::join('orders', 'orders.id', '=', 'payments.order_id')
+            ->whereBetween('orders.order_date', [$start, $end])
+            // ->where('orderdetails.process', $this->processStatus)
+            ->where('payments.payment_method', 'cash')
+            ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
+            ->value('total_payment');
+
+        // total payment berdasar order.order_date (selain cash)
+        $this->order_payment_notpickup_transfer = Payment::join('orders', 'orders.id', '=', 'payments.order_id')
+            ->whereBetween('orders.order_date', [$start, $end])
+            // ->where('orderdetails.process', $this->processStatus)
+            ->where('payments.payment_method', '<>', 'cash')
+            ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
+            ->value('total_payment');
+
+        $this->order_payment_notpickup = $this->order_payment_notpickup_cash + $this->order_payment_notpickup_transfer;
         $this->order_payment = $this->order_payment_cash + $this->order_payment_transfer;
         $this->pickup_payment = $this->pickup_payment_cash + $this->pickup_payment_transfer;
         $this->total_payment = $this->order_payment + $this->pickup_payment;

@@ -112,12 +112,7 @@ class Widget extends Component
             ->get();
 
 
-        // total payment berdasar order.order_date
-        // $this->order_payment = Payment::join('orders', 'orders.id', '=', 'payments.order_id')
-        //     ->whereBetween('orders.order_date', [$start, $end])
-        //     // ->where('orderdetails.process', $this->processStatus)
-        //     ->selectRaw('COALESCE(SUM(payments.amount), 0) as total_payment')
-        //     ->value('total_payment');
+
     }
 
     #[On('success')]
