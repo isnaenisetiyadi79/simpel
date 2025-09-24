@@ -102,17 +102,19 @@
               <div class="flex justify-between">
                   <div class="mt-1 flex items-center gap-x-2">
                       <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                          Rp. {{ number_format($order_payment_notpickup, 0, ',', '.') }}
+                          Rp. {{ number_format(max(0, $order_payment_notpickup - $order_payment), 0, ',', '.') }}
                       </h3>
 
                   </div>
                   <div class="mt-1 flex flex-col items-end text-xs text-gray-600 dark:text-neutral-300">
                       <span class="text-xs">
 
-                          {{ number_format($order_payment_notpickup_cash, 0, ',', '.') }} (cash)
+                          {{ number_format(max(0, $order_payment_notpickup_cash - $order_payment_cash), 0, ',', '.') }}
+                          (cash)
                       </span>
                       <span class="text-xs">
-                          {{ number_format($order_payment_notpickup_transfer, 0, ',', '.') }} (transfer)
+                          {{ number_format(max(0, $order_payment_notpickup_transfer - $order_payment_transfer), 0, ',', '.') }}
+                          (transfer)
                       </span>
                   </div>
               </div>
