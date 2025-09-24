@@ -100,12 +100,12 @@
 
 
               <div class="flex justify-between">
-                   <div class="mt-1 flex items-center gap-x-2">
-                       <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
-                           {{ number_format($order_payment_notpickup, 0, ',', '.') }}
-                       </h3>
+                  <div class="mt-1 flex items-center gap-x-2">
+                      <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+                          Rp. {{ number_format($order_payment_notpickup, 0, ',', '.') }}
+                      </h3>
 
-                   </div>
+                  </div>
                   <div class="mt-1 flex flex-col items-end text-xs text-gray-600 dark:text-neutral-300">
                       <span class="text-xs">
 
