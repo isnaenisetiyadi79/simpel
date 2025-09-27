@@ -29,6 +29,11 @@ class Changeprocess extends Component
         $this->reset();
     }
 
+    public function setProcessStatus($status)
+    {
+        $this->process_status = $status;
+    }
+
     public function save()
     {
          $this->validate([
@@ -54,8 +59,6 @@ class Changeprocess extends Component
 
     public function printStatusPesanan($id){
        return redirect()->route('orderdetail.printStatus', $id);
-
-
     }
     public function render()
     {
