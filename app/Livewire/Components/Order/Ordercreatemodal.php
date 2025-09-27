@@ -117,7 +117,7 @@ class Ordercreatemodal extends Component
             'pay' => 'required|numeric',
         ]);
 
-        $this->change = $this->pay - $this->total_amount;
+        $this->change = round($this->pay - $this->total_amount,2);
     }
 
 
