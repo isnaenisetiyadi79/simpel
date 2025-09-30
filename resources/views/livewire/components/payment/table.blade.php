@@ -109,10 +109,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3 w-16 text-end">
                                     {{-- <div class="flex items-center"> --}}
-                                        <span
-                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
-                                            Jumlah
-                                        </span>
+                                    <span class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
+                                        Jumlah
+                                    </span>
                                     {{-- </div> --}}
                                 </th>
                                 {{--
@@ -205,15 +204,27 @@
                                     <td class="h-px w-72 whitespace-nowrap ">
                                         <div class="px-6 py-3">
                                             <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                @if (optional($item->order)->id)
-                                                    @foreach ($item->order->orderdetail as $od)
-                                                        {{ $od->description }}
-                                                    @endforeach
-                                                @elseif (optional($item->pickup)->id)
-                                                    @foreach ($item->pickup->pickupdetail as $od)
-                                                        {{ $od->orderdetail->description }}
-                                                    @endforeach
-                                                @endif
+                                                <ul>
+
+                                                    @if (optional($item->order)->id)
+                                                        @foreach ($item->order->orderdetail as $od)
+                                                            <li>
+                                                                @if ($item->order->orderdetail->count() > 1)
+                                                                    {{ $loop->iteration }}.
+                                                                @endif {{ $od->description }}
+                                                            </li>
+                                                        @endforeach
+                                                    @elseif (optional($item->pickup)->id)
+                                                        @foreach ($item->pickup->pickupdetail as $od)
+                                                            <li>
+                                                                @if ($item->pickup->pickupdetail->count() > 1)
+                                                                    {{ $loop->iteration }}.
+                                                                @endif
+                                                                {{ $od->orderdetail->description }}
+                                                            </li>
+                                                        @endforeach
+                                                    @endif
+                                                </ul>
                                             </span>
                                         </div>
                                     </td>
