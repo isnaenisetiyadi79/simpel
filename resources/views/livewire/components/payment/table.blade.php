@@ -78,16 +78,24 @@
                                     <div class="flex items-center gap-x-2">
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
-                                            Tanggal
+                                            Tanggal Bayar
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
+                                            Item dibayar
                                         </span>
                                     </div>
                                 </th>
 
-                                <th scope="col" class="px-6 py-3 text-start">
+                                <th scope="col" class="px-6 py-3 text-start w-32">
                                     <div class="flex items-center gap-x-2">
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
-                                            Pembayaran
+                                            Metode
                                         </span>
                                     </div>
                                 </th>
@@ -95,17 +103,17 @@
                                     <div class="flex items-center gap-x-2">
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
-                                            metode
+                                            Jenis Pembayaran
                                         </span>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-start">
-                                    <div class="flex items-center gap-x-2">
+                                <th scope="col" class="px-6 py-3 w-16 text-end">
+                                    {{-- <div class="flex items-center"> --}}
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
-                                            ---
+                                            Jumlah
                                         </span>
-                                    </div>
+                                    {{-- </div> --}}
                                 </th>
                                 {{--
                                 <th scope="col" class="px-6 py-3 text-start">
@@ -194,14 +202,23 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="h-px w-72 whitespace-nowrap text-right">
+                                    <td class="h-px w-72 whitespace-nowrap ">
                                         <div class="px-6 py-3">
                                             <span class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                {{ number_format($item->amount, 2, ',', '.') }}
+                                                @if (optional($item->order)->id)
+                                                    @foreach ($item->order->orderdetail as $od)
+                                                        {{ $od->description }}
+                                                    @endforeach
+                                                @elseif (optional($item->pickup)->id)
+                                                    @foreach ($item->pickup->pickupdetail as $od)
+                                                        {{ $od->orderdetail->description }}
+                                                    @endforeach
+                                                @endif
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="h-px w-72 whitespace-nowrap">
+
+                                    <td class="h-px whitespace-nowrap w-32">
                                         <div class="px-6 py-3">
                                             <span class="block text-sm text-gray-500 dark:text-neutral-500">
                                                 @if ($item->payment_method == 'cash')
@@ -221,9 +238,16 @@
                                                     @if (!$item->pickup->pickup_date->isSameDay($item->created_at))
                                                         PIUTANG
                                                     @else
-                                                        PENGAMBILAN
+                                                        PENGAMBILAN/ PENYERAHAN
                                                     @endif
                                                 @endif
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="h-px whitespace-nowrap text-right w-16">
+                                        <div class="px-6 py-3">
+                                            <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                {{ number_format($item->amount, 2, ',', '.') }}
                                             </span>
                                         </div>
                                     </td>
@@ -302,7 +326,7 @@
                             @empty
                                 <tr>
                                     <td colspan="8" class="px-4 py-6 text-sm text-center text-gray-500">Belum ada
-                                        pickup (pengambilan barang)
+                                        pembayaran apapun
                                     </td>
                                 </tr>
                             @endforelse
@@ -313,14 +337,14 @@
                         </tbody>
                         <tfoot class="bg-gray-50 dark:bg-neutral-800">
                             <tr>
-                                <td colspan="2"
+                                <td colspan="5"
                                     class="px-6 py-3 text-end font-semibold text-gray-800 dark:text-neutral-200">
                                     SUBTOTAL
                                 </td>
                                 <td class="px-6 py-3 text-right font-semibold text-gray-800 dark:text-neutral-200">
                                     {{ number_format($payments->sum('amount'), 2, ',', '.') }}
                                 </td>
-                                <td colspan="2"></td>
+                                {{-- <td colspan="2"></td> --}}
                             </tr>
                         </tfoot>
                     </table>
