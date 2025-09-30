@@ -12,6 +12,9 @@ class ReportController extends Controller
         return view('reports.salary');
     }
 
+    public function kas() {
+        return view('kas');
+    }
     public function printsalary(Request $request, Table $table)
     {
 
@@ -27,6 +30,8 @@ class ReportController extends Controller
             'end_date'   => $table->end_date,
         ]);
     }
+
+
 
     public function print()
     {

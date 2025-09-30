@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Pickup extends Model
 {
     protected $guarded = [];
-
+    protected $casts = [
+        'pickup_date' => 'date', // atau 'datetime' kalau di DB bertipe DATETIME
+    ];
     public function customer()
     {
         return $this->belongsTo(Customer::class);

@@ -52,6 +52,7 @@ Route::middleware(['authenticate'])->group(function () {
         Route::get('report/salary', [ReportController::class, 'salary'])->name('report.salary');
         Route::get('report/salarysalary', [ReportController::class, 'printsalary'])->name('printsalary');
         Route::get('report/print', [ReportController::class, 'print'])->name('report.print');
+        Route::get('report/kas', [ReportController::class, 'kas'])->name('report.kas');
         // Route::get('/work', [WorkController::class, 'index'])->name('master.work');
         // Route::get('/employee', [EmployeeController::class, 'index'])->name('master.employee');
     });
