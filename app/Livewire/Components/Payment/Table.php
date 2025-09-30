@@ -22,6 +22,17 @@ class Table extends Component
         $this->dateTo   = now()->endOfMonth()->toDateString();
         $this->getItems();
     }
+    public function updated($field)
+    {
+        if (in_array($field, ['dateFrom', 'dateTo'])) {
+            // kirim ke komponen lain (WidgetSalary)
+            $this->dispatch(
+                'dateFilterUpdated',
+                start: $this->dateFrom,
+                end: $this->dateTo
+            );
+        }
+    }
 
     public function getItems()
     {
@@ -38,7 +49,7 @@ class Table extends Component
 
         return view('livewire.components.payment.table', [
             'payments' => $this->getItems()->latest()->paginate(10),
-            'totalAmount' => $this->getItems()->sum('amount'),
+            // 'totalAmount' => $this->getItems()->sum('amount'),
         ]);
     }
 }

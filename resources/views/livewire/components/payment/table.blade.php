@@ -1,8 +1,8 @@
 <div>
-    @include('livewire.components.payment.widget', [
+    {{-- @include('livewire.components.payment.widget', [
         'totalAmount' => $totalAmount,
         'pageAmount' => $payments->sum('amount'),
-    ])
+    ]) --}}
     {{-- Alert --}}
     @if (session()->has('success'))
         <div class="p-4 mt-2 mb-5 text-sm text-teal-800 bg-teal-100 border border-teal-200 rounded-lg dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500"
@@ -12,7 +12,7 @@
     @endif
     {{-- End Alert --}}
     <!-- Card -->
-    <div class="flex flex-col mt-4">
+    <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle">
                 <div
@@ -22,10 +22,10 @@
                         class="grid gap-3 px-6 py-4 border-b border-gray-200 md:flex md:justify-between md:items-center dark:border-neutral-700">
                         <div>
                             <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                Penyerahan/ Pengambilan Pesanan
+                                Laporan Kas
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                Penyerahan barang ke pelanggan
+                                Uang Muka/ Depe, Bayar pengambilan, Pembayaran Piutang
                             </p>
                         </div>
 
@@ -311,6 +311,18 @@
 
 
                         </tbody>
+                        <tfoot class="bg-gray-50 dark:bg-neutral-800">
+                            <tr>
+                                <td colspan="2"
+                                    class="px-6 py-3 text-end font-semibold text-gray-800 dark:text-neutral-200">
+                                    SUBTOTAL
+                                </td>
+                                <td class="px-6 py-3 text-right font-semibold text-gray-800 dark:text-neutral-200">
+                                    {{ number_format($payments->sum('amount'), 2, ',', '.') }}
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
                     </table>
                     <!-- End Table -->
 
