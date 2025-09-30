@@ -25,7 +25,8 @@ class Widget extends Component
     {
         return Payment::query()
             ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '>=', $this->dateFrom))
-            ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '<=', $this->dateTo));
+            ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '<=', $this->dateTo))
+            ->get();
         // ->latest();
         // dd($this->payments);
         // $this->totalAmount = $allPayments->sum('amount');
