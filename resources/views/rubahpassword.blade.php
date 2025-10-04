@@ -12,7 +12,7 @@
 
             {{-- @livewire('components.pickup.widget') --}}
             {{-- @livewire('components.salary.widget') --}}
-            @livewire('components.user.rubahpassword')
+            @livewire('components.user.RubahPassword')
         </div>
     </div>
     <!-- End Content -->
