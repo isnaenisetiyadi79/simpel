@@ -27,6 +27,9 @@ class ModalEdit extends Component
     public $process_status;
     public $pickup_status;
 
+    // pembulatan qyu
+    public $use_rounding = false;
+
     // Variabel data
     public $services;
     public $service;
@@ -45,6 +48,9 @@ class ModalEdit extends Component
             $this->qty = $orderDetail->qty;
             $this->qty_asli = $orderDetail->qty_asli;
             $this->qty_final = $orderDetail->qty_final;
+            if ((float)$this->qty_asli != (float)$this->qty_final) {
+                $this->use_rounding = true;
+            }
             $this->price = $orderDetail->price;
             $this->subtotal = $orderDetail->subtotal;
             $this->process_status = $orderDetail->process_status;
@@ -90,16 +96,23 @@ class ModalEdit extends Component
             'width' => 'required|numeric',
             'length' => 'required|numeric',
             'qty' => 'required|numeric',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric',
+            'use_rounding' => 'required'
         ]);
 
         if (!$this->service->is_package) {
-            $this->qty_final = $this->width * $this->length * $this->qty;
-            $this->subtotal = (float)$this->width * $this->length * $this->qty * $this->price;
-        }else {
+            $this->qty_asli = $this->width * $this->length * $this->qty;
+            if($this->use_rounding)
+            {
+                $this->qty_final = ceil($this->qty_asli);
+                $this->subtotal = (float)$this->qty_final * $this->price;
+            }else{
+                $this->qty_final = $this->qty_asli;
+                $this->subtotal = (float)$this->width * $this->length * $this->qty * $this->price;
+            }
+        } else {
             $this->qty_final = $this->qty;
             $this->subtotal = (float)$this->qty * $this->price;
-
         }
     }
     public function getSubtotalFormattedProperty()
@@ -118,6 +131,7 @@ class ModalEdit extends Component
             'description' => 'nullable|string|max:255',
             'length' => 'required|numeric|min:0',
             'width' => 'required|numeric|min:0',
+            'qty' => 'required|numeric|min:0',
             'qty_asli' => 'required|numeric|min:0',
             'qty_final' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',

@@ -132,43 +132,6 @@ class PickupWizardModal extends Component
         $this->selectedDetailIds = [];
     }
 
-    // public function updatedOrderId()
-    // {
-    //     // Ambil order details yang boleh di-pickup
-    //     $ods = OrderDetail::query()
-    //         ->with(['service:id,name'])
-    //         ->where('order_id', $this->order_id)
-    //         ->where('process_status', 'done')
-    //         ->whereIn('pickup_status', ['pending', 'partially'])
-    //         ->get();
-
-    //     $this->pickupQty = $ods->mapWithKeys(function ($od) {
-    //         $picked = $od->pickupdetail()->sum('qty');
-    //         $remaining = max(0, $od->qty - $picked);
-    //         return [$od->id => $remaining];
-    //     })->toArray();
-
-    //     $this->availableOrderDetails = $ods->map(function ($od) {
-    //         $picked = $od->pickupdetail()->sum('qty');
-    //         return [
-    //             'id' => $od->id,
-    //             'service_name' => optional($od->service)->name,
-    //             'qty' => (float)$od->qty,
-    //             'qty_remaining' => max(0, (float)$od->qty - $picked),
-    //             'price' => (float)$od->price,
-    //             'subtotal' => (float)$od->subtotal,
-    //             'description' => $od->description,
-    //         ];
-    //     })->toArray();
-
-    //     // Hitung total & pembayaran existing
-    //     $order = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
-    //     $this->order_total = (float)($order->total_amount ?? 0);
-    //     $this->paid_total = (float)($order->paid_sum ?? 0);
-    //     $this->outstanding = max(0, $this->order_total - $this->paid_total);
-    //     // $this->change = (float) $this->outstanding - $this->pay_now;
-    //     $this->selectedDetailIds = [];
-    // }
     public function updatedOrderId()
     {
         // Ambil order details yang boleh di-pickup
@@ -197,6 +160,8 @@ class PickupWizardModal extends Component
                 'length' => (float) $od->length,
                 'width' => (float) $od->width,
                 'qty' => (float) $od->qty,
+                'qty_asli' => (float) $od->qty_asli,
+                'qty_final' => (float) $od->qty_final,
                 'qty_remaining' => $qtyRemaining,
                 'price' => (float) $od->price,
                 'subtotal' => (float) $od->subtotal, // subtotal original (boleh disimpan, tapi kita hitung ulang saat pickup)
@@ -274,11 +239,22 @@ class PickupWizardModal extends Component
             $subtotal = 0.0;
             $price = (float) $od->price;
             if ($od->service && $od->service->is_package) {
-                $subtotal = $qtyUsed * $price;
+                if($od->qty_asli === $od->qty_final)
+                {
+                    $subtotal = $qtyUsed * $price;
+                }else {
+                    $subtotal = $od->qty_final * $price;
+                }
             } else {
                 $length = (float) $od->length;
                 $width = (float) $od->width;
-                $subtotal = $length * $width * $qtyUsed * $price;
+                if($od->qty_asli === $od->qty_final)
+                {
+                    $subtotal = $length * $width * $qtyUsed * $price;
+                }else {
+                    $subtotal = $od->qty_final * $price;
+                }
+
             }
 
             // **Mutate model instance (memory only)** agar Blade yang memakai $row['order_detail']->qty/subtotal langsung menampilkan nilai baru
@@ -323,9 +299,21 @@ class PickupWizardModal extends Component
             if ($qty <= 0) continue;
 
             if ($row['is_package']) {
-                $line = $qty * $row['price'];
+                if ($row['qty_asli'] == $row['qty_final']) {    // INI UJI COBA BLM SELESAI
+                    // dd('disini');                               // INI UJI COBA BLM SELESAI
+                    $line = $qty * $row['price'];    // INI ASLINYA (AWAL)
+                } else {                                        // INI UJI COBA BLM SELESAI
+                    // dd('disini broo');                          // INI UJI COBA BLM SELESAI
+                    $line = $row['qty_final'] * $row['price'];  // INI UJI COBA BLM SELESAI
+                }                                               // INI UJI COBA BLM SELESAI
             } else {
-                $line = $row['length'] * $row['width'] * $qty * $row['price'];
+                if ($row['qty_asli'] == $row['qty_final']) {    // INI UJI COBA BLM SELESAI
+                    // dd('disini 2');                               // INI UJI COBA BLM SELESAI
+                    $line = $row['length'] * $row['width'] * $qty * $row['price']; //INI ASLINYA AWAL
+                } else {                                        // INI UJI COBA BLM SELESAI
+                    // dd('disini broo 2');                          // INI UJI COBA BLM SELESAI
+                    $line = $row['qty_final'] * $row['price'];  // INI UJI COBA BLM SELESAI
+                }                                               // INI UJI COBA BLM SELESAI
             }
 
             $total += $line;
@@ -508,10 +496,10 @@ class PickupWizardModal extends Component
             // 6) Update status order (unpaid/partially_paid/paid) setelah pembayaran
             $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
             $pickups = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
-            $paid    = round((float)($order->paid_sum ?? 0) + (float)($pickups->paid_sum ?? 0 + $payAmount),2);
+            $paid    = round((float)($order->paid_sum ?? 0) + (float)($pickups->paid_sum ?? 0 + $payAmount), 2);
             // dd($pickups->paid_sum);
             // dd($paid);
-            $total   = round((float)($order->total_amount ?? 0),2);
+            $total   = round((float)($order->total_amount ?? 0), 2);
             $status  = match (true) {
                 $paid <= 0        => 'unpaid',
                 $paid < $total    => 'partially',

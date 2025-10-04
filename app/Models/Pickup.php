@@ -41,9 +41,29 @@ class Pickup extends Model
             $price = $od->price;
             $width = $od->width ?? 1;
             $length = $od->length ?? 1;
+            $qty_asli = $od->qty_asli ?? 1;
+            $qty_final = $od->qty_final ?? 1;
+
             $isPackage = $od->service->is_package ?? false;
 
-            return $isPackage ? $qty * $price : $qty * $width * $length * $price;
+            $subtotal = 0.00;
+            if($isPackage) {
+                if((float)$qty_asli === (float)$qty_final)
+                {
+                    $subtotal = $qty * $price;
+                }else {
+                    $subtotal = $qty_final * $price;
+                }
+            }else {
+                if((float)$qty_asli === (float)$qty_final)
+                {
+                    $subtotal = $qty * $width * $length * $price;
+                }else {
+                    $subtotal = $qty_final * $price;
+                }
+            }
+
+            return $subtotal;
         });
     }
 

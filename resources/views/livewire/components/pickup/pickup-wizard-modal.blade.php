@@ -191,7 +191,8 @@
                                                     {{ number_format($row['width'], 2, ',', '.') }})
                                                 @endif
                                                 {{-- {{ $row['qty'] }} --}}
-                                                <input type="number"
+                                                <input type="number" {{ $row['qty_asli'] != $row['qty_final'] ? 'readonly' : ''}}
+                                                class="read-only:bg-gray-100"
                                                     wire:model.live.debounce.30="pickupQty.{{ $row['id'] }}"
                                                     min="1" max="{{ $row['qty_remaining'] }}"
                                                     class="w-16 px-1 text-center border rounded">
@@ -212,10 +213,22 @@
                                                     }
 
                                                     if ($row['is_package']) {
-                                                        $lineSubtotal = $qtyUsed * $row['price'];
+                                                        if ($row['qty_asli'] == $row['qty_final']) {
+                                                            $lineSubtotal = $qtyUsed * $row['price'];
+                                                        } else {
+                                                            $lineSubtotal = $row['qty_final'] * $row['price'];
+                                                        }
                                                     } else {
-                                                        $lineSubtotal =
-                                                            $row['length'] * $row['width'] * $qtyUsed * $row['price'];
+                                                        if ($row['qty_asli'] == $row['qty_final']) {
+                                                            // $lineSubtotal = $qtyUsed * $row['price'];
+                                                            $lineSubtotal =
+                                                                $row['length'] *
+                                                                $row['width'] *
+                                                                $qtyUsed *
+                                                                $row['price'];
+                                                        } else {
+                                                            $lineSubtotal = $row['qty_final'] * $row['price'];
+                                                        }
                                                     }
                                                 @endphp
                                                 {{ number_format($lineSubtotal, 0, ',', '.') }}

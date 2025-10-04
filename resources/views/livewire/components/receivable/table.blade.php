@@ -238,11 +238,21 @@
                                                         <li>
 
                                                             @if ($pd->orderdetail->service->is_package)
-                                                                {{ number_format($pd->qty * $pd->orderdetail->price, 0, ',', '.') }}
-                                                                |
+                                                                @if ((float) $pd->orderdetail->qty_asli === (float) $pd->orderdetail->qty_final)
+                                                                    {{ number_format($pd->qty * $pd->orderdetail->price, 0, ',', '.') }}
+                                                                    |
+                                                                @else
+                                                                    {{ number_format($pd->qty_final * $pd->orderdetail->price, 0, ',', '.') }}
+                                                                    |
+                                                                @endif
                                                             @else
-                                                                {{ number_format($pd->qty * $pd->orderdetail->price * $pd->orderdetail->width * $pd->orderdetail->length, 0, ',', '.') }}
-                                                                |
+                                                                @if ((float) $pd->orderdetail->qty_asli === (float) $pd->orderdetail->qty_final)
+                                                                    {{ number_format($pd->qty * $pd->orderdetail->price * $pd->orderdetail->width * $pd->orderdetail->length, 0, ',', '.') }}
+                                                                    |
+                                                                @else
+                                                                    {{ number_format($pd->orderdetail->qty_final * $pd->orderdetail->price, 0, ',', '.') }}
+                                                                    |
+                                                                @endif
                                                             @endif
 
                                                         </li>

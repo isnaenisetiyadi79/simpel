@@ -81,7 +81,8 @@
                             <input type="text" wire:model="description" name="description"
                                 id="input-label-with-helper-phone"
                                 class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                placeholder="John Doe" aria-describedby="hs-input-helper-text" required>
+                                placeholder="Pesanan ekspres atau cetakan spanduk papan proyek"
+                                aria-describedby="hs-input-helper-text" required>
                             @error('name')
                                 <span class="text-red-600 text-xs">{{ $message }}</span>
                             @enderror
@@ -89,7 +90,7 @@
                         {{-- END: Komponen Input Name --}}
 
 
-                        <div class="mt-4 {{ $this->service->is_package ?? false ? 'columns-2' : 'columns-4' }}">
+                        <div class="mt-4 {{ $this->service->is_package ?? false ? 'columns-1' : 'columns-3' }}">
                             <div class="{{ $this->service->is_package ?? false ? 'hidden' : '' }}">
                                 <label for="input-length"
                                     class="block text-sm font-medium mb-2 dark:text-white">Panjang</label>
@@ -115,13 +116,44 @@
                                     class="text-end block w-full rounded-md border-gray-300 shadow-sm
                                 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>
+                        </div>
+                        <div class="mt-4 columns-3">
+                            <div>
+                                <label for="input-qty_asli"
+                                    class="block text-sm font-medium mb-2 dark:text-white">Jumlah Asli</label>
+                                <input type="text" name="input-qty_asli" readonly
+                                    value="{{ number_format($qty_asli, 2, ',', '.') }}"
+                                    class="pointer-events-none text-end block w-full rounded-md border-gray-300 shadow-sm
+                        focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                {{-- <input type="checkbox"
+                                    class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                    wire:model.live.debounce.300ms="use_rounding" /> --}}
+                            </div>
+                            <div class="text-center">
+                                <label for="input-check-rounding"
+                                    class="block text-sm font-medium mb-2 dark:text-white">
+                                    Bulatkan
+                                </label>
+                                <input type="checkbox" id="input-check-rounding" name="check-rounding"
+                                    class="border-gray-200 rounded-sm text-blue-600
+               focus:ring-blue-500 checked:border-blue-500
+               disabled:opacity-50 disabled:pointer-events-none
+               dark:bg-neutral-800 dark:border-neutral-700
+               dark:checked:bg-blue-500 dark:checked:border-blue-500
+               dark:focus:ring-offset-gray-800 mx-auto"
+                                    wire:model.live.debounce.300ms="use_rounding" />
+                            </div>
+
                             <div>
                                 <label for="input-qty_final"
-                                    class="block text-sm font-medium mb-2 dark:text-white">Jumlah Total</label>
+                                    class="block text-sm font-medium mb-2 dark:text-white">Jumlah Pembulatan</label>
                                 <input type="text" name="input-qty_final" readonly
                                     value="{{ number_format($qty_final, 2, ',', '.') }}"
                                     class="pointer-events-none text-end block w-full rounded-md border-gray-300 shadow-sm
                         focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                                {{-- <input type="checkbox"
+                                    class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                    wire:model.live.debounce.300ms="use_rounding" /> --}}
                             </div>
                         </div>
                         <div class="mt-4 columns-2">
