@@ -58,8 +58,28 @@
 
 
                 {{-- END : TABEL ORDER --}}
-
                 <div class="px-6 py-4 text-sm text-gray-700 border-gray-400">
+
+                    {{-- Date Time Picker --}}
+                    <div class="mt-2 flex flex-col">
+                        <label class="text-xs font-bold uppercase text-gray-600 dark:text-neutral-100">Tanggal
+                            Bayar</label> <span class="text-xs font-medium col-span-2">(Hanya bisa dirubah oleh
+                            owner/admin)</span>
+                        <div class="relative mt-1 max-w-sm">
+                            <input type="datetime-local" wire:model="payment_date" @disabled(!Auth::user()->hasRole('owner') && !Auth::user()->hasRole('admin'))
+                                class="py-3  px-3 ps-9 block w-full border-gray-200 shadow-2xs rounded-lg sm:text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M17 14a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2m-4-5a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-6-3a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2" />
+                                    <path fill="currentColor" fill-rule="evenodd"
+                                        d="M7 1.75a.75.75 0 0 1 .75.75v.763c.662-.013 1.391-.013 2.193-.013h4.113c.803 0 1.532 0 2.194.013V2.5a.75.75 0 0 1 1.5 0v.827q.39.03.739.076c1.172.158 2.121.49 2.87 1.238c.748.749 1.08 1.698 1.238 2.87c.153 1.14.153 2.595.153 4.433v2.112c0 1.838 0 3.294-.153 4.433c-.158 1.172-.49 2.121-1.238 2.87c-.749.748-1.698 1.08-2.87 1.238c-1.14.153-2.595.153-4.433.153H9.945c-1.838 0-3.294 0-4.433-.153c-1.172-.158-2.121-.49-2.87-1.238c-.748-.749-1.08-1.698-1.238-2.87c-.153-1.14-.153-2.595-.153-4.433v-2.112c0-1.838 0-3.294.153-4.433c.158-1.172.49-2.121 1.238-2.87c.749-.748 1.698-1.08 2.87-1.238q.35-.046.739-.076V2.5A.75.75 0 0 1 7 1.75M5.71 4.89c-1.005.135-1.585.389-2.008.812S3.025 6.705 2.89 7.71q-.034.255-.058.539h18.336q-.024-.284-.058-.54c-.135-1.005-.389-1.585-.812-2.008s-1.003-.677-2.009-.812c-1.027-.138-2.382-.14-4.289-.14h-4c-1.907 0-3.261.002-4.29.14M2.75 12c0-.854 0-1.597.013-2.25h18.474c.013.653.013 1.396.013 2.25v2c0 1.907-.002 3.262-.14 4.29c-.135 1.005-.389 1.585-.812 2.008s-1.003.677-2.009.812c-1.027.138-2.382.14-4.289.14h-4c-1.907 0-3.261-.002-4.29-.14c-1.005-.135-1.585-.389-2.008-.812s-.677-1.003-.812-2.009c-.138-1.027-.14-2.382-.14-4.289z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -115,10 +135,11 @@
                                         <input type="number" wire:model.live.debounce.300ms="pay_now"
                                             class="text-end py-2.5 px-4 block w-full border-gray-200 rounded-lg text-2xl focus:border-blue-500 focus:ring-blue-500"
                                             placeholder="0">
-                                        </div>
-                                        @error('pay_now')
-                                            <span class="text-red-600 text-xs">{{ $message }} (Tidak boleh bayar nol)</span>
-                                        @enderror
+                                    </div>
+                                    @error('pay_now')
+                                        <span class="text-red-600 text-xs">{{ $message }} (Tidak boleh bayar
+                                            nol)</span>
+                                    @enderror
                                 </div>
 
                                 {{-- Kembalian Rp --}}

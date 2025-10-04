@@ -225,6 +225,8 @@ class Ordercreatemodal extends Component
                 $payment_status = $this->change >= 0 ? 'paid' : 'partially';
                 Payment::create([
                     'order_id' => $order->id,
+                    'user_id' => Auth::user()->id,
+                    'payment_date' => Carbon::parse($this->order_date)->format('Y-m-d H:i:s'),
                     'amount' => $this->pay > $this->total_amount ? $this->total_amount : $this->pay,
                     'paid_amount' => $this->pay,
                     'payment_method' => $this->payment_method == 'transfer' ? 'transfer' : 'cash',

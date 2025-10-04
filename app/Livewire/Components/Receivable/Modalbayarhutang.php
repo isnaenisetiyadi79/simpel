@@ -4,6 +4,8 @@ namespace App\Livewire\Components\Receivable;
 
 use App\Models\Order;
 use App\Models\Pickup;
+use Auth;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\on;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,7 @@ class Modalbayarhutang extends Component
     public $total_amount = 0;
     public $spending = 0;
 
+    public $payment_date;
     // Payment section
     public $order_total = 0;
     public $paid_total = 0; // total payment recorded (order-level)
@@ -75,7 +78,10 @@ class Modalbayarhutang extends Component
         $this->modalFormBayarHutang = true;
     }
 
-
+    public function mount()
+    {
+        $this->payment_date = now()->format('Y-m-d\TH:i');
+    }
     public function closeModal()
     {
         $this->modalFormBayarHutang = false;
@@ -119,6 +125,8 @@ class Modalbayarhutang extends Component
                 $this->pickup->payment()->create([
                     // 'order_id'       => $this->order_id, // tetap kaitkan ke order
                     'pickup_id'      => $this->pickup->id, // tetap kaitkan ke pickup
+                    'user_id'   => Auth::user()->id,
+                    'payment_date' => Carbon::parse($this->payment_date)->format('Y-m-d H:i:s'),
                     'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
                     'paid_amount'   => $payAmount,
                     'payment_method' => $this->payment_method,

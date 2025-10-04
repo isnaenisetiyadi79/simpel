@@ -17,4 +17,8 @@ class Payment extends Model
     {
         return $this->belongsTo(Pickup::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

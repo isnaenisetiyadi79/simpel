@@ -9,7 +9,7 @@ class Pickup extends Model
 {
     protected $guarded = [];
     protected $casts = [
-        'pickup_date' => 'date', // atau 'datetime' kalau di DB bertipe DATETIME
+        'pickup_date' => 'datetime', // atau 'datetime' kalau di DB bertipe DATETIME
     ];
     public function customer()
     {

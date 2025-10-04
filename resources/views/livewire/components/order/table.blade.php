@@ -112,7 +112,14 @@
                                             </span>
                                         </div>
                                     </th>
-
+                                    <th scope="col" class="w-32 px-6 py-3 text-start">
+                                        <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
+                                                operator
+                                            </span>
+                                        </div>
+                                    </th>
                                     <th scope="col" class="w-40 px-6 py-3 truncate text-start">
                                         <div class="flex items-center gap-x-2">
                                             <span
@@ -181,6 +188,7 @@
                                     </th>
 
 
+
                                     <th scope="col" class="px-6 py-3 text-end"></th>
                                 </tr>
                             </thead>
@@ -201,20 +209,26 @@
                                                 </div>
                                             </div>
                                         </td>
-
                                         <td class="h-px w-72 whitespace-nowrap">
                                             <div class="px-6 py-3">
 
-                                                <span
-                                                    class="block text-sm text-gray-500 dark:text-neutral-500">
-                                                  <ul>
-                                                    <li>
-                                                        {{ $item->order->customer->name }}
-                                                    </li>
-                                                    <li>
-                                                        {{ $item->order->note }}
-                                                    </li>
-                                                  </ul>
+                                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                    {{ optional($item->order->user)->name ?? '-' }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="h-px w-72 whitespace-nowrap">
+                                            <div class="px-6 py-3">
+
+                                                <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                    <ul>
+                                                        <li>
+                                                            {{ $item->order->customer->name }}
+                                                        </li>
+                                                        <li>
+                                                            {{ $item->order->note }}
+                                                        </li>
+                                                    </ul>
 
                                                 </span>
                                             </div>
@@ -413,11 +427,12 @@
                                             <div class="px-6 py-3">
 
                                                 <span class="block text-sm text-gray-500 dark:text-neutral-500"
-                                                    title="{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}">
-                                                    {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                                                    title="{{ \Carbon\Carbon::parse($item->order->order_date)->format('d/m/Y H:i') }}">
+                                                    {{ \Carbon\Carbon::parse($item->order->order_date)->diffForHumans() }}
                                                 </span>
                                             </div>
                                         </td>
+
 
 
                                         <td class="size-px whitespace-nowrap">

@@ -90,6 +90,14 @@
                                     <div class="flex items-center gap-x-2">
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
+                                            Operator
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="py-3 ps-6 pe-6 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Tanggal
                                         </span>
                                     </div>
@@ -173,6 +181,20 @@
 
                                                     <span
                                                         class="block text-sm text-gray-500 dark:text-neutral-500">{{ $loop->iteration }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="py-3 ps-6 pe-6">
+                                            <div class="flex items-center gap-x-3">
+
+                                                <div class="grow">
+
+                                                    <span
+                                                        class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                        {{ optional($item->pickup->user)->name ?? '-' }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

@@ -41,7 +41,7 @@ class Widget extends Component
             ->join('works as w', 'w.id', '=', 'pdew.work_id')
             ->join('employees as e', 'e.id', '=', 'pdew.employee_id')
             ->join('pickups as p', 'p.id', '=', 'pd.pickup_id')
-            ->whereBetween('p.created_at', [$start, $end])
+            ->whereBetween('p.pickup_date', [$start, $end])
             ->select(
                 'e.id as employee_id',
                 'e.name as employee_name',

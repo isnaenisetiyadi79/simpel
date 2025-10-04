@@ -78,6 +78,14 @@
                                     <div class="flex items-center gap-x-2">
                                         <span
                                             class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
+                                            Operator
+                                        </span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="py-3 ps-6 pe-6 text-start">
+                                    <div class="flex items-center gap-x-2">
+                                        <span
+                                            class="text-xs font-semibold text-gray-800 uppercase dark:text-neutral-200">
                                             Tanggal Bayar
                                         </span>
                                     </div>
@@ -172,7 +180,6 @@
                                 <th scope="col" class="px-6 py-3 text-end"></th> --}}
                             </tr>
                         </thead>
-                        {{ $payments->sum('amount') }}
                         <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
                             @forelse ($payments as $item)
                                 <tr>
@@ -192,15 +199,27 @@
                                     <td class="size-px whitespace-nowrap">
                                         <div class="py-3 ps-6 pe-6">
                                             <div class="flex items-center gap-x-3">
-
                                                 <div class="grow">
-
-                                                    <span
-                                                        class="block text-sm text-gray-500 dark:text-neutral-500">{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}</span>
+                                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">
+                                                        {{ optional($item->user)->name ?? '-' }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="size-px whitespace-nowrap">
+                                        <div class="py-3 ps-6 pe-6">
+                                            <div class="flex items-center gap-x-3">
+
+                                                <div class="grow">
+
+                                                    <span
+                                                        class="block text-sm text-gray-500 dark:text-neutral-500">{{ \Carbon\Carbon::parse($item->payment_date)->format('d/m/Y H:i') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
                                     <td class="h-px w-72 whitespace-nowrap ">
                                         <div class="px-6 py-3">
                                             <span class="block text-sm text-gray-500 dark:text-neutral-500">

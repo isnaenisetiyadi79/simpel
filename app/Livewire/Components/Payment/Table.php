@@ -37,8 +37,10 @@ class Table extends Component
     public function getItems()
     {
         return Payment::query()
-            ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '>=', $this->dateFrom))
-            ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '<=', $this->dateTo));
+            ->when($this->dateFrom, fn($q) => $q->whereDate('payment_date', '>=', $this->dateFrom))
+            ->when($this->dateFrom, fn($q) => $q->whereDate('payment_date', '<=', $this->dateTo));
+            // ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '>=', $this->dateFrom))
+            // ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '<=', $this->dateTo));
         // ->latest();
         // dd($this->payments);
         // $this->totalAmount = $allPayments->sum('amount');

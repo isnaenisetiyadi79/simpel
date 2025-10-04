@@ -13,7 +13,7 @@ class Widget extends Component
     public $dateFrom;
     public $dateTo;
 
-     protected $listeners = ['dateFilterUpdated' => 'updateDate'];
+    protected $listeners = ['dateFilterUpdated' => 'updateDate'];
 
     public function updateDate($start, $end)
     {
@@ -21,12 +21,15 @@ class Widget extends Component
         $this->dateTo   = $end;
     }
 
-     public function getItems()
+    public function getItems()
     {
         return Payment::query()
-            ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '>=', $this->dateFrom))
-            ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '<=', $this->dateTo))
+            ->when($this->dateFrom, fn($q) => $q->whereDate('payment_date', '>=', $this->dateFrom))
+            ->when($this->dateFrom, fn($q) => $q->whereDate('payment_date', '<=', $this->dateTo))
             ->get();
+        // ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '>=', $this->dateFrom))
+        // ->when($this->dateFrom, fn($q) => $q->whereDate('created_at', '<=', $this->dateTo))
+        // ->get();
         // ->latest();
         // dd($this->payments);
         // $this->totalAmount = $allPayments->sum('amount');

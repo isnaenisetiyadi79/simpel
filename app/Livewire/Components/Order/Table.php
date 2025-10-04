@@ -95,74 +95,6 @@ class Table extends Component
     }
     public function getItems()
     {
-        // $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
-        //     ->when($this->search, function ($q) {
-        //         $q->where(function ($sub) {
-        //             $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
-        //                 ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%")
-        //                 ->orWhereRelation('order.orderdetail', 'description', 'ilike', "%{$this->search}%");
-        //         });
-        //     })
-        //     ->where(function ($q) {
-        //         $q->where('pickup_status', '!=', 'completed')
-        //             ->orWhere(function ($sub) {
-        //                 $sub->where('pickup_status', 'completed');
-
-        //                 if ($this->dateFrom) {
-        //                     $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
-        //                 }
-        //                 if ($this->dateTo) {
-        //                     $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
-        //                 }
-        //             });
-        //     })
-        //     ->when($this->pendingStatus && $this->processStatus, function ($q) {
-        //         $q->whereIn('process_status', [$this->pendingStatus, $this->processStatus]);
-        //     })
-        //     ->when($this->pendingStatus && !$this->processStatus, function ($q) {
-        //         $q->where('process_status', $this->pendingStatus);
-        //     })
-        //     ->when(!$this->pendingStatus && $this->processStatus, function ($q) {
-        //         $q->where('process_status', $this->processStatus);
-        //     })
-        //     ->latest();
-
-        // return $query->paginate(10);
-        // $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
-        //     ->when($this->search, function ($q) {
-        //         $q->where(function ($sub) {
-        //             $sub->whereRelation('order.customer', 'name', 'ilike', "%{$this->search}%")
-        //                 ->orWhereRelation('service', 'name', 'ilike', "%{$this->search}%")
-        //                 ->orWhereRelation('order.orderdetail', 'description', 'ilike', "%{$this->search}%");
-        //         });
-        //     })
-        //     ->where(function ($q) {
-        //         $q->where('pickup_status', '!=', 'completed')
-        //             ->orWhere(function ($sub) {
-        //                 $sub->where('pickup_status', 'completed');
-
-        //                 if ($this->dateFrom) {
-        //                     $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
-        //                 }
-        //                 if ($this->dateTo) {
-        //                     $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
-        //                 }
-        //             });
-        //     })
-        //     ->when($this->pendingStatus && $this->processStatus, function ($q) {
-        //         $q->whereIn('process_status', [$this->pendingStatus, $this->processStatus]);
-        //     })
-        //     ->when($this->pendingStatus && !$this->processStatus, function ($q) {
-        //         $q->where('process_status', $this->pendingStatus);
-        //     })
-        //     ->when(!$this->pendingStatus && $this->processStatus, function ($q) {
-        //         $q->where('process_status', $this->processStatus);
-        //     })
-        //     ->when($this->doneStatus, function ($q) {
-        //         $q->where('pickup_status', '!=', 'completed')
-        //             ->where('process_status', $this->doneStatus);
-        //     })
-        //     ->latest();
 
         // return $query->paginate(10);
         $query = OrderDetail::with(['order.customer', 'service', 'order.orderdetail'])
@@ -178,12 +110,22 @@ class Table extends Component
                     ->orWhere(function ($sub) {
                         $sub->where('pickup_status', 'completed');
 
-                        if ($this->dateFrom) {
-                            $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
-                        }
-                        if ($this->dateTo) {
-                            $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
-                        }
+                        // if ($this->dateFrom) {
+                        //     $sub->whereDate('created_at', '>=', Carbon::parse($this->dateFrom));
+                        // }
+                        // if ($this->dateTo) {
+                        //     $sub->whereDate('created_at', '<=', Carbon::parse($this->dateTo));
+                        // }
+
+                        // ✅ Ubah filter tanggal agar berdasarkan orders.order_date
+                        $sub->whereHas('order', function ($orderQuery) {
+                            if ($this->dateFrom) {
+                                $orderQuery->whereDate('order_date', '>=', \Carbon\Carbon::parse($this->dateFrom));
+                            }
+                            if ($this->dateTo) {
+                                $orderQuery->whereDate('order_date', '<=', \Carbon\Carbon::parse($this->dateTo));
+                            }
+                        });
                     });
             })
             ->when($this->pendingStatus || $this->processStatus || $this->doneStatus, function ($q) {

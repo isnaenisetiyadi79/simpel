@@ -78,4 +78,8 @@ class User extends Authenticatable
     {
         return $this->roles->contains('slug', $slug);
     }
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

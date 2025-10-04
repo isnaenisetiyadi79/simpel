@@ -3,6 +3,8 @@
 namespace App\Livewire\Components\Order;
 
 use App\Models\Order;
+use Auth;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\on;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +21,7 @@ class Modalbayardepe extends Component
     public $total_amount = 0;
     public $spending = 0;
 
+    public $payment_date;
     // Payment section
     public $order_total = 0;
     public $paid_total = 0; // total payment recorded (order-level)
@@ -45,6 +48,9 @@ class Modalbayardepe extends Component
         $this->modalFormBayarDepe = true;
     }
 
+    public function mount() {
+        $this->payment_date = now()->format('Y-m-d\TH:i');
+    }
     public function closeModal()
     {
         $this->modalFormBayarDepe = false;
@@ -75,40 +81,6 @@ class Modalbayardepe extends Component
         DB::beginTransaction();
 
         try {
-
-
-            // foreach ($this->selectedRows as $row) {
-            // $od = OrderDetail::find($row['order_detail']['id']);
-
-            // $pd = PickupDetail::create([
-            //     'pickup_id' => $pickup->id,
-            //     'order_detail_id' => $od->id,
-            //     'qty' => $od->qty_final, // jika nanti mau partial, ganti sesuai input
-            // ]);
-
-            // Simpan pivot pekerjaan per baris
-            // if (!empty($row['works'])) {
-            //     $pivotRows = [];
-            //     foreach ($row['works'] as $w) {
-            //         $pivotRows[] = [
-            //             'pickup_detail_id' => $pd->id,
-            //             'work_id' => $w['work']['id'],
-            //             'employee_id' => $w['employee_id'] ?? null,
-            //             'pay_default' => (float)($w['fee'] ?? 0),
-            //             'created_at' => now(),
-            //             'updated_at' => now(),
-            //         ];
-            //     }
-            //     if (!empty($pivotRows)) {
-            //         DB::table('pickup_detail_employee_works')->insert($pivotRows);
-            //     }
-            // }
-
-            // 3) Update status order_detail → completed
-            // $od->update([
-            //     'pickup_status' => 'completed',
-            // ]);
-
             // 4) Pembayaran (kalau ada)
             $payAmount = (float)($this->pay_now ?? 0);
             // 5) Cek pembayaran dulu, untuk melihat lebih apa tidak
@@ -121,6 +93,8 @@ class Modalbayardepe extends Component
                 $this->order->payment()->create([
                     'order_id'       => $this->order_id, // tetap kaitkan ke order
                     // 'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
+                    'user_id'   => Auth::user()->id,
+                    'payment_date' => Carbon::parse($this->payment_date)->format('Y-m-d H:i:s'),
                     'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
                     'paid_amount'   => $payAmount,
                     'payment_method' => $this->payment_method,

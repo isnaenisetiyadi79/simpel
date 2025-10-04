@@ -239,22 +239,19 @@ class PickupWizardModal extends Component
             $subtotal = 0.0;
             $price = (float) $od->price;
             if ($od->service && $od->service->is_package) {
-                if($od->qty_asli === $od->qty_final)
-                {
+                if ($od->qty_asli === $od->qty_final) {
                     $subtotal = $qtyUsed * $price;
-                }else {
+                } else {
                     $subtotal = $od->qty_final * $price;
                 }
             } else {
                 $length = (float) $od->length;
                 $width = (float) $od->width;
-                if($od->qty_asli === $od->qty_final)
-                {
+                if ($od->qty_asli === $od->qty_final) {
                     $subtotal = $length * $width * $qtyUsed * $price;
-                }else {
+                } else {
                     $subtotal = $od->qty_final * $price;
                 }
-
             }
 
             // **Mutate model instance (memory only)** agar Blade yang memakai $row['order_detail']->qty/subtotal langsung menampilkan nilai baru
@@ -487,6 +484,8 @@ class PickupWizardModal extends Component
                 $pickup->payment()->create([
                     // 'order_id'       => $this->order_id, // tetap kaitkan ke order
                     'pickup_id'      => $pickup->id, // tetap kaitkan ke pickup
+                    'user_id'       => Auth::user()->id,
+                    'payment_date'   => Carbon::parse($this->pickup_date)->format('Y-m-d H:i:s'),
                     'amount'         => $payAmount > $total ? $this->outstanding : $payAmount,
                     'paid_amount'    => $payAmount,
                     'payment_method' => $this->payment_method,
