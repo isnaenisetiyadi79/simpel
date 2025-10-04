@@ -46,11 +46,21 @@ class Modalbayarhutang extends Component
         foreach ($this->pickup->pickupdetail as $pd) {
             if ($pd->orderdetail->width != 0) {
                 // dd('disini');
-                $this->total_amount = $this->total_amount +
-                    ($pd->qty * $pd->orderdetail->width * $pd->orderdetail->length * $pd->orderdetail->price);
+                if ((float)$pd->orderdetail->qty_asli === (float)$pd->orderdetail->qty_final) {
+                    $this->total_amount = $this->total_amount +
+                        ($pd->qty * $pd->orderdetail->width * $pd->orderdetail->length * $pd->orderdetail->price);
+                } else {
+                    $this->total_amount = $this->total_amount +
+                        ($pd->orderdetail->qty_final * $pd->orderdetail->price);
+                }
             } else {
-                $this->total_amount = $this->total_amount +
-                    ($pd->qty * $pd->orderdetail->price);
+                if ((float)$pd->orderdetail->qty_asli === (float)$pd->orderdetail->qty_final) {
+                    $this->total_amount = $this->total_amount +
+                        ($pd->qty * $pd->orderdetail->price);
+                } else {
+                    $this->total_amount = $this->total_amount +
+                        ($pd->orderdetail->qty_final * $pd->orderdetail->price);
+                }
             }
         }
         // $this->total_amount = number_format($this->pickup->pickupdetail()->sum('qty'), 0, ',', '.');
@@ -118,10 +128,10 @@ class Modalbayarhutang extends Component
             // 6) Update status order (unpaid/partially_paid/paid)
             $order   = Order::withSum('payment as paid_sum', 'amount')->find($this->order_id);
             $pickup = Pickup::withSum('payment as paid_sum', 'amount')->find($this->pickup_id);
-            $paid    = round((float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0),2);
+            $paid    = round((float)($order->paid_sum ?? 0) + (float) ($pickup->paid_sum ?? 0), 2);
             // dd($pickup->paid_sum);
             // dd($paid);
-            $total   = round((float)($order->total_amount ?? 0),2);
+            $total   = round((float)($order->total_amount ?? 0), 2);
             $status  = match (true) {
                 $paid <= 0        => 'unpaid',
                 $paid < $total    => 'partially',
