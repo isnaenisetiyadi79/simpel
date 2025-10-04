@@ -244,7 +244,13 @@
         @endforeach
     </div>
     <div class="divider"></div>
-
+ <div class="transaction-info">
+        <div class="info-row">
+            <span>Kasir: {{ optional($pickup->user)->name ?? '-' }}</span>
+            {{-- <span>{{ date('d-F-Y H:i', strtotime($order->created_at)) }}</span> --}}
+            {{-- <span>{{ \Illuminate\Support\Carbon::parse($order->order_date)->locale('id')->translatedFormat('d F Y H:i') }}</span> --}}
+        </div>
+ </div>
     <div class="footer">
         <div>{{ $toko->note }}</div>
         <div><b>{{ $toko->slogan }}</b></div>
