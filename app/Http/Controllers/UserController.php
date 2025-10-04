@@ -12,4 +12,8 @@ class UserController extends Controller
 
         return view ('user');
     }
+
+    public function rubahPassword() {
+        return view ('rubahpassword');
+    }
 }

@@ -74,6 +74,8 @@ Route::middleware(['authenticate'])->group(function () {
     // Route Receivable
 
     // Route User
+    Route::get('user/rubahpassword', [UserController::class, 'rubahPassword'])->name('user.rubahpassword');
+
 
     // Route Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.auth');
